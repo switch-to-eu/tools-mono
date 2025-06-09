@@ -1,0 +1,102 @@
+"use client";
+
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { PollForm } from "@components/poll-form";
+import { generateEncryptionKey, encryptData } from "@/lib/crypto";
+import { toast } from "sonner";
+import type { PollFormData } from "@/lib/schemas";
+import { calculateExpirationDate } from "@/lib/expiration";
+import { api } from "@/lib/trpc-client";
+import { LoadingButton } from "@workspace/ui/components/loading-button";
+import { Users } from "lucide-react";
+
+export default function CreatePoll() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Use tRPC mutation
+  const createPollMutation = api.poll.create.useMutation();
+
+  const handlePollSubmit = async (formData: PollFormData) => {
+    setIsLoading(true);
+
+    try {
+      // Generate encryption key for E2EE
+      const encryptionKey = await generateEncryptionKey();
+
+      // Prepare poll data for encryption (excluding expiresAt which stays unencrypted)
+      const pollDataToEncrypt = {
+        title: formData.title,
+        description: formData.description,
+        location: formData.location,
+        dates: formData.selectedDates.map(date => date.toISOString().split("T")[0]!),
+        participants: [], // Initialize empty participants array
+      };
+
+      // Encrypt the poll data
+      const encryptedData = await encryptData(pollDataToEncrypt, encryptionKey);
+
+      // Prepare tRPC request with encrypted data
+      const tRPCRequest = {
+        encryptedData,
+        expiresAt: calculateExpirationDate(new Date(), formData.expirationDays), // Send as Date object
+      };
+
+      // Create poll via tRPC
+      const response = await createPollMutation.mutateAsync(tRPCRequest);
+
+      const { poll, adminToken } = response;
+
+      const adminUrl = `${window.location.origin}/poll/${poll.id}/admin/${adminToken}#${encryptionKey}`;
+
+      toast.success("Poll created successfully!");
+      router.push(adminUrl);
+    } catch (error) {
+      console.error("Error creating poll:", error);
+      toast.error("Failed to create poll. Please try again.");
+      setIsLoading(false);
+    }
+  };
+
+  const handleMobileSubmit = () => {
+    if (formRef.current) {
+      // Trigger form submission programmatically
+      formRef.current.requestSubmit();
+    }
+  };
+
+  return (
+    <>
+      <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
+        <div className="container mx-auto max-w-4xl space-y-8 !px-0 sm:!px-6 lg:!px-8">
+          <PollForm
+            onSubmit={handlePollSubmit}
+            isLoading={isLoading}
+            submitText="Create Poll"
+            hideMobileSubmit={true}
+            formRef={formRef}
+          />
+        </div>
+      </div>
+
+      {/* Mobile Sticky Footer Button */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 p-4 sm:hidden">
+        <LoadingButton
+          type="button"
+          onClick={handleMobileSubmit}
+          loading={isLoading}
+          loadingText="Creating your poll..."
+          className="w-full"
+        >
+          <Users className="mr-2 h-5 w-5" />
+          Create Poll
+        </LoadingButton>
+      </div>
+
+      {/* Add bottom padding on mobile to account for sticky footer */}
+      <div className="h-20 sm:hidden" />
+    </>
+  );
+}

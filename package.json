@@ -1,22 +1,65 @@
 {
-  "name": "shadcn-ui-monorepo",
+  "name": "@workspace/monorepo",
   "version": "0.0.1",
   "private": true,
+  "description": "Turborepo monorepo with Next.js apps and shared packages",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint:fix": "turbo lint:fix",
+    "type-check": "turbo type-check",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml}\"",
+    "clean": "turbo clean && rm -rf node_modules",
+    "clean:workspaces": "turbo clean",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo build && changeset publish",
+    "reset": "rm -rf node_modules && rm -rf .turbo && pnpm install",
+    "db:generate": "turbo db:generate",
+    "db:push": "turbo db:push",
+    "db:migrate": "turbo db:migrate",
+    "db:studio": "turbo db:studio"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.9",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "prettier": "^3.5.1",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "turbo": "^2.4.2",
-    "typescript": "5.7.3"
+    "typescript": "^5.7.3"
   },
   "packageManager": "pnpm@10.4.1",
   "engines": {
-    "node": ">=20"
+    "node": ">=20",
+    "pnpm": ">=8"
+  },
+  "keywords": [
+    "monorepo",
+    "turborepo",
+    "nextjs",
+    "react",
+    "typescript"
+  ],
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@tailwindcss/oxide",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "overrides": {
+      "react-day-picker>react": "^19.0.0",
+      "react-day-picker>react-dom": "^19.0.0"
+    },
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "19",
+        "react-dom": "19"
+      }
+    }
   }
 }
