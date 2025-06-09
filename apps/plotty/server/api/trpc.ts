@@ -6,9 +6,8 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
-import superjson from "superjson";
-import { ZodError } from "zod";
+import { createTRPCInit } from "@workspace/trpc/init";
+import { createTimingMiddleware } from "@workspace/trpc/middleware";
 
 import { db } from "@/server/db";
 
@@ -38,27 +37,8 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: superjson,
-  errorFormatter({ shape, error }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
-      },
-    };
-  },
-  sse: {
-    ping: {
-      enabled: true,
-      intervalMs: 2_000,
-    },
-    client: {
-      reconnectAfterInactivityMs: 5_000,
-    },
-  },
+const t = createTRPCInit(createTRPCContext, {
+  enableSSE: true,
 });
 
 /**
@@ -88,22 +68,7 @@ export const createTRPCRouter = t.router;
  * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
  * network latency that would occur in production but not in local development.
  */
-const timingMiddleware = t.middleware(async ({ next, path }) => {
-  const start = Date.now();
-
-  if (t._config.isDev) {
-    // artificial delay in dev
-    const waitMs = Math.floor(Math.random() * 400) + 100;
-    await new Promise((resolve) => setTimeout(resolve, waitMs));
-  }
-
-  const result = await next();
-
-  const end = Date.now();
-  console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
-
-  return result;
-});
+const timingMiddleware = createTimingMiddleware(t);
 
 /**
  * Public (unauthenticated) procedure
