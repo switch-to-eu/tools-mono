@@ -24,13 +24,13 @@ export interface TRPCInitOptions {
 export function createTRPCInit<
   TCreateTRPCContext extends (...args: any[]) => any,
 >(createTRPCContext: TCreateTRPCContext, options: TRPCInitOptions = {}) {
-  const { enableSSE = true, customErrorFormatter } = options;
+  const { customErrorFormatter } = options;
 
-  const config: any = {
+  const config = {
     transformer: superjson,
     errorFormatter:
       customErrorFormatter ||
-      (({ shape, error }: any) => {
+      (({ shape, error }) => {
         return {
           ...shape,
           data: {
@@ -40,10 +40,7 @@ export function createTRPCInit<
           },
         };
       }),
-  };
-
-  if (enableSSE) {
-    config.sse = {
+    sse: {
       ping: {
         enabled: true,
         intervalMs: 2_000,
@@ -51,8 +48,8 @@ export function createTRPCInit<
       client: {
         reconnectAfterInactivityMs: 5_000,
       },
-    };
-  }
+    },
+  };
 
   return initTRPC.context<TCreateTRPCContext>().create(config);
 }

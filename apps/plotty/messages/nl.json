@@ -1,0 +1,165 @@
+{
+    "Layout": {
+        "metadata": {
+            "title": "Plotty",
+            "description": "Plan Afspraken zonder gedoe"
+        },
+        "header": {
+            "createPoll": "Maak Poll"
+        }
+    },
+    "ErrorStates": {
+        "missingKey": {
+            "title": "Ontbrekende Encryptiesleutel",
+            "message": "Deze poll vereist een encryptiesleutel om te bekijken. De sleutel moet in de URL staan na het # symbool.",
+            "urlFormat": "Verwacht URL formaat:",
+            "urlExample": "/poll/[id]#[encryptiesleutel]"
+        },
+        "pollNotFound": {
+            "title": "Poll Niet Gevonden",
+            "titleAdmin": "Poll Niet Gevonden of Toegang Geweigerd",
+            "message": "Deze poll bestaat niet of is mogelijk verwijderd.",
+            "messageAdmin": "Deze poll bestaat niet, is verlopen, of je hebt geen beheerderstoegang.",
+            "returnHome": "Terug naar Home"
+        },
+        "decryption": {
+            "title": "Ontsleuteling Mislukt",
+            "message": "Kan de poll data niet ontsleutelen. Dit kan komen door een ongeldige encryptiesleutel of beschadigde data.",
+            "technicalDetails": "Technische details:",
+            "returnHome": "Terug naar Home"
+        }
+    },
+    "PollHeader": {
+        "eventDetails": "Gebeurtenis details en informatie",
+        "responses": "reacties",
+        "dates": "datums",
+        "bestTime": {
+            "title": "Beste Beschikbare Tijd",
+            "description": "{count} van {total} deelnemers beschikbaar ({percentage}%)"
+        }
+    },
+    "AvailabilityGrid": {
+        "participants": "Deelnemers",
+        "options": "opties",
+        "you": "Jij",
+        "you_label": "jij",
+        "allDay": "Hele dag",
+        "clearAll": "Alles Wissen",
+        "unsavedChanges": "Niet opgeslagen wijzigingen",
+        "save": "Opslaan",
+        "nameDialog": {
+            "titleNew": "Voer Je Naam In",
+            "titleEdit": "Bewerk Je Naam",
+            "descriptionNew": "Voer je naam in om je beschikbaarheid op te slaan.",
+            "descriptionEdit": "Werk je naam bij voor deze poll.",
+            "nameLabel": "Naam",
+            "placeholder": "Voer je naam in",
+            "cancel": "Annuleren",
+            "update": "Bijwerken",
+            "save": "Opslaan"
+        }
+    },
+    "PollLoading": {
+        "eventDetails": "Gebeurtenis details laden",
+        "yourAvailability": "Je Beschikbaarheid",
+        "loadingAvailabilityForm": "Beschikbaarheidsformulier laden",
+        "currentResponses": "Huidige Reacties",
+        "loadingResponses": "Deelnemersreacties laden"
+    },
+    "CreatePage": {
+        "submitText": "Maak Poll",
+        "loadingText": "Je poll wordt aangemaakt...",
+        "successMessage": "Poll succesvol aangemaakt!",
+        "errorMessage": "Poll aanmaken mislukt. Probeer het opnieuw."
+    },
+    "PollForm": {
+        "sections": {
+            "event": {
+                "title": "Gebeurtenis",
+                "description": "Beschrijf wat je van plan bent"
+            },
+            "calendar": {
+                "title": "Kalender",
+                "description": "Selecteer mogelijke datums of tijden voor je gebeurtenis"
+            }
+        },
+        "fields": {
+            "title": {
+                "label": "Titel",
+                "placeholder": "Maandelijkse teamvergadering"
+            },
+            "location": {
+                "label": "Locatie",
+                "placeholder": "Koffieshop Joe's"
+            },
+            "description": {
+                "label": "Beschrijving",
+                "placeholder": "Hallo allemaal! Kies hier de datums die het beste uitkomen."
+            }
+        },
+        "calendar": {
+            "todayButton": "Vandaag",
+            "selectedDates": "Geselecteerde Datums",
+            "noDatesSelected": "Geen datums geselecteerd",
+            "chooseDates": "Kies datums in de kalender om te beginnen"
+        },
+        "buttons": {
+            "cancel": "Annuleren",
+            "saveChanges": "Wijzigingen Opslaan",
+            "savingText": "Opslaan...",
+            "createPoll": "Maak Poll",
+            "creatingText": "Je poll wordt aangemaakt..."
+        }
+    },
+    "HomePage": {
+        "hero": {
+            "title": "Plan Afspraken",
+            "subtitle": "zonder gedoe",
+            "description": "Maak polls om de perfecte tijd voor je afspraken te vinden. Eenvoudig, snel en privacy-gericht.",
+            "cta": "Maak een Poll, geen inloggen vereist!",
+            "ctaMobile": "Maak een Poll"
+        },
+        "features": {
+            "title": "Waarom Plotty kiezen?",
+            "description": "Gebouwd met privacy en eenvoud in gedachten, maakt onze planning tool het gemakkelijk om met iedereen af te stemmen.",
+            "fast": {
+                "title": "Bliksemsnelle",
+                "description": "Maak polls in seconden. Geen lange formulieren of ingewikkelde instellingen vereist."
+            },
+            "privacy": {
+                "title": "Privacy Eerst",
+                "description": "Je gegevens worden automatisch na 30 dagen verwijderd. Geen tracking, geen advertenties, geen datamining."
+            },
+            "share": {
+                "title": "Overal Delen",
+                "description": "Stuur een eenvoudige link naar deelnemers. Geen accounts vereist voor stemmen."
+            }
+        },
+        "howItWorks": {
+            "title": "Hoe Het Werkt",
+            "description": "Begin in drie eenvoudige stappen",
+            "step1": {
+                "title": "Maak Je Poll",
+                "description": "Voeg je afspraaktitel, beschrijving toe en stel meerdere datums en tijden voor."
+            },
+            "step2": {
+                "title": "Deel de Link",
+                "description": "Stuur de poll link naar deelnemers via e-mail, chat of elk berichtplatform."
+            },
+            "step3": {
+                "title": "Vind de Beste Tijd",
+                "description": "Bekijk reacties in real-time en identificeer gemakkelijk de meest populaire tijdslots."
+            }
+        },
+        "cta": {
+            "title": "Klaar om Je Volgende Afspraak in te Plannen?",
+            "description": "Sluit je aan bij duizenden gebruikers die ons platform vertrouwen voor hun planningsbehoeften.",
+            "button": "Maak Je Eerste Poll",
+            "buttonMobile": "Begin"
+        },
+        "footer": {
+            "brand": "Plotty",
+            "tagline": "Privacy-gerichte planning eenvoudig gemaakt. Gebouwd met ❤️ voor betere afspraken."
+        }
+    }
+}

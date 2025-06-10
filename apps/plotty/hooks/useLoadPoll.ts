@@ -56,6 +56,8 @@ export function useLoadPoll({
       }
     );
 
+  console.log("pollData", pollData);
+
   // Extract encryption key from URL fragment
   useEffect(() => {
     const fragment = window.location.hash.substring(1);
@@ -85,8 +87,8 @@ export function useLoadPoll({
 
         // Add metadata from the subscription response
         decryptedPoll.id = pollData.id;
-        decryptedPoll.createdAt = pollData.createdAt.toISOString();
-        decryptedPoll.expiresAt = pollData.expiresAt.toISOString();
+        decryptedPoll.createdAt = pollData.createdAt;
+        decryptedPoll.expiresAt = pollData.expiresAt;
 
         setPoll(decryptedPoll);
       } catch (error) {

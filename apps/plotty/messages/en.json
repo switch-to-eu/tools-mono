@@ -1,0 +1,165 @@
+{
+    "Layout": {
+        "metadata": {
+            "title": "Plotty",
+            "description": "Schedule Meetings without hassle"
+        },
+        "header": {
+            "createPoll": "Create Poll"
+        }
+    },
+    "ErrorStates": {
+        "missingKey": {
+            "title": "Missing Encryption Key",
+            "message": "This poll requires an encryption key to view. The key should be included in the URL after the # symbol.",
+            "urlFormat": "Expected URL format:",
+            "urlExample": "/poll/[id]#[encryption-key]"
+        },
+        "pollNotFound": {
+            "title": "Poll Not Found",
+            "titleAdmin": "Poll Not Found or Access Denied",
+            "message": "This poll doesn't exist or may have been removed.",
+            "messageAdmin": "This poll doesn't exist, has expired, or you don't have admin access.",
+            "returnHome": "Return to Home"
+        },
+        "decryption": {
+            "title": "Decryption Failed",
+            "message": "Unable to decrypt the poll data. This could be due to an invalid encryption key or corrupted data.",
+            "technicalDetails": "Technical details:",
+            "returnHome": "Return to Home"
+        }
+    },
+    "PollHeader": {
+        "eventDetails": "Event details and information",
+        "responses": "responses",
+        "dates": "dates",
+        "bestTime": {
+            "title": "Best Available Time",
+            "description": "{{count}} out of {{total}} people available ({{percentage}}%)"
+        }
+    },
+    "AvailabilityGrid": {
+        "participants": "Participants",
+        "options": "options",
+        "you": "You",
+        "you_label": "you",
+        "allDay": "All day",
+        "clearAll": "Clear All",
+        "unsavedChanges": "Unsaved changes",
+        "save": "Save",
+        "nameDialog": {
+            "titleNew": "Enter Your Name",
+            "titleEdit": "Edit Your Name",
+            "descriptionNew": "Please enter your name to save your availability.",
+            "descriptionEdit": "Update your name for this poll.",
+            "nameLabel": "Name",
+            "placeholder": "Enter your name",
+            "cancel": "Cancel",
+            "update": "Update",
+            "save": "Save"
+        }
+    },
+    "PollLoading": {
+        "eventDetails": "Loading event details",
+        "yourAvailability": "Your Availability",
+        "loadingAvailabilityForm": "Loading availability form",
+        "currentResponses": "Current Responses",
+        "loadingResponses": "Loading participant responses"
+    },
+    "CreatePage": {
+        "submitText": "Create Poll",
+        "loadingText": "Creating your poll...",
+        "successMessage": "Poll created successfully!",
+        "errorMessage": "Failed to create poll. Please try again."
+    },
+    "PollForm": {
+        "sections": {
+            "event": {
+                "title": "Event",
+                "description": "Describe what you're planning"
+            },
+            "calendar": {
+                "title": "Calendar",
+                "description": "Select potential dates or times for your event"
+            }
+        },
+        "fields": {
+            "title": {
+                "label": "Title",
+                "placeholder": "Monthly team meeting"
+            },
+            "location": {
+                "label": "Location",
+                "placeholder": "Coffee shop Joe's"
+            },
+            "description": {
+                "label": "Description",
+                "placeholder": "Hello everyone! Choose here the dates that work best for you."
+            }
+        },
+        "calendar": {
+            "todayButton": "Today",
+            "selectedDates": "Selected Dates",
+            "noDatesSelected": "No dates selected",
+            "chooseDates": "Choose dates in the calendar to get started"
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "saveChanges": "Save Changes",
+            "savingText": "Saving...",
+            "createPoll": "Create Poll",
+            "creatingText": "Creating your poll..."
+        }
+    },
+    "HomePage": {
+        "hero": {
+            "title": "Schedule Meetings",
+            "subtitle": "without hassle",
+            "description": "Create polls to find the perfect time for your meetings. Simple, fast, and privacy-focused.",
+            "cta": "Create a Poll, no login required!",
+            "ctaMobile": "Create a Poll"
+        },
+        "features": {
+            "title": "Why Choose Plotty?",
+            "description": "Built with privacy and simplicity in mind, our scheduling tool makes it easy to coordinate with anyone.",
+            "fast": {
+                "title": "Lightning Fast",
+                "description": "Create polls in seconds. No lengthy forms or complicated setup required."
+            },
+            "privacy": {
+                "title": "Privacy First",
+                "description": "Your data is automatically deleted after 30 days. No tracking, no ads, no data mining."
+            },
+            "share": {
+                "title": "Share Anywhere",
+                "description": "Send a simple link to participants. No accounts required for voting."
+            }
+        },
+        "howItWorks": {
+            "title": "How It Works",
+            "description": "Get started in three simple steps",
+            "step1": {
+                "title": "Create Your Poll",
+                "description": "Add your meeting title, description, and propose multiple dates and times."
+            },
+            "step2": {
+                "title": "Share the Link",
+                "description": "Send the poll link to participants via email, chat, or any messaging platform."
+            },
+            "step3": {
+                "title": "Find the Best Time",
+                "description": "View responses in real-time and easily identify the most popular time slots."
+            }
+        },
+        "cta": {
+            "title": "Ready to Schedule Your Next Meeting?",
+            "description": "Join thousands of users who trust our platform for their scheduling needs.",
+            "button": "Create Your First Poll",
+            "buttonMobile": "Get Started"
+        },
+        "footer": {
+            "brand": "Plotty",
+            "tagline": "Privacy-focused scheduling made simple. Built with ❤️ for better meetings."
+        }
+    }
+}

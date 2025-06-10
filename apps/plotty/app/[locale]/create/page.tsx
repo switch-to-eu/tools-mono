@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { PollForm } from "@components/poll-form";
 import { generateEncryptionKey, encryptData } from "@/lib/crypto";
 import { toast } from "sonner";
@@ -10,11 +10,13 @@ import { calculateExpirationDate } from "@/lib/expiration";
 import { api } from "@/lib/trpc-client";
 import { LoadingButton } from "@workspace/ui/components/loading-button";
 import { Users } from "lucide-react";
+import { useRouter } from "@i18n/navigation";
 
 export default function CreatePoll() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const t = useTranslations('CreatePage');
 
   // Use tRPC mutation
   const createPollMutation = api.poll.create.useMutation();
@@ -49,13 +51,13 @@ export default function CreatePoll() {
 
       const { poll, adminToken } = response;
 
-      const adminUrl = `${window.location.origin}/poll/${poll.id}/admin/${adminToken}#${encryptionKey}`;
+      const adminUrl = `/poll/${poll.id}/admin/${adminToken}#${encryptionKey}`;
 
-      toast.success("Poll created successfully!");
+      toast.success(t('successMessage'));
       router.push(adminUrl);
     } catch (error) {
       console.error("Error creating poll:", error);
-      toast.error("Failed to create poll. Please try again.");
+      toast.error(t('errorMessage'));
       setIsLoading(false);
     }
   };
@@ -74,7 +76,7 @@ export default function CreatePoll() {
           <PollForm
             onSubmit={handlePollSubmit}
             isLoading={isLoading}
-            submitText="Create Poll"
+            submitText={t('submitText')}
             hideMobileSubmit={true}
             formRef={formRef}
           />
@@ -87,11 +89,11 @@ export default function CreatePoll() {
           type="button"
           onClick={handleMobileSubmit}
           loading={isLoading}
-          loadingText="Creating your poll..."
+          loadingText={t('loadingText')}
           className="w-full"
         >
           <Users className="mr-2 h-5 w-5" />
-          Create Poll
+          {t('submitText')}
         </LoadingButton>
       </div>
 

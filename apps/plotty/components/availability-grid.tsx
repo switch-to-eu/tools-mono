@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { User, Edit } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@workspace/ui/components/button";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
@@ -33,6 +34,8 @@ export function AvailabilityGrid({
   onSave,
   isSaving,
 }: AvailabilityGridProps) {
+  const t = useTranslations('AvailabilityGrid');
+
   // Local state to track user's changes before submitting
   const [currentUserSelections, setCurrentUserSelections] = useState<Record<string, boolean>>({});
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -222,11 +225,11 @@ export function AvailabilityGrid({
       {/* Header */}
       <div className="flex items-center border-primary-color gradient-bg-purple-blue justify-between border-b px-6 py-4">
         <h2 className="text-lg font-semibold text-gray-900">
-          Participants <span className="text-gray-500">{transformedData.participants.length + 1}</span>
+          {t('participants')} <span className="text-gray-500">{transformedData.participants.length + 1}</span>
         </h2>
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-600">
-            {transformedData.eventOptionsCount} options
+            {transformedData.eventOptionsCount} {t('options')}
           </span>
         </div>
       </div>
@@ -237,7 +240,7 @@ export function AvailabilityGrid({
         <div className="w-30 sm:w-56 flex-shrink-0 border-r border-primary-color bg-white">
           {/* Header for names column */}
           <div className="border-b border-primary-color   bg-gray-50 px-4 py-4 h-[120px] flex items-end">
-            <div className="text-sm font-medium text-gray-600">Participants</div>
+            <div className="text-sm font-medium text-gray-600">{t('participants')}</div>
           </div>
 
           {/* Current User Row */}
@@ -248,11 +251,11 @@ export function AvailabilityGrid({
               </div>
               <div className="flex-1 flex items-center gap-2">
                 <span className="truncate text-sm font-medium text-gray-900">
-                  {currentUserName || "You"}
+                  {currentUserName || t('you')}
                 </span>
                 {currentUserName && (
                   <span className="hidden sm:inline text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
-                    you
+                    {t('you_label')}
                   </span>
                 )}
                 {currentUserName && (
@@ -310,7 +313,7 @@ export function AvailabilityGrid({
                       }`}>
                       {new Date(slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     </div>
-                    <div className="text-xs text-gray-500 mb-2">All day</div>
+                    <div className="text-xs text-gray-500 mb-2">{t('allDay')}</div>
                     <div className="flex items-center justify-center gap-1 text-xs">
                       {isMostPopular && (
                         <svg className="h-3 w-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
@@ -385,13 +388,13 @@ export function AvailabilityGrid({
           onClick={handleClear}
           className="bg-white hover:bg-red-50 hover:border-red-300 hover:text-red-700"
         >
-          Clear All
+          {t('clearAll')}
         </Button>
         <div className="flex items-center gap-4">
           {hasUnsavedChanges && (
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 bg-yellow-500 rounded-full"></div>
-              <span className="text-sm text-yellow-800 font-medium">Unsaved changes</span>
+              <span className="text-sm text-yellow-800 font-medium">{t('unsavedChanges')}</span>
             </div>
           )}
           <LoadingButton
@@ -399,7 +402,7 @@ export function AvailabilityGrid({
             loading={isSaving}
             className="bg-blue-600 hover:bg-blue-700 px-8"
           >
-            Save
+            {t('save')}
           </LoadingButton>
         </div>
       </div>
@@ -408,18 +411,18 @@ export function AvailabilityGrid({
       <Dialog open={showNameDialog} onOpenChange={setShowNameDialog}>
         <DialogContent className="sm:max-w-[425px] bg-white">
           <DialogHeader>
-            <DialogTitle>{isEditingName ? "Edit Your Name" : "Enter Your Name"}</DialogTitle>
+            <DialogTitle>{isEditingName ? t('nameDialog.titleEdit') : t('nameDialog.titleNew')}</DialogTitle>
             <DialogDescription>
               {isEditingName
-                ? "Update your name for this poll."
-                : "Please enter your name to save your availability."
+                ? t('nameDialog.descriptionEdit')
+                : t('nameDialog.descriptionNew')
               }
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
-                Name
+                {t('nameDialog.nameLabel')}
               </Label>
               <Input
                 id="name"
@@ -427,7 +430,7 @@ export function AvailabilityGrid({
                 onChange={(e) => setNameInput(e.target.value)}
                 onKeyPress={handleNameKeyPress}
                 className="col-span-3"
-                placeholder="Enter your name"
+                placeholder={t('nameDialog.placeholder')}
                 autoFocus
               />
             </div>
@@ -437,7 +440,7 @@ export function AvailabilityGrid({
               variant="secondary"
               onClick={() => setShowNameDialog(false)}
             >
-              Cancel
+              {t('nameDialog.cancel')}
             </Button>
 
             <LoadingButton
@@ -446,7 +449,7 @@ export function AvailabilityGrid({
               onClick={handleNameSubmit}
               disabled={!nameInput.trim()}
             >
-              {isEditingName ? "Update" : "Save"}
+              {isEditingName ? t('nameDialog.update') : t('nameDialog.save')}
             </LoadingButton>
           </DialogFooter>
         </DialogContent>

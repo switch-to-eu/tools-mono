@@ -3,6 +3,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Users, Calendar, FileText, Clock } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { LoadingButton } from "@workspace/ui/components/loading-button";
 import { Button } from "@workspace/ui/components/button";
 import { Calendar as CalendarComponent } from "@workspace/ui/blocks/calendar";
@@ -25,11 +26,13 @@ export function PollForm({
   onSubmit,
   onCancel,
   isLoading = false,
-  submitText = "Create Poll",
+  submitText,
   initialData,
   hideMobileSubmit = false,
   formRef
 }: PollFormProps) {
+  const t = useTranslations('PollForm');
+
   const {
     register,
     handleSubmit,
@@ -53,39 +56,43 @@ export function PollForm({
     await onSubmit(data);
   };
 
+  // Use provided submitText or fall back to translation
+  const buttonText = submitText || t('buttons.createPoll');
+  const loadingText = onCancel ? t('buttons.savingText') : t('buttons.creatingText');
+
   return (
     <form ref={formRef} onSubmit={handleSubmit(handleFormSubmit)} className="">
       {/* Event Section - Separate Box */}
       <SectionCard className="mb-6">
         <SectionHeader
           icon={<FileText className="h-5 w-5" />}
-          title="Event"
-          description="Describe what you're planning"
+          title={t('sections.event.title')}
+          description={t('sections.event.description')}
         />
         <SectionContent>
           <div className="space-y-5">
             <FormInput<PollFormData>
-              label="Title"
+              label={t('fields.title.label')}
               name="title"
-              placeholder="Monthly team meeting"
+              placeholder={t('fields.title.placeholder')}
               register={register}
               error={errors.title}
               schema={pollSchema}
             />
 
             <FormInput<PollFormData>
-              label="Location"
+              label={t('fields.location.label')}
               name="location"
-              placeholder="Coffee shop Joe's"
+              placeholder={t('fields.location.placeholder')}
               register={register}
               error={errors.location}
               schema={pollSchema}
             />
 
             <FormTextArea<PollFormData>
-              label="Description"
+              label={t('fields.description.label')}
               name="description"
-              placeholder="Hello everyone! Choose here the dates that work best for you."
+              placeholder={t('fields.description.placeholder')}
               register={register}
               error={errors.description}
               rows={4}
@@ -99,8 +106,8 @@ export function PollForm({
       <SectionCard className="mb-6">
         <SectionHeader
           icon={<Calendar className="h-5 w-5" />}
-          title="Calendar"
-          description="Select potential dates or times for your event"
+          title={t('sections.calendar.title')}
+          description={t('sections.calendar.description')}
         />
         <SectionContent>
           {errors.selectedDates && (
@@ -151,7 +158,7 @@ export function PollForm({
                       className="px-6 text-sm shadow-card hover:shadow-card-hover transition-all"
                     >
                       <Clock className="mr-2 h-4 w-4" />
-                      Today
+                      {t('calendar.todayButton')}
                     </Button>
                   )}
                 />
@@ -161,7 +168,7 @@ export function PollForm({
             {/* Right Column: Selected Dates - Scalable */}
             <div className="space-y-4 lg:col-span-2">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium text-gray-900">Selected Dates</h3>
+                <h3 className="text-lg font-medium text-gray-900">{t('calendar.selectedDates')}</h3>
 
                 {selectedDates && selectedDates.length > 0 ? (
                   <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3">
@@ -207,10 +214,10 @@ export function PollForm({
                   <div className="text-center py-8 px-4 rounded-lg bg-purple-50 border-2 border-dashed border-purple-300">
                     <Calendar className="h-8 w-8 text-purple-400 mx-auto mb-2" />
                     <p className="text-sm text-purple-600 font-medium">
-                      No dates selected
+                      {t('calendar.noDatesSelected')}
                     </p>
                     <p className="text-xs text-purple-500 mt-1">
-                      Choose dates in the calendar to get started
+                      {t('calendar.chooseDates')}
                     </p>
                   </div>
                 )}
@@ -230,30 +237,28 @@ export function PollForm({
               onClick={onCancel}
               className="flex-1"
             >
-              Cancel
+              {t('buttons.cancel')}
             </Button>
 
             <LoadingButton
               type="submit"
               loading={isLoading}
-              loadingText="Saving..."
+              loadingText={loadingText}
               className="flex-1"
             >
               <Users className="mr-2 h-5 w-5" />
-              {submitText}
+              {buttonText}
             </LoadingButton>
-
-
           </div>
         ) : (
           <LoadingButton
             type="submit"
             loading={isLoading}
-            loadingText="Creating your poll..."
+            loadingText={loadingText}
             className="w-full"
           >
             <Users className="mr-2 h-5 w-5" />
-            {submitText}
+            {buttonText}
           </LoadingButton>
         )}
       </div>

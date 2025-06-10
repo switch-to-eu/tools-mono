@@ -1,69 +1,80 @@
 "use client";
 
+import { User, Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { SectionCard, SectionHeader, SectionContent } from "@workspace/ui/blocks/section-card";
 import { Skeleton } from "@workspace/ui/components/skeleton";
-import { Settings, User, Users, FileText } from "lucide-react";
 
 interface PollLoadingProps {
   showAdminActions?: boolean;
 }
 
 export function PollLoading({ showAdminActions = false }: PollLoadingProps) {
+  const t = useTranslations('PollLoading');
+
   return (
     <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
       <div className="container mx-auto max-w-4xl space-y-8 !px-0 sm:!px-6 lg:!px-8">
-        {/* Poll Header Skeleton */}
+        {/* Poll Info Skeleton */}
         <SectionCard>
           <SectionHeader
-            icon={<FileText className="h-5 w-5" />}
+            icon={<User className="h-5 w-5" />}
             title="Loading..."
-            description="Loading event details"
+            description={t('eventDetails')}
           />
           <SectionContent className="text-center">
-            <Skeleton className="mx-auto mb-6 h-5 w-1/3" />
-            <div className="flex items-center justify-center gap-6">
-              <Skeleton className="h-4 w-24" />
-              <Skeleton className="h-4 w-20" />
+            <div className="space-y-4">
+              <Skeleton className="h-5 w-48 mx-auto" />
+              <div className="flex items-center justify-center gap-6">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-16" />
+              </div>
             </div>
           </SectionContent>
         </SectionCard>
 
-        {/* Admin Actions Skeleton (conditional) */}
+        {/* Admin Actions Skeleton */}
         {showAdminActions && (
           <SectionCard>
             <SectionHeader
-              icon={<Settings className="h-5 w-5" />}
-              title="Poll Management"
+              icon={<User className="h-5 w-5" />}
+              title="Loading..."
               description="Loading poll settings"
             />
-            <SectionContent className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-3">
-                  <Skeleton className="h-5 w-24" />
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-4 w-full" />
+            <SectionContent>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-10 w-full" />
                 </div>
-                <div className="space-y-3">
-                  <Skeleton className="h-5 w-20" />
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-4 w-full" />
+                <div className="flex gap-3">
+                  <Skeleton className="h-12 flex-1" />
+                  <Skeleton className="h-12 flex-1" />
+                  <Skeleton className="h-12 flex-1" />
                 </div>
-              </div>
-              <div className="flex gap-3 pt-4">
-                <Skeleton className="h-12 flex-1" />
-                <Skeleton className="h-12 flex-1" />
-                <Skeleton className="h-12 w-20" />
               </div>
             </SectionContent>
           </SectionCard>
         )}
 
+        {/* Best Time Skeleton */}
+        <SectionCard>
+          <SectionHeader
+            icon={<User className="h-5 w-5" />}
+            title="Loading..."
+            description="Loading best time"
+          />
+          <SectionContent className="text-center">
+            <Skeleton className="h-7 w-56 mx-auto" />
+          </SectionContent>
+        </SectionCard>
+
         {/* Availability Section Skeleton */}
         <SectionCard>
           <SectionHeader
             icon={<User className="h-5 w-5" />}
-            title="Your Availability"
-            description="Loading availability form"
+            title={t('yourAvailability')}
+            description={t('loadingAvailabilityForm')}
           />
           <SectionContent className="space-y-6">
             <Skeleton className="h-12 w-full" />
@@ -74,8 +85,8 @@ export function PollLoading({ showAdminActions = false }: PollLoadingProps) {
         <SectionCard>
           <SectionHeader
             icon={<Users className="h-5 w-5" />}
-            title="Current Responses"
-            description="Loading participant responses"
+            title={t('currentResponses')}
+            description={t('loadingResponses')}
           />
           <SectionContent>
             <div className="space-y-6">
@@ -100,12 +111,9 @@ export function PollLoading({ showAdminActions = false }: PollLoadingProps) {
               <div className="space-y-3">
                 <Skeleton className="h-5 w-24" />
                 {Array.from({ length: 2 }, (_, i) => (
-                  <div key={i} className="flex items-center justify-between border-b border-gray-200 pb-3">
-                    <div className="flex items-center gap-3">
-                      <Skeleton className="h-8 w-8 rounded-full" />
-                      <Skeleton className="h-4 w-24" />
-                    </div>
-                    <Skeleton className="h-4 w-20" />
+                  <div key={i} className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 border border-gray-200">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <Skeleton className="h-4 w-24" />
                   </div>
                 ))}
               </div>

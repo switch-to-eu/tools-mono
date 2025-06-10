@@ -1,9 +1,11 @@
 import { Lock, AlertTriangle, XCircle, FileQuestion } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 
-
 export function MissingKeyError() {
+  const t = useTranslations('ErrorStates.missingKey');
+
   return (
     <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
       <div className="container mx-auto max-w-2xl !px-0 sm:!px-6 lg:!px-8">
@@ -12,15 +14,14 @@ export function MissingKeyError() {
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">
               <AlertTriangle className="h-8 w-8" />
             </div>
-            <h1 className="mb-4 text-2xl font-bold">Missing Encryption Key</h1>
+            <h1 className="mb-4 text-2xl font-bold">{t('title')}</h1>
             <p className="mb-6">
-              This poll requires an encryption key to view. The key should be included in the
-              URL after the # symbol.
+              {t('message')}
             </p>
             <div className="rounded-lg border p-4">
-              <p className="text-sm font-medium mb-2">Expected URL format:</p>
+              <p className="text-sm font-medium mb-2">{t('urlFormat')}</p>
               <code className="text-sm font-mono">
-                /poll/[id]#[encryption-key]
+                {t('urlExample')}
               </code>
             </div>
           </CardContent>
@@ -36,6 +37,8 @@ interface PollNotFoundErrorProps {
 }
 
 export function PollNotFoundError({ isAdmin = false }: PollNotFoundErrorProps) {
+  const t = useTranslations('ErrorStates.pollNotFound');
+
   return (
     <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
       <div className="container mx-auto max-w-2xl !px-0 sm:!px-6 lg:!px-8">
@@ -45,15 +48,13 @@ export function PollNotFoundError({ isAdmin = false }: PollNotFoundErrorProps) {
               <FileQuestion className="h-8 w-8" />
             </div>
             <h1 className="mb-4 text-2xl font-bold">
-              {isAdmin ? "Poll Not Found or Access Denied" : "Poll Not Found"}
+              {isAdmin ? t('titleAdmin') : t('title')}
             </h1>
             <p className="mb-6">
-              {isAdmin
-                ? "This poll doesn't exist, has expired, or you don't have admin access."
-                : "This poll doesn't exist or may have been removed."}
+              {isAdmin ? t('messageAdmin') : t('message')}
             </p>
             <Button onClick={() => window.location.href = '/'} className="px-6">
-              Return to Home
+              {t('returnHome')}
             </Button>
           </CardContent>
         </Card>
@@ -68,6 +69,8 @@ interface DecryptionErrorProps {
 }
 
 export function DecryptionError({ error }: DecryptionErrorProps) {
+  const t = useTranslations('ErrorStates.decryption');
+
   return (
     <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
       <div className="container mx-auto max-w-2xl !px-0 sm:!px-6 lg:!px-8">
@@ -76,19 +79,18 @@ export function DecryptionError({ error }: DecryptionErrorProps) {
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">
               <XCircle className="h-8 w-8" />
             </div>
-            <h1 className="mb-4 text-2xl font-bold">Decryption Failed</h1>
+            <h1 className="mb-4 text-2xl font-bold">{t('title')}</h1>
             <p className="mb-6">
-              Unable to decrypt the poll data. This could be due to an invalid
-              encryption key or corrupted data.
+              {t('message')}
             </p>
             <div className="rounded-lg border p-4 mb-6">
-              <p className="text-sm font-medium mb-2">Technical details:</p>
+              <p className="text-sm font-medium mb-2">{t('technicalDetails')}</p>
               <code className="text-sm font-mono break-all">
                 {error}
               </code>
             </div>
             <Button onClick={() => window.location.href = '/'} className="px-6">
-              Return to Home
+              {t('returnHome')}
             </Button>
           </CardContent>
         </Card>

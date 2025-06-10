@@ -8,7 +8,6 @@
  */
 import { createTRPCInit } from "@workspace/trpc/init";
 import { createTimingMiddleware } from "@workspace/trpc/middleware";
-
 import { db } from "@/server/db";
 
 /**
@@ -37,9 +36,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-const t = createTRPCInit(createTRPCContext, {
-  enableSSE: true,
-});
+const t = createTRPCInit(createTRPCContext);
 
 /**
  * Create a server-side caller.

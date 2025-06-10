@@ -10,10 +10,10 @@ import {
 import { createTRPCReact } from "@trpc/react-query";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import { useState } from "react";
-import SuperJSON from "superjson";
 
 import { createQueryClient } from "@workspace/trpc/query-client";
 import { AppRouter } from "@/server/api/root";
+import SuperJSON from "superjson";
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
 const getQueryClient = () => {

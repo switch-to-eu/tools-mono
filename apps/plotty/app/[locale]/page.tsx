@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@i18n/navigation";
 
 import { Calendar, Users, Shield, Zap, Globe } from "lucide-react";
 
@@ -10,8 +10,11 @@ import {
 } from "@workspace/ui/components/card";
 
 import { Button } from "@workspace/ui/components/button";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
+  const t = useTranslations('HomePage');
+
   return (
     <>
       {/* Hero Section */}
@@ -22,31 +25,29 @@ export default function Home() {
         <div className="relative z-10 container mx-auto text-center">
           <h1 className="mb-4 text-4xl font-bold sm:mb-6 sm:text-5xl lg:text-6xl">
             <span className="gradient-purple-blue bg-clip-text text-transparent">
-              Schedule Meetings
+              {t('hero.title')}
             </span>
             <br />
-            <span className="text-neutral-900">without hassle</span>
+            <span className="text-neutral-900">{t('hero.subtitle')}</span>
           </h1>
-          <p className="mx-auto mb-6 max-w-2xl px-4 text-lg text-neutral-600 sm:mb-8 sm:text-xl">
-            Create polls to find the perfect time for your meetings. Simple,
-            fast, and privacy-focused.
-          </p>
-          <div className="flex flex-col justify-center gap-3 px-4 sm:flex-row sm:gap-4">
-            <Link href="/create" className="w-full sm:w-auto">
-              <Button
-                variant="default"
-                size="lg"
-                className="w-full border-0 sm:w-auto"
-              >
-                <Users className="mr-2 h-5 w-5" />
-                <span className="hidden sm:inline">
-                  Create a Poll, no login required!
-                </span>
 
-                <span className="sm:hidden">Create a Poll</span>
-              </Button>
-            </Link>
-          </div>
+          <p className="mx-auto mb-6 max-w-2xl px-4 text-lg text-neutral-600 sm:mb-8 sm:text-xl">
+            {t('hero.description')}
+          </p>
+          <Link href="/create" className="flex flex-row justify-center">
+            <Button
+              variant="default"
+              size="lg"
+              className="w-full border-0 w-fit flex flex-row justify-center gap-3 px-4 sm:gap-4"
+            >
+              <Users className="mr-2 h-5 w-5" />
+              <span className="hidden sm:inline">
+                {t('hero.cta')}
+              </span>
+
+              <span className="sm:hidden">{t('hero.ctaMobile')}</span>
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -55,11 +56,10 @@ export default function Home() {
         <div className="container mx-auto">
           <div className="mb-8 text-center sm:mb-12">
             <h2 className="mb-3 text-3xl font-bold text-neutral-900 sm:mb-4 sm:text-4xl">
-              Why Choose Plotty?
+              {t('features.title')}
             </h2>
             <p className="mx-auto max-w-2xl px-4 text-base text-neutral-600 sm:text-lg">
-              Built with privacy and simplicity in mind, our scheduling tool
-              makes it easy to coordinate with anyone.
+              {t('features.description')}
             </p>
           </div>
 
@@ -70,11 +70,10 @@ export default function Home() {
                   <Zap className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-xl text-neutral-900">
-                  Lightning Fast
+                  {t('features.fast.title')}
                 </CardTitle>
                 <CardDescription className="text-base text-neutral-600">
-                  Create polls in seconds. No lengthy forms or complicated setup
-                  required.
+                  {t('features.fast.description')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -85,11 +84,10 @@ export default function Home() {
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-xl text-neutral-900">
-                  Privacy First
+                  {t('features.privacy.title')}
                 </CardTitle>
                 <CardDescription className="text-base text-neutral-600">
-                  Your data is automatically deleted after 30 days. No tracking,
-                  no ads, no data mining.
+                  {t('features.privacy.description')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -100,11 +98,10 @@ export default function Home() {
                   <Globe className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-xl text-neutral-900">
-                  Share Anywhere
+                  {t('features.share.title')}
                 </CardTitle>
                 <CardDescription className="text-base text-neutral-600">
-                  Send a simple link to participants. No accounts required for
-                  voting.
+                  {t('features.share.description')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -117,10 +114,10 @@ export default function Home() {
         <div className="container mx-auto">
           <div className="mb-8 text-center sm:mb-12">
             <h2 className="mb-3 text-3xl font-bold text-neutral-900 sm:mb-4 sm:text-4xl">
-              How It Works
+              {t('howItWorks.title')}
             </h2>
             <p className="px-4 text-base text-neutral-600 sm:text-lg">
-              Get started in three simple steps
+              {t('howItWorks.description')}
             </p>
           </div>
 
@@ -130,11 +127,10 @@ export default function Home() {
                 <span className="text-xl font-bold text-white">1</span>
               </div>
               <h3 className="mb-2 text-xl font-semibold text-neutral-900">
-                Create Your Poll
+                {t('howItWorks.step1.title')}
               </h3>
               <p className="px-2 text-base text-neutral-600">
-                Add your meeting title, description, and propose multiple dates
-                and times.
+                {t('howItWorks.step1.description')}
               </p>
             </div>
 
@@ -143,11 +139,10 @@ export default function Home() {
                 <span className="text-xl font-bold text-white">2</span>
               </div>
               <h3 className="mb-2 text-xl font-semibold text-neutral-900">
-                Share the Link
+                {t('howItWorks.step2.title')}
               </h3>
               <p className="px-2 text-base text-neutral-600">
-                Send the poll link to participants via email, chat, or any
-                messaging platform.
+                {t('howItWorks.step2.description')}
               </p>
             </div>
 
@@ -156,11 +151,10 @@ export default function Home() {
                 <span className="text-xl font-bold text-white">3</span>
               </div>
               <h3 className="mb-2 text-xl font-semibold text-neutral-900">
-                Find the Best Time
+                {t('howItWorks.step3.title')}
               </h3>
               <p className="px-2 text-base text-neutral-600">
-                View responses in real-time and easily identify the most popular
-                time slots.
+                {t('howItWorks.step3.description')}
               </p>
             </div>
           </div>
@@ -172,11 +166,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 container mx-auto text-center">
           <h2 className="mb-3 px-4 text-3xl font-bold text-white sm:mb-4 sm:text-4xl">
-            Ready to Schedule Your Next Meeting?
+            {t('cta.title')}
           </h2>
           <p className="mx-auto mb-6 max-w-2xl px-4 text-base text-white/90 sm:mb-8 sm:text-lg">
-            Join thousands of users who trust our platform for their scheduling
-            needs.
+            {t('cta.description')}
           </p>
           <div className="px-4">
             <Link href="/create" className="inline-block w-full sm:w-auto">
@@ -186,8 +179,8 @@ export default function Home() {
                 className="w-full bg-white text-purple-600 shadow-xl transition-all hover:scale-105 hover:bg-neutral-100 sm:w-auto"
               >
                 <Users className="mr-2 h-5 w-5" />
-                <span className="hidden sm:inline">Create Your First Poll</span>
-                <span className="sm:hidden">Get Started</span>
+                <span className="hidden sm:inline">{t('cta.button')}</span>
+                <span className="sm:hidden">{t('cta.buttonMobile')}</span>
               </Button>
             </Link>
           </div>
@@ -199,11 +192,10 @@ export default function Home() {
         <div className="container mx-auto text-center">
           <div className="mb-4 flex items-center justify-center gap-2">
             <Calendar className="h-6 w-6" />
-            <span className="text-lg font-semibold">Plotty</span>
+            <span className="text-lg font-semibold">{t('footer.brand')}</span>
           </div>
           <p className="text-sm text-gray-400">
-            Privacy-focused scheduling made simple. Built with ❤️ for better
-            meetings.
+            {t('footer.tagline')}
           </p>
         </div>
       </footer>
