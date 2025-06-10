@@ -1,0 +1,15 @@
+{
+    "form": {
+        "optional": "(Optioneel)",
+        "errors": {
+            "required": "Dit veld is verplicht",
+            "invalid": "Ongeldige waarde",
+            "email": "Voer een geldig e-mailadres in",
+            "minLength": "Minimaal {{min}} tekens vereist",
+            "maxLength": "Maximaal {{max}} tekens toegestaan",
+            "min": "Waarde moet minimaal {{min}} zijn",
+            "max": "Waarde mag maximaal {{max}} zijn",
+            "pattern": "Ongeldig formaat"
+        }
+    }
+}

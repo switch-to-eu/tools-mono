@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
 import {
   Copy,
   Check,
@@ -20,6 +19,8 @@ import type { DecryptedPoll } from "@/lib/interfaces";
 import type { PollFormData } from "@/lib/schemas";
 import { generateAdminUrl } from "@/lib/admin";
 import { SectionCard, SectionHeader, SectionContent } from "@workspace/ui/blocks/section-card";
+import { useRouter } from "@i18n/navigation";
+import { useLocale } from "next-intl";
 
 interface AdminSectionProps {
   poll: DecryptedPoll;
@@ -42,6 +43,7 @@ export function AdminSection({
   isUpdating = false,
   isDeleting = false,
 }: AdminSectionProps) {
+  const locale = useLocale();
   const [isEditing, setIsEditing] = useState(false);
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
@@ -85,8 +87,8 @@ export function AdminSection({
   }, [onDeletePoll]);
 
   const openParticipantView = useCallback(() => {
-    window.open(`/poll/${pollId}#${encryptionKey}`, "_blank");
-  }, [pollId, encryptionKey]);
+    window.open(`/${locale}/poll/${pollId}#${encryptionKey}`, "_blank");
+  }, [pollId, encryptionKey, locale]);
 
   return (
     <>
@@ -105,7 +107,7 @@ export function AdminSection({
               </Label>
               <Button
                 onClick={copyPollLink}
-                variant="success"
+                variant="secondary"
                 className="h-12 w-full justify-start"
               >
                 {copiedUrl === "Poll link" ? (
@@ -147,7 +149,6 @@ export function AdminSection({
           <div className="flex flex-col gap-3 pt-4 sm:flex-row">
             <Button
               onClick={startEditing}
-              variant="secondary"
               className="h-12 flex-1"
               disabled={isEditing || isUpdating}
             >
@@ -166,7 +167,7 @@ export function AdminSection({
 
             <Button
               onClick={handleDelete}
-              variant="destructive"
+              variant="danger"
               className="h-12 w-full sm:flex-1"
               disabled={isDeleting}
             >

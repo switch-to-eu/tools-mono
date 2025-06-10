@@ -24,7 +24,6 @@ interface UseLoadPollReturn {
   missingKey: boolean;
   decryptionError: string | null;
   pollQueryError: boolean;
-  refetchPoll: () => void;
   bestTimes: BestTime[];
   topTime?: BestTime;
 }
@@ -56,8 +55,6 @@ export function useLoadPoll({
       }
     );
 
-  console.log("pollData", pollData);
-
   // Extract encryption key from URL fragment
   useEffect(() => {
     const fragment = window.location.hash.substring(1);
@@ -87,8 +84,8 @@ export function useLoadPoll({
 
         // Add metadata from the subscription response
         decryptedPoll.id = pollData.id;
-        decryptedPoll.createdAt = pollData.createdAt;
-        decryptedPoll.expiresAt = pollData.expiresAt;
+        decryptedPoll.createdAt = pollData.createdAt.toISOString();
+        decryptedPoll.expiresAt = pollData.expiresAt.toISOString();
 
         setPoll(decryptedPoll);
       } catch (error) {
@@ -112,11 +109,6 @@ export function useLoadPoll({
       setIsLoading(false);
     }
   }, [subscriptionError]);
-
-  const refetchPoll = () => {
-    // For subscriptions, we don't need to manually refetch as they auto-update
-    console.log("Subscription will auto-update, no manual refetch needed");
-  };
 
   // Calculate best times from poll data
   const bestTimes = useMemo(() => {
@@ -151,7 +143,6 @@ export function useLoadPoll({
     missingKey,
     decryptionError,
     pollQueryError,
-    refetchPoll,
     bestTimes,
     topTime,
   };

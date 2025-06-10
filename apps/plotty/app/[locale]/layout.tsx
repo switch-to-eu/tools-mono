@@ -8,18 +8,19 @@ import { getTranslations } from "next-intl/server";
 import { TRPCReactProvider } from "@/lib/trpc-client";
 import { Header } from "@workspace/ui/blocks/header";
 import { Button } from "@workspace/ui/components/button";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { hasLocale, Locale, NextIntlClientProvider } from "next-intl";
 import { routing } from "i18n/routing";
 import { notFound } from "next/navigation";
 import { Link } from "@i18n/navigation";
+import { LanguageSelector } from "@components/language-selector";
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Layout.metadata' });
+  const t = await getTranslations({ locale, namespace: 'layout.metadata' });
 
   return {
     title: t('title'),
@@ -47,16 +48,15 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: Locale }>;
 }) {
 
-  // Ensure that the incoming `locale` is valid
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
-  const t = await getTranslations({ locale, namespace: 'Layout.header' });
+  const t = await getTranslations({ locale, namespace: 'layout.header' });
 
   return (
     <html lang={locale} className={`${geist.variable}`}>
@@ -74,16 +74,19 @@ export default async function LocaleLayout({
                   </Link>
                 }
                 navigation={
-                  <Link href="/create">
-                    <Button variant="default" size="sm">
-                      <Plus className="mr-2 h-4 w-4" />
-                      {t('createPoll')}
-                    </Button>
-                  </Link>
+                  <div className="flex items-center gap-2">
+                    <LanguageSelector locale={locale} />
+                    <Link href="/create">
+                      <Button size="sm">
+                        <Plus className="mr-2 h-4 w-4" />
+                        {t('createPoll')}
+                      </Button>
+                    </Link>
+                  </div>
                 }
                 mobileNavigation={
                   <Link href="/create">
-                    <Button size="sm" variant="secondary">
+                    <Button size="sm">
                       <Plus className="h-4 w-4" />
                     </Button>
                   </Link>

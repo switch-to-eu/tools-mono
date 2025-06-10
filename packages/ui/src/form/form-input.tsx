@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 
 import type {
   UseFormRegister,
@@ -37,6 +38,8 @@ export const FormInput = <TFormData extends FieldValues>({
   schema,
   ...props
 }: FormInputProps<TFormData>) => {
+  const t = useTranslations("form");
+
   const inputId = id ?? name ?? label.toLowerCase().replace(/\s+/g, "-");
 
   // Determine if field is required from schema if provided
@@ -51,7 +54,7 @@ export const FormInput = <TFormData extends FieldValues>({
         {label}
         {isRequired && <span className="text-red-500 ml-1">*</span>}
         {!isRequired && (
-          <span className="text-neutral-400 ml-1">(Optional)</span>
+          <span className="text-neutral-400 ml-1">{t('optional')}</span>
         )}
       </Label>
 
@@ -72,7 +75,7 @@ export const FormInput = <TFormData extends FieldValues>({
 
       {error && (
         <p className="text-sm text-red-500">
-          {error.message}
+          {t(`errors.${error.message}`) || t('errors.invalid')}
         </p>
       )}
     </div>

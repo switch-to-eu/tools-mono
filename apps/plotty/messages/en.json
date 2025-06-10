@@ -1,5 +1,5 @@
 {
-    "Layout": {
+    "layout": {
         "metadata": {
             "title": "Plotty",
             "description": "Schedule Meetings without hassle"
@@ -35,7 +35,7 @@
         "dates": "dates",
         "bestTime": {
             "title": "Best Available Time",
-            "description": "{{count}} out of {{total}} people available ({{percentage}}%)"
+            "description": "{count} out of {total} people available ({percentage}%)"
         }
     },
     "AvailabilityGrid": {

@@ -62,12 +62,6 @@ export function BestTimeHighlight({ poll, bestTime }: BestTimeHighlightProps) {
     return null;
   }
 
-  console.log("bestTime", {
-    count: bestTime.count,
-    total: poll.participants.length,
-    percentage: bestTime.percentage
-  });
-
   return (
     <SectionCard>
       <SectionHeader
@@ -85,15 +79,5 @@ export function BestTimeHighlight({ poll, bestTime }: BestTimeHighlightProps) {
         </h3>
       </SectionContent>
     </SectionCard>
-  );
-}
-
-// Keep the original component for backward compatibility
-export function PollHeader({ poll, bestTime }: PollHeaderProps) {
-  return (
-    <>
-      <PollInfo poll={poll} />
-      <BestTimeHighlight poll={poll} bestTime={bestTime} />
-    </>
   );
 }

@@ -1,0 +1,41 @@
+{
+    "layout": {
+        "metadata": {
+            "title": "Voorbeeld App",
+            "description": "Een eenvoudige voorbeeldapplicatie met Next.js, tRPC en Drizzle"
+        },
+        "header": {
+            "createItem": "Item Aanmaken"
+        }
+    },
+    "homepage": {
+        "title": "Welkom bij Voorbeeld App",
+        "subtitle": "Dit is een sjabloonapplicatie met alle essentiële functies",
+        "createButton": "Nieuw Item Aanmaken",
+        "features": {
+            "title": "Functies",
+            "nextjs": "Next.js App Router",
+            "trpc": "tRPC voor type-safe API's",
+            "drizzle": "Drizzle ORM voor database",
+            "i18n": "Meertalige ondersteuning",
+            "ui": "Radix UI componenten"
+        }
+    },
+    "create": {
+        "title": "Nieuw Item Aanmaken",
+        "form": {
+            "name": "Naam",
+            "description": "Beschrijving",
+            "submit": "Item Aanmaken",
+            "cancel": "Annuleren"
+        },
+        "success": "Item succesvol aangemaakt!",
+        "error": "Item aanmaken mislukt"
+    },
+    "items": {
+        "title": "Items",
+        "empty": "Geen items gevonden",
+        "loading": "Items laden...",
+        "error": "Items laden mislukt"
+    }
+}

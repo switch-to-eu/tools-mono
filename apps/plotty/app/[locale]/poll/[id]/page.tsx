@@ -3,11 +3,11 @@
 import { useParams } from "next/navigation";
 
 import { MissingKeyError, PollNotFoundError, DecryptionError } from "@components/error-states";
-import { PollHeader } from "@components/poll-header";
 import { PollLoading } from "@components/poll-loading";
 import { AvailabilityGrid } from "@components/availability-grid";
 import { useLoadPoll } from "@hooks/useLoadPoll";
 import { useVote } from "@hooks/useVote";
+import { BestTimeHighlight, PollInfo } from "@components/poll-header";
 
 export default function PollPage() {
   const params = useParams();
@@ -62,13 +62,10 @@ export default function PollPage() {
   return (
     <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
       <div className="container mx-auto max-w-4xl space-y-8 !px-0 sm:!px-6 lg:!px-8">
-        {/* Poll Header */}
-        <PollHeader
-          poll={poll}
-          bestTime={topTime}
-        />
+        <PollInfo poll={poll} />
 
-        {/* Availability Grid Section */}
+        <BestTimeHighlight poll={poll} bestTime={topTime} />
+
         <AvailabilityGrid
           poll={poll}
           currentParticipantId={currentParticipantId}
