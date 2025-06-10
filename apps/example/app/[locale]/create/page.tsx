@@ -13,9 +13,9 @@ import { Button } from "@workspace/ui/components/button";
 import { Card } from "@workspace/ui/components/card";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
-import { TextArea } from "@workspace/ui/form/form-textarea";
 import { api } from "@/lib/trpc-client";
 import { Link } from "../../../i18n/navigation";
+import { FormTextArea } from "@workspace/ui/form/form-textarea";
 
 const createItemSchema = z.object({
     name: z.string().min(1, "Name is required").max(256, "Name is too long"),
@@ -85,9 +85,10 @@ export default function CreatePage() {
 
                     <div>
                         <Label htmlFor="description">{t("form.description")}</Label>
-                        <Textarea
-                            id="description"
-                            {...register("description")}
+                        <FormTextArea
+                            label={t("form.description")}
+                            name="description"
+                            register={register}
                             placeholder="Enter item description (optional)"
                             className="mt-1"
                             rows={4}

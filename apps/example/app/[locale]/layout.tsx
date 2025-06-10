@@ -12,6 +12,7 @@ import { Header } from "@workspace/ui/blocks/header";
 import { Button } from "@workspace/ui/components/button";
 import { routing } from "../../i18n/routing";
 import { Link } from "../../i18n/navigation";
+import { LanguageSelector } from "@components/language-selector";
 
 export async function generateMetadata({
     params,
@@ -72,12 +73,15 @@ export default async function LocaleLayout({
                                     </Link>
                                 }
                                 navigation={
-                                    <Link href="/create">
-                                        <Button size="sm">
-                                            <Plus className="mr-2 h-4 w-4" />
-                                            {t('createItem')}
-                                        </Button>
-                                    </Link>
+                                    <div className="flex items-center gap-2">
+                                        <LanguageSelector locale={locale} />
+                                        <Link href="/create">
+                                            <Button size="sm">
+                                                <Plus className="mr-2 h-4 w-4" />
+                                                {t('createItem')}
+                                            </Button>
+                                        </Link>
+                                    </div>
                                 }
                                 mobileNavigation={
                                     <Link href="/create">
