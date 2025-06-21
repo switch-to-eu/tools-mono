@@ -1,0 +1,135 @@
+{
+  "layout": {
+    "metadata": {
+      "title": "KeepFocus - Pomodoro Timer & Taakbeheer",
+      "description": "Focus met de Pomodoro Techniek. 25-minuten werksessies, 5-minuten pauzes, en taakbeheer om productiviteit te verhogen."
+    },
+    "header": {
+      "createItem": "Item Aanmaken"
+    }
+  },
+  "homepage": {
+    "title": "KeepFocus",
+    "subtitle": "Pomodoro Timer & Taakbeheer",
+    "createButton": "Nieuw Item Aanmaken",
+    "features": {
+      "title": "Functies",
+      "nextjs": "Next.js App Router",
+      "trpc": "tRPC voor type-safe API's",
+      "drizzle": "Drizzle ORM voor database",
+      "i18n": "Meertalige ondersteuning",
+      "ui": "Radix UI componenten"
+    },
+    "instructions": {
+      "title": "Hoe KeepFocus te gebruiken:",
+      "timer": {
+        "title": "Timer:",
+        "focusSessions": "25-minuten focussessies",
+        "shortBreaks": "5-minuten korte pauzes",
+        "longBreaks": "15-minuten lange pauzes",
+        "customizeSettings": "Klik op Instellingen om timer voorkeuren aan te passen"
+      },
+      "tasks": {
+        "title": "Taken:",
+        "addTasks": "Voeg taken toe om je werk bij te houden",
+        "setActive": "Klik op een taak om deze als actief in te stellen",
+        "autoCount": "Pomodoro's worden automatisch geteld",
+        "localData": "Gegevens worden lokaal in je browser opgeslagen"
+      }
+    },
+    "footer": "Focus met de Pomodoro Techniek",
+    "subtitle2": "25-minuten werksessies • 5-minuten pauzes • Blijf productief"
+  },
+  "create": {
+    "title": "Nieuw Item Aanmaken",
+    "form": {
+      "name": "Naam",
+      "description": "Beschrijving",
+      "submit": "Item Aanmaken",
+      "cancel": "Annuleren"
+    },
+    "success": "Item succesvol aangemaakt!",
+    "error": "Item aanmaken mislukt"
+  },
+  "items": {
+    "title": "Items",
+    "empty": "Geen items gevonden",
+    "loading": "Items laden...",
+    "error": "Items laden mislukt"
+  },
+  "pomodoro": {
+    "timer": {
+      "title": "Pomodoro Timer",
+      "start": "Start",
+      "pause": "Pauzeer",
+      "reset": "Reset",
+      "skip": "Overslaan",
+      "complete": "voltooid",
+      "pomodorosToday": "pomodoro's vandaag",
+      "currentPhase": "huidige fase",
+      "phases": {
+        "work": "Focustijd",
+        "shortBreak": "Korte Pauze",
+        "longBreak": "Lange Pauze"
+      },
+      "phaseLabels": {
+        "work": "werk",
+        "shortBreak": "korte pauze",
+        "longBreak": "lange pauze"
+      }
+    },
+    "tasks": {
+      "title": "Taken",
+      "placeholder": "Voeg een nieuwe taak toe...",
+      "empty": "Nog geen taken. Voeg er een toe om te beginnen!",
+      "loading": "Taken laden...",
+      "completed": "Voltooid",
+      "clearCompleted": "Alle Voltooide Wissen",
+      "charactersRemaining": "karakters resterend",
+      "pomodorosCompleted": "pomodoro's voltooid",
+      "activeTask": "Actieve Taak",
+      "setActive": "Instellen als actieve taak",
+      "deactivate": "Taak deactiveren",
+      "noActiveTask": "Geen actieve taak - algemene focussessie",
+      "dragToReorder": "Sleep om taken te herordenen"
+    },
+    "settings": {
+      "title": "Pomodoro Instellingen",
+      "openSettings": "Instellingen Openen",
+      "timerDurations": "Timer Duur",
+      "workSession": "Werksessie",
+      "workSessionHint": "Duur van focussessies (1-60 minuten)",
+      "shortBreak": "Korte Pauze",
+      "shortBreakHint": "Duur van korte pauzes (1-30 minuten)",
+      "longBreak": "Lange Pauze",
+      "longBreakHint": "Duur van lange pauzes (1-60 minuten)",
+      "longBreakInterval": "Lange Pauze Interval",
+      "longBreakIntervalHint": "Na hoeveel werksessies (2-10 sessies)",
+      "autoStart": "Auto-start Opties",
+      "autoStartBreaks": "Auto-start pauzes",
+      "autoStartBreaksHint": "Start automatisch pauzetimers na werksessies",
+      "autoStartWork": "Auto-start werksessies",
+      "autoStartWorkHint": "Start automatisch werksessies na pauzes",
+      "notifications": "Meldingsinstellingen",
+      "soundNotifications": "Geluidsmeldingen",
+      "soundNotificationsHint": "Speel geluid af wanneer timerfases voltooien",
+      "desktopNotifications": "Bureaubladmeldingen",
+      "desktopNotificationsHint": "Toon browsermeldingen voor timer gebeurtenissen",
+      "actions": {
+        "save": "Wijzigingen Opslaan",
+        "cancel": "Annuleren",
+        "reset": "Reset naar Standaard"
+      },
+      "units": {
+        "minutes": "minuten",
+        "sessions": "sessies"
+      }
+    },
+    "notifications": {
+      "workComplete": "Werksessie voltooid! Tijd voor een pauze.",
+      "breakComplete": "Pauzetijd is voorbij! Klaar om te focussen?",
+      "longBreakComplete": "Lange pauze voltooid! Tijd om weer aan het werk te gaan.",
+      "permissionDenied": "Bureaubladmeldingen zijn uitgeschakeld. Schakel ze in via je browserinstellingen voor betere productiviteitstracking."
+    }
+  }
+}

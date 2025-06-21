@@ -1,0 +1,150 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Monorepo Separation of Concerns - Architectural Rules
+
+**Last Updated**: 2025-01-21
+**Context**: Learned during KeepFocus Pomodoro Integration implementation
+**Mistake Made**: Initially placed app-specific components in shared packages/ui/blocks/ - WRONG!
+a
+## 🏗️ **Core Principle**
+
+**Shared packages contain GENERIC, reusable code. App-specific packages contain BUSINESS DOMAIN logic.**
+
+## 📂 **What Goes Where - Detailed Breakdown**
+
+### **`packages/ui/` - Generic UI Components Only**
+
+#### ✅ **Should Contain:**
+- **Generic UI primitives**: `Button`, `Input`, `Card`, `Progress`, `Switch`
+- **Generic layout blocks**: `SectionCard`, `Header`, `Calendar` (reusable across apps)
+- **Generic form components**: `FormInput`, `FormTextArea` (with i18n support)
+- **Generic hooks**: UI-related hooks that work across domains
+- **Generic utilities**: `cn()`, color helpers, generic formatters
+- **Generic types**: Component prop interfaces, UI state types
+
+#### ❌ **Should NOT Contain:**
+- **Business domain types**: `Task`, `Poll`, `User`, `PomodoroSettings`
+- **Domain-specific hooks**: `useSettings`, `useTasks`, `usePolls`
+- **Business logic**: Validation rules, calculation logic
+- **App-specific components**: Components tied to specific business domains
+- **🚨 CRITICAL**: If a component has props like `pomodoros`, `activeTask`, `settings` → **IT'S APP-SPECIFIC!**
+
+### **`apps/{app}/lib/` - Business Domain Logic**
+
+#### ✅ **Should Contain:**
+- **Domain types & interfaces**: `Task`, `PomodoroSettings`, `Poll`, `Participant`
+- **Business schemas**: Zod schemas for domain validation
+- **Domain utilities**: Business-specific calculations, formatters
+- **Domain constants**: App-specific constants, enums, defaults
+- **Business logic**: Core business rules and operations
+
+**Examples from existing apps:**
+- `apps/plotty/lib/interfaces.ts` - Poll domain types
+- `apps/plotty/lib/schemas.ts` - Poll validation schemas
+- `apps/plotty/lib/crypto.ts` - Poll-specific encryption logic
+
+### **`apps/{app}/hooks/` - App-Specific Hooks**
+
+#### ✅ **Should Contain:**
+- **Domain hooks**: `useSettings`, `useTasks`, `usePolls`
+- **Business logic hooks**: `useDeletePoll`, `useLoadPoll`, `useVote`
+- **State management**: App-specific state management hooks
+- **Side effects**: App-specific side effects (localStorage, notifications)
+
+### **`apps/{app}/components/` - App-Specific Components**
+
+#### ✅ **Should Contain:**
+- **Domain components**: Components that understand business concepts
+- **Page components**: Components specific to app pages/routes
+- **Feature components**: Components tied to specific app features
+
+## 🔄 **Component Import Patterns**
+
+### **Direct File Imports (Current Pattern)**
+```tsx
+// ✅ Correct - Direct imports from individual files
+import { Button } from "@workspace/ui/components/button";
+import { SectionCard } from "@workspace/ui/blocks/section-card";
+import { FormInput } from "@workspace/ui/form/form-input";
+
+// ❌ Wrong - No index.ts files used
+import { Button } from "@workspace/ui/components";
+```
+
+### **Package.json Exports Handle Path Mapping**
+```json
+{
+  "exports": {
+    "./components/*": "./src/components/*.tsx",
+    "./blocks/*": "./src/blocks/*.tsx",
+    "./form/*": "./src/form/*.tsx"
+  }
+}
+```
+
+
+## 🚨 **Common Mistakes to Avoid**
+
+### **❌ Mistake: "This component looks reusable, so it goes in shared packages"**
+
+**Example mistake we made:**
+- Created `task-item.tsx` with props: `pomodoros`, `isActive`, `onSetActive`
+- **WRONG THINKING**: "It's just displaying a task, seems generic"
+- **REALITY**: It has pomodoro-specific props and behavior → **APP-SPECIFIC**
+
+### **✅ Correct Decision Process:**
+
+1. **Does it have domain-specific props?** (`task`, `poll`, `pomodoros`, `settings`) → **APP-SPECIFIC**
+2. **Does it know business concepts?** (what a "pomodoro" is, timer phases, etc.) → **APP-SPECIFIC**
+3. **Would other apps use it as-is?** (without changing props/logic) → If NO: **APP-SPECIFIC**
+
+## 📋 **Decision Matrix**
+
+When deciding where to put code, ask:
+
+| **Question** | **If YES → `packages/ui/`** | **If NO → `apps/{app}/`** |
+|--------------|----------------------------|---------------------------|
+| Can this be used by other apps **AS-IS**? | Generic UI component | App-specific component |
+| Is this pure UI presentation **without domain knowledge**? | Button, Input, Card | PollForm, TaskItem |
+| Does it contain business logic? | No business logic | Business domain logic |
+| Does it know about domain concepts? | No domain knowledge | Knows Tasks, Polls, etc. |
+| **🚨 Does it have domain-specific props?** | **Generic props only** | **Domain props = APP-SPECIFIC** |
+
+## 📚 **Examples from Existing Apps**
+
+### **Plotty App Structure (Good Example)**
+```
+apps/plotty/
+├── lib/
+│   ├── interfaces.ts      # Poll domain types
+│   ├── schemas.ts         # Poll validation schemas
+│   └── crypto.ts          # Poll-specific logic
+├── hooks/
+│   ├── useDeletePoll.ts   # Poll-specific hooks
+│   └── useLoadPoll.ts
+└── components/
+    ├── poll-form.tsx      # Poll-specific component
+    └── admin-section.tsx  # Uses shared UI + poll logic
+```
+
+### **Shared UI Structure (Good Example)**
+```
+packages/ui/src/
+├── components/
+│   ├── button.tsx         # Generic button
+│   └── progress.tsx       # Generic progress bar
+├── blocks/
+│   └── section-card.tsx   # Generic layout block
+└── form/
+    └── form-input.tsx     # Generic form input
+```
+
+## 🎯 **Key Takeaway**
+
+**Shared packages are for INFRASTRUCTURE. App packages are for BUSINESS LOGIC.**
+
+The moment you introduce business domain concepts (Tasks, Polls, Users, Settings), it belongs in the app, not the shared package.
+
