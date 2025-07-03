@@ -31,6 +31,9 @@ pnpm install
 # Start all apps in development mode
 pnpm dev
 
+# run a single app in development mode
+pnpm dev --filter @workspace/app-name
+
 # Build all apps and packages
 pnpm build
 

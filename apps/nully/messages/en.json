@@ -1,0 +1,27 @@
+{
+  "homepage": {
+    "title": "Nully File Transfer",
+    "subtitle": "Share files directly between devices without any servers. Fast, secure, and completely decentralized.",
+    "transferButton": "Start Transfer",
+    "features": {
+      "title": "Why Choose P2P Transfer?",
+      "p2p": "Peer-to-Peer",
+      "p2pDesc": "Direct file transfer between you and your receiver, no middleman",
+      "noCloud": "No Cloud Storage",
+      "noCloudDesc": "Your files aren't saved in the cloud, you stay in control of your files",
+      "secure": "Secure & Private",
+      "secureDesc": "End-to-end encrypted transfers",
+      "unlimited": "Unlimited File Size",
+      "unlimitedDesc": "No restriction on file extension or size"
+    }
+  },
+  "layout": {
+    "metadata": {
+      "title": "Nully File Transfer",
+      "description": "Peer-to-peer file transfer application - share files directly between devices"
+    },
+    "header": {
+      "createItem": "Create"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "homepage": {
+    "title": "P2P Bestandsoverdracht",
+    "subtitle": "Deel bestanden direct tussen apparaten zonder servers. Snel, veilig en volledig gedecentraliseerd.",
+    "transferButton": "Start Overdracht",
+    "features": {
+      "title": "Waarom P2P Transfer Kiezen?",
+      "p2p": "Peer-to-Peer",
+      "p2pDesc": "Directe bestandsoverdracht tussen jou en je ontvanger, geen tussenpersoon",
+      "noCloud": "Geen Cloud Opslag",
+      "noCloudDesc": "Je bestanden worden niet opgeslagen in de cloud, jij behoudt de controle",
+      "secure": "Veilig & Privé",
+      "secureDesc": "End-to-end versleutelde overdrachten",
+      "unlimited": "Onbeperkte Bestandsgrootte",
+      "unlimitedDesc": "Geen beperking op bestandsextensie of grootte"
+    }
+  },
+  "layout": {
+    "metadata": {
+      "title": "P2P Bestandsoverdracht",
+      "description": "Peer-to-peer bestandsoverdrachtapplicatie - deel bestanden direct tussen apparaten"
+    },
+    "header": {
+      "createItem": "Aanmaken"
+    }
+  }
+}
