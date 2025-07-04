@@ -42,6 +42,7 @@
     "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
+    "./translations": "./src/translations",
     "./translations/*": "./src/translations/*",
     "./translations/nl.json": "./src/translations/nl.json",
     "./translations/en.json": "./src/translations/en.json"

@@ -14,6 +14,10 @@ import { Label } from "@workspace/ui/components/label";
 import { cn } from "@workspace/ui/lib/utils";
 import { isFieldRequired } from "./form-utils";
 
+import en from '@workspace/ui/translations/en.json';
+
+type ErrorKey = keyof (typeof en)["form"]["errors"];
+
 interface FormInputProps<TFormData extends FieldValues>
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name'> {
   label: string;
@@ -73,9 +77,9 @@ export const FormInput = <TFormData extends FieldValues>({
         {...props}
       />
 
-      {error && (
+      {(error && error.message) && (
         <p className="text-sm text-red-500">
-          {t(`errors.${error.message}`) || t('errors.invalid')}
+          {t(`errors.${error.message as ErrorKey}`) || t('errors.invalid')}
         </p>
       )}
     </div>
