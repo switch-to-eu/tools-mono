@@ -1,0 +1,24 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+.pnpm-store
+
+# next.js
+.next
+out
+
+# turbo
+.turbo
+
+# misc
+.DS_Store
+*.pem
+*.log
+.env
+.env*.local
+.vscode
+README.md
+
+# testing
+coverage

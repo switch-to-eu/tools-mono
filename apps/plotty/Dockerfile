@@ -3,26 +3,34 @@
 # ---- Base ----
 FROM node:20-alpine AS base
 WORKDIR /app
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat openssl
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # ---- Dependencies ----
+# First, install all dependencies in the monorepo
 FROM base AS deps
-COPY package.json ./
-COPY pnpm-lock.yaml .npmrc* pnpm-workspace.yaml ./
-COPY tsconfig.json turbo.json ./
-COPY packages/ packages/
-COPY apps/ apps/
+WORKDIR /app
+COPY package.json pnpm-lock.yaml .npmrc* pnpm-workspace.yaml ./
+COPY packages/**/package.json ./packages/
+COPY apps/**/package.json ./apps/
 RUN pnpm install --frozen-lockfile --prod=false
 
-# ---- Build ----
+# ---- Builder ----
+# This stage builds the target app using the pnpm deploy method
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app /app
-# Create drizzle directory if it doesn't exist to prevent COPY from failing later
-RUN mkdir -p /app/apps/plotty/drizzle
-RUN pnpm turbo build --filter=@workspace/plotty
+
+# First, copy the full source code
+COPY . .
+# Then, copy the installed node_modules from the deps stage
+COPY --from=deps /app/node_modules ./node_modules
+
+# Use pnpm deploy to create a self-contained folder with the app and its dependencies
+RUN pnpm deploy --legacy --filter=@workspace/plotty ./deploy
+
+# Run the build inside the deployed folder
+WORKDIR /app/deploy
+RUN pnpm next build
 
 # ---- Runner ----
 FROM base AS runner
@@ -35,23 +43,12 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Install drizzle-kit to run migrations.
-# It's installed globally here to avoid adding it to production dependencies.
-RUN npm install -g drizzle-kit
+# Copy the deployed and built app from the builder stage
+COPY --from=builder --chown=nextjs:nodejs /app/deploy .
 
-# Copy required files from the builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/standalone/ ./
-COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/package.json ./package.json
-
-# Copy Drizzle config and the migrations folder.
-# The `drizzle` folder might not exist yet if you haven't created migrations.
-# The COPY command will not fail if it's missing.
-COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle.config.ts ./drizzle.config.ts
-COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle ./drizzle
-COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/server/db/schema.ts ./server/db/schema.ts
-
+# Also copy the startup script from its original location
+COPY --chown=nextjs:nodejs /app/apps/plotty/start-server.sh .
+RUN chmod +x ./start-server.sh
 
 USER nextjs
 
@@ -59,16 +56,4 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME="0.0.0.0"
 
-# Create a startup script that runs migrations before starting the server
-COPY --chown=nextjs:nodejs <<EOF /app/start.sh
-#!/bin/sh
-set -e
-echo "Running database migrations..."
-drizzle-kit migrate
-echo "Starting server..."
-exec node server.js
-EOF
-
-RUN chmod +x /app/start.sh
-
-CMD ["/app/start.sh"]
+CMD ["./start-server.sh"]

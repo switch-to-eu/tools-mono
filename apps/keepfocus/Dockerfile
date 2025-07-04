@@ -8,21 +8,31 @@ RUN apk add --no-cache libc6-compat
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # ---- Dependencies ----
+# First, install all dependencies in the monorepo
 FROM base AS deps
-COPY package.json ./
-COPY pnpm-lock.yaml .npmrc* pnpm-workspace.yaml ./
-COPY tsconfig.json turbo.json ./
-COPY packages/ packages/
-COPY apps/ apps/
+WORKDIR /app
+COPY package.json pnpm-lock.yaml .npmrc* pnpm-workspace.yaml ./
+# Copy all package.json files from the workspace
+COPY packages/**/package.json ./packages/
+COPY apps/**/package.json ./apps/
 RUN pnpm install --frozen-lockfile --prod=false
 
-# ---- Build ----
+# ---- Builder ----
+# This stage builds the target app using the pnpm deploy method
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app /app
-# Create public directory if it doesn't exist to prevent COPY from failing later
-RUN mkdir -p /app/apps/keepfocus/public
-RUN pnpm turbo build --filter=@workspace/keepfocus
+
+# First, copy the full source code
+COPY . .
+# Then, copy the installed node_modules from the deps stage
+COPY --from=deps /app/node_modules ./node_modules
+
+# Use pnpm deploy to create a self-contained folder with the app and its dependencies
+RUN pnpm deploy --legacy --filter=@workspace/keepfocus ./deploy
+
+# Run the build inside the deployed folder
+WORKDIR /app/deploy
+RUN pnpm next build
 
 # ---- Runner ----
 FROM base AS runner
@@ -35,10 +45,8 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy required files from the builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/standalone/ ./
-COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/public ./public
+# Copy the deployed and built app from the builder stage
+COPY --from=builder --chown=nextjs:nodejs /app/deploy .
 
 USER nextjs
 
@@ -46,4 +54,4 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", "server.js"]
+CMD ["node", ".next/standalone/server.js"]
