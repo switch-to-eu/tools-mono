@@ -10,12 +10,15 @@ import type {
 } from "@/lib/interfaces";
 import { v4 as uuidv4 } from 'uuid';
 
+export type { FileMetadata };
+
 interface UseFileTransferProps {
     send: (message: PeerMessage) => void;
     onData: (callback: (data: PeerMessage) => void) => void;
+    onConnect: (callback: () => void) => void;
 }
 
-export function useFileTransfer({ send, onData }: UseFileTransferProps) {
+export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProps) {
     const [stagedFiles, setStagedFiles] = useState<Map<string, File>>(new Map());
     const [availableFiles, setAvailableFiles] = useState<FileMetadata[]>([]);
     const [receivedChunks, setReceivedChunks] = useState<Map<string, ArrayBuffer[]>>(new Map());
@@ -28,6 +31,31 @@ export function useFileTransfer({ send, onData }: UseFileTransferProps) {
 
     const receivedChunksRef = useRef(receivedChunks);
     receivedChunksRef.current = receivedChunks;
+
+    const sendMetadata = useCallback(() => {
+        const metadata: FileMetadata[] = Array.from(stagedFilesRef.current.entries()).map(([id, f]) => ({
+            id,
+            name: f.name,
+            size: f.size,
+            type: f.type,
+        }));
+
+        if (metadata.length > 0) {
+            const message: FileMetadataMessage = {
+                type: "FILE_METADATA",
+                payload: metadata,
+            };
+            send(message);
+            console.log("[useFileTransfer] Sent initial file metadata to new peer.");
+        }
+    }, [send]);
+
+    useEffect(() => {
+        onConnect(() => {
+            console.log("[useFileTransfer] Peer connected, sending file metadata if available.");
+            sendMetadata();
+        });
+    }, [onConnect, sendMetadata]);
 
     const handleFileRequest = useCallback((fileId: string) => {
         const file = stagedFilesRef.current.get(fileId);

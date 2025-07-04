@@ -16,6 +16,7 @@ export function usePeerConnection() {
     const [error, setError] = useState<string | null>(null);
     const [connection, setConnection] = useState<DataConnection | null>(null);
     const onDataCallbackRef = useRef<(data: PeerMessage) => void>(() => { });
+    const onConnectCallbackRef = useRef<() => void>(() => { });
 
     useEffect(() => {
         console.log("[usePeerConnection] Initializing new peer");
@@ -36,6 +37,7 @@ export function usePeerConnection() {
 
             conn.on("open", () => {
                 console.log("[usePeerConnection] Incoming connection opened");
+                onConnectCallbackRef.current(); // Notify that a connection is established
             });
 
             conn.on("data", (data) => {
@@ -45,7 +47,10 @@ export function usePeerConnection() {
                     const message = JSON.parse(data as string) as PeerMessage;
                     onDataCallbackRef.current(message);
                 } catch (e) {
-                    console.error("[usePeerConnection] Failed to parse incoming message:", e);
+                    console.error(
+                        "[usePeerConnection] Failed to parse incoming message:",
+                        e,
+                    );
                 }
             });
 
@@ -77,65 +82,111 @@ export function usePeerConnection() {
         };
     }, []);
 
-    const connect = useCallback((remotePeerId: string) => {
-        if (!peer) {
-            console.log("[usePeerConnection] Cannot connect: peer not initialized");
-            return;
-        }
-
-        console.log("[usePeerConnection] Attempting to connect to:", remotePeerId);
-        const conn = peer.connect(remotePeerId);
-
-        if (!conn) {
-            console.error("[usePeerConnection] Connection failed to initialize.");
-            setError("Connection failed. The remote peer might be unavailable.");
-            setStatus("error");
-            return;
-        }
-
-        setConnection(conn);
-        setStatus("connecting");
-
-        conn.on("open", () => {
-            console.log("[usePeerConnection] Outgoing connection opened to:", remotePeerId);
-            setStatus("connected");
-        });
-
-        conn.on("data", (data) => {
-            console.log("[usePeerConnection] Data received on outgoing connection:", data);
-            // Attempt to parse the incoming data as a PeerMessage
-            try {
-                const message = JSON.parse(data as string) as PeerMessage;
-                onDataCallbackRef.current(message);
-            } catch (e) {
-                console.error("[usePeerConnection] Failed to parse incoming message:", e);
+    const connect = useCallback(
+        (remotePeerId: string) => {
+            if (!peer) {
+                console.log(
+                    "[usePeerConnection] Cannot connect: peer not initialized",
+                );
+                return;
             }
-        });
 
-        conn.on("close", () => {
-            console.log("[usePeerConnection] Outgoing connection closed");
-            setStatus("disconnected");
-        });
+            console.log(
+                "[usePeerConnection] Attempting to connect to:",
+                remotePeerId,
+            );
+            const conn = peer.connect(remotePeerId);
 
-        conn.on("error", (err) => {
-            console.error("[usePeerConnection] Outgoing connection error:", err);
-            setError(err.message);
-            setStatus("error");
-        });
-    }, [peer]);
+            if (!conn) {
+                console.error(
+                    "[usePeerConnection] Connection failed to initialize.",
+                );
+                setError(
+                    "Connection failed. The remote peer might be unavailable.",
+                );
+                setStatus("error");
+                return;
+            }
 
-    const send = useCallback((message: PeerMessage) => {
-        if (connection && connection.open) {
-            const serializedMessage = JSON.stringify(message);
-            connection.send(serializedMessage);
-        } else {
-            console.error("[usePeerConnection] Cannot send message: no open connection.");
-        }
-    }, [connection]);
+            setConnection(conn);
+            setStatus("connecting");
+
+            conn.on("open", () => {
+                console.log(
+                    "[usePeerConnection] Outgoing connection opened to:",
+                    remotePeerId,
+                );
+                setStatus("connected");
+                onConnectCallbackRef.current(); // Notify that a connection is established
+            });
+
+            conn.on("data", (data) => {
+                console.log(
+                    "[usePeerConnection] Data received on outgoing connection:",
+                    data,
+                );
+                // Attempt to parse the incoming data as a PeerMessage
+                try {
+                    const message = JSON.parse(
+                        data as string,
+                    ) as PeerMessage;
+                    onDataCallbackRef.current(message);
+                } catch (e) {
+                    console.error(
+                        "[usePeerConnection] Failed to parse incoming message:",
+                        e,
+                    );
+                }
+            });
+
+            conn.on("close", () => {
+                console.log("[usePeerConnection] Outgoing connection closed");
+                setStatus("disconnected");
+            });
+
+            conn.on("error", (err) => {
+                console.error(
+                    "[usePeerConnection] Outgoing connection error:",
+                    err,
+                );
+                setError(err.message);
+                setStatus("error");
+            });
+        },
+        [peer],
+    );
+
+    const send = useCallback(
+        (message: PeerMessage) => {
+            if (connection && connection.open) {
+                const serializedMessage = JSON.stringify(message);
+                connection.send(serializedMessage);
+            } else {
+                console.error(
+                    "[usePeerConnection] Cannot send message: no open connection.",
+                );
+            }
+        },
+        [connection],
+    );
 
     const onData = useCallback((callback: (data: PeerMessage) => void) => {
         onDataCallbackRef.current = callback;
     }, []);
 
-    return { peer, peerId, status, error, connection, connect, send, onData };
+    const onConnect = useCallback((callback: () => void) => {
+        onConnectCallbackRef.current = callback;
+    }, []);
+
+    return {
+        peer,
+        peerId,
+        status,
+        error,
+        connection,
+        connect,
+        send,
+        onData,
+        onConnect,
+    };
 }

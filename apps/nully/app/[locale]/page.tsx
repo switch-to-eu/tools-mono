@@ -55,7 +55,7 @@ export default async function HomePage({
           </Link>
           <Button size="lg" variant="outline" className="gap-2">
             <Check className="h-5 w-5" />
-            Learn More
+            {t('learnMoreButton')}
           </Button>
         </div>
       </div>

@@ -3,15 +3,14 @@
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { usePeerConnection } from "../../../../hooks/use-peer-connection";
-import { ConnectionStatusIndicator } from "../../../../components/connection-status-indicator";
-import { FileReceiver } from "../../../../components/file-receiver";
 import { useFileTransfer } from "../../../../hooks/use-file-transfer";
+import { ReceivePage } from "../../../../components/receive-page";
 
 export default function JoinPage() {
   const params = useParams();
   const senderPeerId = params.peerId as string;
-  const { peerId, status, error, connect, send, onData } = usePeerConnection();
-  const { availableFiles, requestFile } = useFileTransfer({ send, onData });
+  const { peerId, status, error, connect, send, onData, onConnect } = usePeerConnection();
+  const { availableFiles, requestFile } = useFileTransfer({ send, onData, onConnect });
 
   console.log("[JoinPage] Status:", status, "My PeerID:", peerId, "Sender PeerID:", senderPeerId);
 
@@ -27,7 +26,7 @@ export default function JoinPage() {
     return (
       <main className="container mx-auto p-4">
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
-          <ConnectionStatusIndicator status={status} error={error} role="receiver" />
+          <p>Connecting...</p>
           {senderPeerId && (
             <p className="text-sm text-gray-500">
               Sender ID: <code className="bg-gray-100 px-1 rounded">{senderPeerId}</code>
@@ -40,41 +39,12 @@ export default function JoinPage() {
 
   if (status === "connected") {
     return (
-      <main className="container mx-auto p-4 space-y-6">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-2">Receive Files</h1>
-          <p className="text-gray-600">Connected and ready to receive files</p>
-        </div>
-
-        <div className="max-w-md mx-auto space-y-4">
-          <ConnectionStatusIndicator status={status} error={error} role="receiver" />
-
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Your Peer ID
-            </label>
-            <code className="block p-2 bg-white border rounded text-sm font-mono">
-              {peerId}
-            </code>
-          </div>
-
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Sender's Peer ID
-            </label>
-            <code className="block p-2 bg-white border rounded text-sm font-mono">
-              {senderPeerId}
-            </code>
-          </div>
-
-          <div className="text-center text-sm text-gray-600">
-            Waiting for files from sender...
-          </div>
-
-          {status === 'connected' && (
-            <FileReceiver availableFiles={availableFiles} requestFile={requestFile} />
-          )}
-        </div>
+      <main className="container mx-auto max-w-2xl p-4">
+        <ReceivePage
+          status={status}
+          availableFiles={availableFiles}
+          onDownload={requestFile}
+        />
       </main>
     );
   }

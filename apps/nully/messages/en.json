@@ -1,18 +1,54 @@
 {
   "homepage": {
-    "title": "Nully File Transfer",
-    "subtitle": "Share files directly between devices without any servers. Fast, secure, and completely decentralized.",
+    "title": "Send files directly, without the cloud",
+    "subtitle": "A free, secure, and private way to share files with anyone, on any device.",
     "transferButton": "Start Transfer",
+    "learnMoreButton": "Learn More",
     "features": {
-      "title": "Why Choose P2P Transfer?",
+      "title": "Why use this tool?",
       "p2p": "Peer-to-Peer",
-      "p2pDesc": "Direct file transfer between you and your receiver, no middleman",
+      "p2pDesc": "Files are sent directly between your devices without passing through a central server.",
       "noCloud": "No Cloud Storage",
-      "noCloudDesc": "Your files aren't saved in the cloud, you stay in control of your files",
-      "secure": "Secure & Private",
-      "secureDesc": "End-to-end encrypted transfers",
-      "unlimited": "Unlimited File Size",
-      "unlimitedDesc": "No restriction on file extension or size"
+      "noCloudDesc": "Your files are never stored on a server, ensuring your privacy and security.",
+      "secure": "Secure & Encrypted",
+      "secureDesc": "End-to-end encryption means your files are for your eyes only.",
+      "unlimited": "Unlimited Transfers",
+      "unlimitedDesc": "Send files of any size, as many times as you want. No limits."
+    }
+  },
+  "Nully": {
+    "Send": {
+      "title": "Send Files",
+      "description": "Share a link to start a secure, real-time file transfer.",
+      "copyButton": "Copy",
+      "stagedFilesTitle": "Files to Send",
+      "noFilesStaged": "Select files you want to share",
+      "selectFilesButton": "Select Files"
+    },
+    "HowTo": {
+      "step1": {
+        "title": "2. Select Your Files",
+        "description": "Choose the files you want to send. There's no limit on size or number."
+      },
+      "step2": {
+        "title": "1. Share the Link",
+        "description": "Copy the unique link and send it to your recipient."
+      },
+      "step3": {
+        "title": "3. Stay Connected",
+        "description": "Keep this page open while the transfer is in progress."
+      }
+    },
+    "Connection": {
+      "waiting": "Waiting for recipient to connect...",
+      "connected": "Connected and ready to transfer"
+    },
+    "Receive": {
+      "title": "Receive Files",
+      "description": "Connected and ready to receive files.",
+      "availableFilesTitle": "Available Files",
+      "noFilesAvailable": "Waiting for sender to provide files...",
+      "downloadButton": "Download"
     }
   },
   "layout": {
@@ -22,6 +58,11 @@
     },
     "header": {
       "createItem": "Create"
+    },
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "contact": "Contact"
     }
   }
 }
