@@ -1,0 +1,135 @@
+{
+  "layout": {
+    "metadata": {
+      "title": "KeepFocus - Pomodoro Timer & Task Manager",
+      "description": "Focus with the Pomodoro Technique. 25-minute work sessions, 5-minute breaks, and task management to boost productivity."
+    },
+    "header": {
+      "createItem": "Create Item"
+    }
+  },
+  "homepage": {
+    "title": "KeepFocus",
+    "subtitle": "Pomodoro Timer & Task Manager",
+    "createButton": "Create New Item",
+    "features": {
+      "title": "Features",
+      "nextjs": "Next.js App Router",
+      "trpc": "tRPC for type-safe APIs",
+      "drizzle": "Drizzle ORM for database",
+      "i18n": "Multi-language support",
+      "ui": "Radix UI components"
+    },
+    "instructions": {
+      "title": "How to use KeepFocus:",
+      "timer": {
+        "title": "Timer:",
+        "focusSessions": "25-minute focus sessions",
+        "shortBreaks": "5-minute short breaks",
+        "longBreaks": "15-minute long breaks",
+        "customizeSettings": "Click Settings to customize timer preferences"
+      },
+      "tasks": {
+        "title": "Tasks:",
+        "addTasks": "Add tasks to track your work",
+        "setActive": "Click a task to set it as active",
+        "autoCount": "Pomodoros count automatically",
+        "localData": "Data saved locally in your browser"
+      }
+    },
+    "footer": "Focus with the Pomodoro Technique",
+    "subtitle2": "25-minute work sessions • 5-minute breaks • Stay productive"
+  },
+  "create": {
+    "title": "Create New Item",
+    "form": {
+      "name": "Name",
+      "description": "Description",
+      "submit": "Create Item",
+      "cancel": "Cancel"
+    },
+    "success": "Item created successfully!",
+    "error": "Failed to create item"
+  },
+  "items": {
+    "title": "Items",
+    "empty": "No items found",
+    "loading": "Loading items...",
+    "error": "Failed to load items"
+  },
+  "pomodoro": {
+    "timer": {
+      "title": "Pomodoro Timer",
+      "start": "Start",
+      "pause": "Pause",
+      "reset": "Reset",
+      "skip": "Skip",
+      "complete": "complete",
+      "pomodorosToday": "pomodoros today",
+      "currentPhase": "current phase",
+      "phases": {
+        "work": "Focus Time",
+        "shortBreak": "Short Break",
+        "longBreak": "Long Break"
+      },
+      "phaseLabels": {
+        "work": "work",
+        "shortBreak": "short break",
+        "longBreak": "long break"
+      }
+    },
+    "tasks": {
+      "title": "Tasks",
+      "placeholder": "Add a new task...",
+      "empty": "No tasks yet. Add one above to get started!",
+      "loading": "Loading tasks...",
+      "completed": "Completed",
+      "clearCompleted": "Clear All Completed",
+      "charactersRemaining": "characters remaining",
+      "pomodorosCompleted": "pomodoros completed",
+      "activeTask": "Active Task",
+      "setActive": "Set as active task",
+      "deactivate": "Deactivate task",
+      "noActiveTask": "No active task - general focus session",
+      "dragToReorder": "Drag to reorder tasks"
+    },
+    "settings": {
+      "title": "Pomodoro Settings",
+      "openSettings": "Open Settings",
+      "timerDurations": "Timer Durations",
+      "workSession": "Work Session",
+      "workSessionHint": "Duration of focus sessions (1-60 minutes)",
+      "shortBreak": "Short Break",
+      "shortBreakHint": "Duration of short breaks (1-30 minutes)",
+      "longBreak": "Long Break",
+      "longBreakHint": "Duration of long breaks (1-60 minutes)",
+      "longBreakInterval": "Long Break Interval",
+      "longBreakIntervalHint": "After how many work sessions (2-10 sessions)",
+      "autoStart": "Auto-start Options",
+      "autoStartBreaks": "Auto-start breaks",
+      "autoStartBreaksHint": "Automatically start break timers after work sessions",
+      "autoStartWork": "Auto-start work sessions",
+      "autoStartWorkHint": "Automatically start work sessions after breaks",
+      "notifications": "Notification Settings",
+      "soundNotifications": "Sound notifications",
+      "soundNotificationsHint": "Play sound when timer phases complete",
+      "desktopNotifications": "Desktop notifications",
+      "desktopNotificationsHint": "Show browser notifications for timer events",
+      "actions": {
+        "save": "Save Changes",
+        "cancel": "Cancel",
+        "reset": "Reset to Defaults"
+      },
+      "units": {
+        "minutes": "minutes",
+        "sessions": "sessions"
+      }
+    },
+    "notifications": {
+      "workComplete": "Work session complete! Time for a break.",
+      "breakComplete": "Break time is over! Ready to focus?",
+      "longBreakComplete": "Long break finished! Time to get back to work.",
+      "permissionDenied": "Desktop notifications are disabled. Enable them in your browser settings for better productivity tracking."
+    }
+  }
+}
