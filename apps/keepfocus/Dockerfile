@@ -20,6 +20,8 @@ RUN pnpm install --frozen-lockfile --prod=false
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app /app
+# Create public directory if it doesn't exist to prevent COPY from failing later
+RUN mkdir -p /app/apps/keepfocus/public
 RUN pnpm turbo build --filter=@workspace/keepfocus
 
 # ---- Runner ----
