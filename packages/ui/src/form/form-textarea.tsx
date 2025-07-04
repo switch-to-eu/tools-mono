@@ -12,6 +12,10 @@ import { Label } from "@workspace/ui/components/label";
 import { cn } from "@workspace/ui/lib/utils";
 import { isFieldRequired } from "./form-utils";
 
+import en from '@workspace/ui/translations/en.json';
+
+type ErrorKey = keyof (typeof en)["form"]["errors"];
+
 interface FormTextAreaProps<TFormData extends FieldValues>
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'name'> {
   label: string;
@@ -72,7 +76,7 @@ export const FormTextArea = <TFormData extends FieldValues>({
 
       {error && (
         <p className="text-sm text-red-500">
-          {error.message || t('errors.invalid')}
+          {error.message as ErrorKey || t('errors.invalid')}
         </p>
       )}
     </div>
