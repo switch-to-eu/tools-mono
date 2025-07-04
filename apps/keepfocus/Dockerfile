@@ -8,10 +8,10 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy monorepo workspace files
+# Copy monorepo workspace files  
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 COPY packages/ ./packages/
-COPY apps/keepfocus/package.json ./apps/keepfocus/
+COPY apps/keepfocus/ ./apps/keepfocus/
 
 # Install dependencies with pnpm
 RUN corepack enable pnpm && pnpm i --no-frozen-lockfile
@@ -20,12 +20,7 @@ RUN corepack enable pnpm && pnpm i --no-frozen-lockfile
 FROM base AS builder
 WORKDIR /app
 RUN apk add --no-cache git
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/packages ./packages
-
-# Copy source code
-COPY apps/keepfocus/ ./apps/keepfocus/
-COPY turbo.json package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY --from=deps /app ./
 
 # Initialize git submodules if they exist
 RUN if [ -f .gitmodules ]; then \
@@ -55,7 +50,7 @@ RUN adduser --system --uid 1001 nextjs
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/static ./apps/keepfocus/.next/static
 
 USER nextjs
 
