@@ -37,6 +37,21 @@ export default function JoinPage() {
     );
   }
 
+  if (status === "reconnecting") {
+    return (
+      <main className="container mx-auto p-4">
+        <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+          <p>Connection lost. Reconnecting...</p>
+          {senderPeerId && (
+            <p className="text-sm text-gray-500">
+              Attempting to reconnect to: <code className="bg-gray-100 px-1 rounded">{senderPeerId}</code>
+            </p>
+          )}
+        </div>
+      </main>
+    );
+  }
+
   if (status === "connected") {
     return (
       <main className="container mx-auto max-w-2xl p-4">

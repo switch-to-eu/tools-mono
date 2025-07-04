@@ -1,48 +1,37 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { usePeerConnection } from "../../../hooks/use-peer-connection";
-import { useFileTransfer } from "../../../hooks/use-file-transfer";
-import { SendPage } from "../../../components/send-page";
+import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { Peer } from "peerjs";
+
+const generateUniqueId = () => {
+  const peer = new Peer();
+  return new Promise<string>((resolve) => {
+    peer.on("open", (id) => {
+      resolve(id);
+      peer.destroy();
+    });
+  });
+};
 
 export default function TransferPage() {
+  const router = useRouter();
   const params = useParams();
-  const locale = params.locale as string;
-  const { peerId, status, error, send, onData, onConnect } = usePeerConnection();
-  const { stageFile, stagedFiles } = useFileTransfer({ send, onData, onConnect });
+  const locale = params.locale;
 
-  console.log("[TransferPage] Status:", status, "PeerID:", peerId);
-
-  const getShareableUrl = () => {
-    if (!peerId) return "";
-    return `${window.location.origin}/${locale}/join/${peerId}`;
-  };
-
-  const handleSelectFiles = (files: FileList | null) => {
-    if (!files) return;
-    for (const file of files) {
-      stageFile(file);
-    }
-  };
-
-  if (status === "connecting" || status === "error") {
-    return (
-      <main className="container mx-auto p-4">
-        <div className="flex flex-col items-center justify-center min-h-[400px]">
-          <p>Loading...</p>
-        </div>
-      </main>
-    );
-  }
+  useEffect(() => {
+    const redirectToRoom = async () => {
+      const peerId = await generateUniqueId();
+      router.replace(`/${locale}/transfer/${peerId}`);
+    };
+    redirectToRoom();
+  }, [router, locale]);
 
   return (
-    <main className="container mx-auto max-w-2xl p-4">
-      <SendPage
-        shareUrl={getShareableUrl()}
-        status={status}
-        stagedFiles={stagedFiles}
-        onSelectFiles={handleSelectFiles}
-      />
+    <main className="container mx-auto p-4">
+      <div className="flex flex-col items-center justify-center min-h-[400px]">
+        <p>Creating a new room...</p>
+      </div>
     </main>
   );
 }
