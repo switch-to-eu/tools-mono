@@ -40,7 +40,7 @@ RUN adduser --system --uid 1001 nextjs
 RUN npm install -g drizzle-kit
 
 # Copy required files from the builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/standalone/ ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/package.json ./package.json

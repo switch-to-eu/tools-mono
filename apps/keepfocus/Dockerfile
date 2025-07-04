@@ -36,7 +36,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Copy required files from the builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/standalone/ ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/public ./public
 
