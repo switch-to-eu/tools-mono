@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Laptop, File, Download } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@workspace/ui/components/button";
@@ -8,6 +9,8 @@ import {
 } from "@workspace/ui/blocks/section-card";
 import { ConnectionStatus } from "../hooks/use-peer-connection";
 import { type FileMetadata } from "../hooks/use-file-transfer";
+import { usePolicyAcceptance } from "../hooks/use-policy-acceptance";
+import { AcceptanceChecklist } from "./acceptance-checklist";
 
 interface ConnectionIndicatorProps {
   status: ConnectionStatus;
@@ -82,6 +85,10 @@ interface ReceivePageProps {
 
 export function ReceivePage({ status, availableFiles, onDownload }: ReceivePageProps) {
   const t = useTranslations("Nully.Receive");
+  const { hasAcceptedAll, isLoaded } = usePolicyAcceptance();
+  const [userHasConfirmed, setUserHasConfirmed] = useState(false);
+
+  const showAvailableFiles = (isLoaded && hasAcceptedAll) || userHasConfirmed;
 
   return (
     <div className="space-y-6">
@@ -96,15 +103,24 @@ export function ReceivePage({ status, availableFiles, onDownload }: ReceivePageP
         </SectionContent>
       </SectionCard>
 
-      <SectionCard>
-        <SectionHeader
-          icon={<File className="h-6 w-6" />}
-          title={t("availableFilesTitle")}
-        />
-        <SectionContent>
-          <AvailableFiles availableFiles={availableFiles} onDownload={onDownload} />
-        </SectionContent>
-      </SectionCard>
+      {isLoaded && !showAvailableFiles && (
+        <AcceptanceChecklist onAccepted={() => setUserHasConfirmed(true)} />
+      )}
+
+      {showAvailableFiles && (
+        <SectionCard>
+          <SectionHeader
+            icon={<File className="h-6 w-6" />}
+            title={t("availableFilesTitle")}
+          />
+          <SectionContent>
+            <AvailableFiles
+              availableFiles={availableFiles}
+              onDownload={onDownload}
+            />
+          </SectionContent>
+        </SectionCard>
+      )}
     </div>
   );
 }

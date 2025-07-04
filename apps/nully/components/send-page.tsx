@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Laptop, Copy, Send, FilePlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@workspace/ui/components/button";
@@ -8,6 +9,8 @@ import {
   SectionFooter,
 } from "@workspace/ui/blocks/section-card";
 import { ConnectionStatus } from "../hooks/use-peer-connection";
+import { usePolicyAcceptance } from "../hooks/use-policy-acceptance";
+import { AcceptanceChecklist } from "./acceptance-checklist";
 
 interface HowToStepProps {
   icon: React.ReactNode;
@@ -96,6 +99,10 @@ interface SendPageProps {
 
 export function SendPage({ shareUrl, status, stagedFiles, onSelectFiles }: SendPageProps) {
   const t = useTranslations("Nully");
+  const { hasAcceptedAll, isLoaded } = usePolicyAcceptance();
+  const [userHasConfirmed, setUserHasConfirmed] = useState(false);
+
+  const showFileSelection = (isLoaded && hasAcceptedAll) || userHasConfirmed;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);
@@ -151,32 +158,38 @@ export function SendPage({ shareUrl, status, stagedFiles, onSelectFiles }: SendP
         </SectionContent>
       </SectionCard>
 
-      <SectionCard>
-        <SectionHeader
-          icon={<FilePlus className="h-6 w-6" />}
-          title={t("Send.stagedFilesTitle")}
-        />
-        <SectionContent>
-          <StagedFiles stagedFiles={stagedFiles} />
-        </SectionContent>
-        <SectionFooter>
-          <input
-            type="file"
-            multiple
-            id="file-input"
-            className="hidden"
-            onChange={(e) => onSelectFiles(e.target.files)}
+      {isLoaded && !showFileSelection && (
+        <AcceptanceChecklist onAccepted={() => setUserHasConfirmed(true)} />
+      )}
+
+      {showFileSelection && (
+        <SectionCard>
+          <SectionHeader
+            icon={<FilePlus className="h-6 w-6" />}
+            title={t("Send.stagedFilesTitle")}
           />
-          <Button
-            className="w-full"
-            size="lg"
-            onClick={() => document.getElementById('file-input')?.click()}
-          >
-            <FilePlus className="mr-2 h-5 w-5" />
-            {t("Send.selectFilesButton")}
-          </Button>
-        </SectionFooter>
-      </SectionCard>
+          <SectionContent>
+            <StagedFiles stagedFiles={stagedFiles} />
+          </SectionContent>
+          <SectionFooter>
+            <input
+              type="file"
+              multiple
+              id="file-input"
+              className="hidden"
+              onChange={(e) => onSelectFiles(e.target.files)}
+            />
+            <Button
+              className="w-full"
+              size="lg"
+              onClick={() => document.getElementById("file-input")?.click()}
+            >
+              <FilePlus className="mr-2 h-5 w-5" />
+              {t("Send.selectFilesButton")}
+            </Button>
+          </SectionFooter>
+        </SectionCard>
+      )}
     </div>
   );
 }
