@@ -1,40 +1,46 @@
 # syntax=docker.io/docker/dockerfile:1
 
-# ---- Base ----
-FROM node:20-alpine AS base
-WORKDIR /app
+FROM node:22-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-# ---- Dependencies ----
-# First, install all dependencies in the monorepo
-FROM base AS deps
 WORKDIR /app
-COPY package.json pnpm-lock.yaml .npmrc* pnpm-workspace.yaml ./
-# Copy all package.json files from the workspace
-COPY packages/**/package.json ./packages/
-COPY apps/**/package.json ./apps/
-RUN pnpm install --frozen-lockfile --prod=false
 
-# ---- Builder ----
-# This stage builds the target app using the pnpm deploy method
+# Copy monorepo workspace files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+COPY packages/ ./packages/
+COPY apps/keepfocus/package.json ./apps/keepfocus/
+
+# Install dependencies with pnpm
+RUN corepack enable pnpm && pnpm i --no-frozen-lockfile
+
+# Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-
-# First, copy the full source code
-COPY . .
-# Then, copy the installed node_modules from the deps stage
+RUN apk add --no-cache git
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/packages ./packages
 
-# Use pnpm deploy to create a self-contained folder with the app and its dependencies
-RUN pnpm deploy --legacy --filter=@workspace/keepfocus ./deploy
+# Copy source code
+COPY apps/keepfocus/ ./apps/keepfocus/
+COPY turbo.json package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Run the build inside the deployed folder
-WORKDIR /app/deploy
-RUN pnpm next build
+# Initialize git submodules if they exist
+RUN if [ -f .gitmodules ]; then \
+      git submodule update --init --recursive; \
+    fi
 
-# ---- Runner ----
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED=1
+
+# Enable pnpm and build the keepfocus app
+RUN corepack enable pnpm && pnpm run build --filter=@workspace/keepfocus
+
+# Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
 
@@ -43,15 +49,27 @@ ENV NODE_ENV=production
 # ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs
+
 RUN adduser --system --uid 1001 nextjs
 
-# Copy the deployed and built app from the builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/deploy .
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/keepfocus/.next/static ./.next/static
 
 USER nextjs
 
-EXPOSE 3000
-ENV PORT 3000
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", ".next/standalone/server.js"]
+COPY --chown=nextjs:nodejs <<EOF /app/start.sh
+#!/bin/sh
+echo "Starting server..."
+cd /app/apps/keepfocus
+exec node server.js
+EOF
+
+RUN chmod +x /app/start.sh
+
+CMD ["/app/start.sh"]
