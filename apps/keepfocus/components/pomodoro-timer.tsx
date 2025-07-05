@@ -13,17 +13,14 @@ import { usePomodoroSettings } from '../hooks/use-pomodoro-settings';
 import { useTasks } from '../hooks/use-tasks';
 
 interface PomodoroTimerProps {
-  activeTask?: Task | null;
   className?: string;
 }
 
 export function PomodoroTimer({
-  activeTask,
   className,
 }: PomodoroTimerProps) {
   const t = useTranslations();
   const { settings } = usePomodoroSettings();
-  const { incrementTaskPomodoros } = useTasks();
 
   const {
     phase,
@@ -40,10 +37,6 @@ export function PomodoroTimer({
   } = usePomodoroTimer({
     settings,
     onPomodoroComplete: () => {
-      // Increment pomodoro count for active task
-      if (activeTask) {
-        incrementTaskPomodoros(activeTask.id);
-      }
     },
     onPhaseChange: (newPhase) => {
       console.log(`Phase changed to: ${newPhase}`);
@@ -70,6 +63,7 @@ export function PomodoroTimer({
           <Timer className="h-5 w-5" />
           {t('pomodoro.timer.title')}
         </CardTitle>
+
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Timer Display */}

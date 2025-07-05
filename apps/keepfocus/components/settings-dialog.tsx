@@ -51,7 +51,7 @@ export function SettingsDialog() {
         <Button
           variant="outline"
           size="default"
-          className="w-full border-gray-300 hover:bg-gray-50 justify-center"
+          className="w-full bg-white border-gray-300 hover:bg-gray-50 justify-center"
         >
           <Settings className="w-4 h-4 mr-2" />
           {t('pomodoro.settings.openSettings')}
