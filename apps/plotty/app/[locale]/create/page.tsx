@@ -35,6 +35,10 @@ export default function CreatePoll() {
         location: formData.location,
         dates: formData.selectedDates.map(date => date.toISOString().split("T")[0]!),
         participants: [], // Initialize empty participants array
+        // Include new time selection fields
+        fixedDuration: formData.fixedDuration,
+        selectedStartTimes: formData.selectedStartTimes,
+        allowHourSelection: formData.enableTimeSelection,
       };
 
       // Encrypt the poll data

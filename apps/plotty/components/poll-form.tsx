@@ -9,6 +9,9 @@ import { Button } from "@workspace/ui/components/button";
 import { Calendar as CalendarComponent } from "@workspace/ui/blocks/calendar";
 import { FormInput } from "@workspace/ui/form/form-input";
 import { FormTextArea } from "@workspace/ui/form/form-textarea";
+import { TimeSelectionToggle } from "@workspace/ui/form/time-selection-toggle";
+import { DurationSelector } from "@workspace/ui/form/duration-selector";
+import { TimeSlotsManager } from "@workspace/ui/form/time-slots-manager";
 import { pollSchema, type PollFormData } from "@/lib/schemas";
 import { SectionCard, SectionHeader, SectionContent } from "@workspace/ui/blocks/section-card";
 
@@ -39,6 +42,7 @@ export function PollForm({
     control,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<PollFormData>({
     resolver: zodResolver(pollSchema),
     defaultValues: {
@@ -47,13 +51,29 @@ export function PollForm({
       location: initialData?.location ?? "",
       selectedDates: initialData?.selectedDates ?? [],
       expirationDays: initialData?.expirationDays ?? 30,
+      enableTimeSelection: initialData?.enableTimeSelection ?? false,
+      fixedDuration: initialData?.fixedDuration ?? 2,
+      selectedStartTimes: initialData?.selectedStartTimes ?? [],
     },
   });
 
   const selectedDates = watch("selectedDates");
+  const enableTimeSelection = watch("enableTimeSelection");
+  const fixedDuration = watch("fixedDuration");
+  const selectedStartTimes = watch("selectedStartTimes");
 
   const handleFormSubmit = async (data: PollFormData) => {
-    await onSubmit(data);
+    // Convert start times from {hour, minutes} objects to "HH:MM" strings for backend
+    const processedData = {
+      ...data,
+      selectedStartTimes: data.selectedStartTimes?.map(startTime => {
+        const hour = startTime.hour.toString().padStart(2, '0');
+        const minutes = startTime.minutes.toString().padStart(2, '0');
+        return `${hour}:${minutes}`;
+      }) || [],
+    };
+    
+    await onSubmit(processedData);
   };
 
   // Use provided submitText or fall back to translation
@@ -98,6 +118,17 @@ export function PollForm({
               rows={4}
               schema={pollSchema}
             />
+
+            {/* Time Type Decision - moved from separate section for better UX flow */}
+            <div className="pt-4 border-t border-gray-200">
+              <TimeSelectionToggle<PollFormData>
+                name="enableTimeSelection"
+                control={control}
+                error={errors.enableTimeSelection}
+                description={t('sections.timing.toggleDescription')}
+              />
+
+            </div>
           </div>
         </SectionContent>
       </SectionCard>
@@ -226,6 +257,27 @@ export function PollForm({
           </div>
         </SectionContent>
       </SectionCard>
+
+      {/* Time Slots Section - Only shown when time selection is enabled */}
+      {enableTimeSelection && (
+        <SectionCard className="mb-6">
+          <SectionHeader
+            icon={<Clock className="h-5 w-5" />}
+            title={t('sections.timeSlots.title')}
+            description={t('sections.timeSlots.description', { duration: fixedDuration })}
+          />
+          <SectionContent>
+            <TimeSlotsManager<PollFormData>
+              name="selectedStartTimes"
+              setValue={setValue}
+              watch={watch}
+              error={errors.selectedStartTimes as any}
+              label={t('sections.timeSlots.title')}
+              description={t('sections.timeSlots.startTimesDescription')}
+            />
+          </SectionContent>
+        </SectionCard>
+      )}
 
       {/* Action Buttons */}
       <div className={`pt-4 sm:pt-6 ${hideMobileSubmit ? "hidden sm:block" : ""}`}>

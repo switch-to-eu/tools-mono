@@ -33,6 +33,8 @@
         "eventDetails": "Event details and information",
         "responses": "responses",
         "dates": "dates",
+        "timeSlots": "time slots",
+        "duration": "duration",
         "bestTime": {
             "title": "Best Available Time",
             "description": "{count} out of {total} people available ({percentage}%)"
@@ -81,6 +83,18 @@
             "calendar": {
                 "title": "Calendar",
                 "description": "Select potential dates or times for your event"
+            },
+            "timing": {
+                "title": "Time Selection",
+                "description": "Optional: Specify time ranges for all selected dates",
+                "toggleDescription": "Choose specific hours instead of all-day events",
+                "durationDescription": "How long should each time slot be?",
+                "startTimesDescription": "Select the start times for your time slots"
+            },
+            "timeSlots": {
+                "title": "Time Slots",
+                "description": "Select specific start times for your {duration}h slots",
+                "startTimesDescription": "Add the times when your event could start"
             }
         },
         "fields": {

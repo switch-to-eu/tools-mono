@@ -116,19 +116,41 @@ export function useLoadPoll({
 
     const timeSlots: BestTime[] = [];
 
-    poll.dates.forEach((date) => {
-      const count = poll.participants.filter(
-        (p) => p.availability[date]
-      ).length;
-      const percentage = Math.round((count / poll.participants.length) * 100);
+    // Check if this is a timed poll with time slots
+    if (poll.allowHourSelection && poll.selectedStartTimes && poll.fixedDuration && poll.selectedStartTimes.length > 0) {
+      // For timed polls: calculate best time slots (date + time combinations)
+      poll.dates.forEach((date) => {
+        poll.selectedStartTimes!.forEach((startTime) => {
+          const slotKey = `${date}T${startTime}`;
+          const count = poll.participants.filter(
+            (participant) => participant.availability[slotKey]
+          ).length;
+          const percentage = Math.round((count / poll.participants.length) * 100);
 
-      timeSlots.push({
-        key: date,
-        date,
-        count,
-        percentage,
+          timeSlots.push({
+            key: slotKey,
+            date: slotKey, // For backward compatibility with existing code
+            count,
+            percentage,
+          });
+        });
       });
-    });
+    } else {
+      // For date-only polls: use original logic
+      poll.dates.forEach((date) => {
+        const count = poll.participants.filter(
+          (participant) => participant.availability[date]
+        ).length;
+        const percentage = Math.round((count / poll.participants.length) * 100);
+
+        timeSlots.push({
+          key: date,
+          date,
+          count,
+          percentage,
+        });
+      });
+    }
 
     return timeSlots.sort((a, b) => b.count - a.count);
   }, [poll]);

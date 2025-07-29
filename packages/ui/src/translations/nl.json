@@ -1,6 +1,9 @@
 {
     "form": {
         "optional": "(Optioneel)",
+        "enableSpecificTimes": "Specifieke tijden inschakelen",
+        "fixedDuration": "Duur voor elke tijdsslot",
+        "selectStartTimes": "Selecteer starttijden",
         "errors": {
             "required": "Dit veld is verplicht",
             "invalid": "Ongeldige waarde",

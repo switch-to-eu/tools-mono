@@ -1,6 +1,9 @@
 {
     "form": {
         "optional": "(Optional)",
+        "enableSpecificTimes": "Enable specific times",
+        "fixedDuration": "Duration for each time slot",
+        "selectStartTimes": "Select start times",
         "errors": {
             "required": "This field is required",
             "invalid": "Invalid value",
