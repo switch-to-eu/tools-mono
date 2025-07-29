@@ -72,11 +72,11 @@ export const TimeSelectionToggle = <TFormData extends FieldValues>({
                   "text-sm",
                   field.value ? "text-blue-700" : "text-neutral-500"
                 )}>
-                  {description || "Choose specific time ranges instead of all-day events"}
+                  {description || t("timeSelectionDescription")}
                 </p>
                 {field.value && (
                   <div className="bg-blue-100 border border-blue-200 rounded-md p-2 text-xs text-blue-800">
-                    ✨ <strong>Time selection enabled!</strong> You can now pick specific hours when your event can happen.
+                    ✨ <strong>{t("timeSelectionEnabledMessage")}</strong>
                   </div>
                 )}
               </div>

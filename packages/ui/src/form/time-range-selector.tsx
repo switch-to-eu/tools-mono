@@ -81,7 +81,7 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
             htmlFor="startTime"
             className="text-sm font-medium text-neutral-700"
           >
-            Start time
+            {t('startTime')}
             <span className="text-red-500 ml-1">*</span>
           </Label>
           
@@ -93,7 +93,7 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
             )}
             {...register(startTimeField)}
           >
-            <option value="">Select start time</option>
+            <option value="">{t('selectStartTime')}</option>
             {timeOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -103,7 +103,7 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
           
           {startTimeError && (
             <p className="text-sm text-red-500">
-              {startTimeError.message || "Invalid start time"}
+              {startTimeError.message || t('errors.invalidStartTime')}
             </p>
           )}
         </div>
@@ -114,7 +114,7 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
             htmlFor="duration"
             className="text-sm font-medium text-neutral-700"
           >
-            Duration
+            {t('duration')}
             <span className="text-red-500 ml-1">*</span>
           </Label>
           
@@ -126,7 +126,7 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
             )}
             {...register(durationField, { valueAsNumber: true })}
           >
-            <option value="">Select duration</option>
+            <option value="">{t('selectDuration')}</option>
             {durationOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -136,7 +136,7 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
           
           {durationError && (
             <p className="text-sm text-red-500">
-              {durationError.message || "Invalid duration"}
+              {durationError.message || t('errors.invalidDuration')}
             </p>
           )}
         </div>
@@ -147,7 +147,7 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
         <div className="p-3 bg-gray-50 rounded-md">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-neutral-700">
-              Time range:
+              {t('timeRange')}:
             </span>
             <span className={cn(
               "text-sm font-mono",
@@ -159,7 +159,7 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
           
           {!isValid && (
             <p className="text-sm text-red-600 mt-1">
-              Time range exceeds 24:00. Please select an earlier start time or shorter duration.
+              {t('timeRangeExceeds')}
             </p>
           )}
         </div>
