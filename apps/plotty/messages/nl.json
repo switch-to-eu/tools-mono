@@ -123,6 +123,10 @@
             "savingText": "Opslaan...",
             "createPoll": "Maak Poll",
             "creatingText": "Je poll wordt aangemaakt..."
+        },
+        "timeFields": {
+            "hour": "Uur",
+            "minutes": "Minuten"
         }
     },
     "HomePage": {

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import type {
   UseFormSetValue,
@@ -21,6 +22,7 @@ interface StartTimeEntryProps<TFormData extends FieldValues> {
   className?: string;
   showRemove?: boolean;
   duration?: number; // External duration for preview calculation
+  formatTimeSlot?: (hour: number, minutes: number, duration: number) => string;
 }
 
 // Generate hour options (0-23)
@@ -38,8 +40,8 @@ const minuteOptions = [
   { value: 45, label: "45" },
 ];
 
-// Format time slot range preview using external duration
-function formatTimeSlotRange(hour: number, minutes: number, duration: number): string {
+// Default formatting function if none provided
+function defaultFormatTimeSlot(hour: number, minutes: number, duration: number): string {
   const startHour = hour;
   const startMinutes = minutes;
   const endHour = Math.floor((startHour * 60 + startMinutes + duration * 60) / 60) % 24;
@@ -60,13 +62,15 @@ export const StartTimeEntry = <TFormData extends FieldValues>({
   className,
   showRemove = true,
   duration = 2, // Default duration for preview
+  formatTimeSlot = defaultFormatTimeSlot,
 }: StartTimeEntryProps<TFormData>) => {
+  const t = useTranslations("form");
   // Watch current values (only hour and minutes now)
   const hour = watch(`${namePrefix}.${index}.hour` as FieldPath<TFormData>) || 0;
   const minutes = watch(`${namePrefix}.${index}.minutes` as FieldPath<TFormData>) || 0;
   
-  // Generate preview using external duration
-  const preview = formatTimeSlotRange(hour, minutes, duration);
+  // Generate preview using external formatting function
+  const preview = formatTimeSlot(hour, minutes, duration);
   
   const handleHourChange = (newHour: number) => {
     setValue(`${namePrefix}.${index}.hour` as FieldPath<TFormData>, newHour as any);
@@ -101,7 +105,7 @@ export const StartTimeEntry = <TFormData extends FieldValues>({
         {/* Hour dropdown */}
         <div className="space-y-2">
           <Label className="text-sm font-medium text-neutral-700">
-            Hour
+            {t('hour')}
           </Label>
           <select
             value={hour}
@@ -119,7 +123,7 @@ export const StartTimeEntry = <TFormData extends FieldValues>({
         {/* Minutes toggle - 4 buttons in a grid */}
         <div className="space-y-2">
           <Label className="text-sm font-medium text-neutral-700">
-            Minutes
+            {t('minutes')}
           </Label>
           <div className="grid grid-cols-4 gap-1 rounded-md border border-gray-300 bg-background p-1">
             {minuteOptions.map((option) => (

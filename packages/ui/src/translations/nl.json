@@ -4,6 +4,8 @@
         "enableSpecificTimes": "Specifieke tijden inschakelen",
         "fixedDuration": "Duur voor elke tijdsslot",
         "selectStartTimes": "Selecteer starttijden",
+        "hour": "Uur",
+        "minutes": "Minuten",
         "errors": {
             "required": "Dit veld is verplicht",
             "invalid": "Ongeldige waarde",

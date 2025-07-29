@@ -123,6 +123,10 @@
             "savingText": "Saving...",
             "createPoll": "Create Poll",
             "creatingText": "Creating your poll..."
+        },
+        "timeFields": {
+            "hour": "Hour",
+            "minutes": "Minutes"
         }
     },
     "HomePage": {

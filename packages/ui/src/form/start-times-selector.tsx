@@ -12,42 +12,11 @@ import { Controller } from "react-hook-form";
 import { Checkbox } from "@workspace/ui/components/checkbox";
 import { Label } from "@workspace/ui/components/label";
 import { cn } from "@workspace/ui/lib/utils";
-// Note: These utility functions should be imported from the app using this component
-// For now, we'll define basic versions here to avoid cross-package dependencies
-
-// Generate all available start times in 30-minute intervals
-const getAvailableStartTimes = (): string[] => {
-  const times: string[] = [];
-  for (let hour = 0; hour < 24; hour++) {
-    for (let minute = 0; minute < 60; minute += 30) {
-      const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-      times.push(timeString);
-    }
-  }
-  return times;
-};
-
-// Basic validation for overlapping times
-const validateStartTimesWithDuration = (startTimes: string[], duration: number): boolean => {
-  if (startTimes.length <= 1) return true;
-  
-  const timeRanges = startTimes.map(startTime => {
-    const [hours, minutes] = startTime.split(':').map(Number);
-    const startMinutes = (hours || 0) * 60 + (minutes || 0);
-    const endMinutes = startMinutes + (duration * 60);
-    return { start: startMinutes, end: endMinutes };
-  });
-  
-  timeRanges.sort((a, b) => a.start - b.start);
-  
-  for (let i = 0; i < timeRanges.length - 1; i++) {
-    if (timeRanges[i]!.end > timeRanges[i + 1]!.start) {
-      return false; // Overlap detected
-    }
-  }
-  
-  return true;
-};
+import { 
+  generateAvailableStartTimes, 
+  validateStartTimes, 
+  TimeValidationStrategy 
+} from "@workspace/ui/lib/time-utils";
 
 interface StartTimesSelectorProps<TFormData extends FieldValues> {
   name: FieldPath<TFormData>;
@@ -57,12 +26,19 @@ interface StartTimesSelectorProps<TFormData extends FieldValues> {
   label?: string;
   description?: string;
   duration?: number; // For validation - prevent overlapping slots
+  /** Time interval in minutes (default: 30) */
+  intervalMinutes?: number;
+  /** Validation strategy (default: 'overlaps') */
+  validationStrategy?: TimeValidationStrategy;
+  /** Custom time generator function */
+  timeGenerator?: () => string[];
+  /** Custom validation function */
+  timeValidator?: (times: string[], duration: number) => boolean;
 }
 
 // Generate time options for display in grid
-const generateTimeOptionsGrid = (): { value: string; label: string; hour: number }[] => {
-  const times = getAvailableStartTimes();
-  return times.map(time => {
+const generateTimeOptionsGrid = (availableTimes: string[]): { value: string; label: string; hour: number }[] => {
+  return availableTimes.map(time => {
     const [hourStr] = time.split(':');
     const hour = parseInt(hourStr || '0', 10);
     return {
@@ -81,12 +57,22 @@ export const StartTimesSelector = <TFormData extends FieldValues>({
   label,
   description,
   duration = 1,
+  intervalMinutes = 30,
+  validationStrategy = 'overlaps',
+  timeGenerator,
+  timeValidator,
 }: StartTimesSelectorProps<TFormData>) => {
   const t = useTranslations("form");
   
   const selectorId = `${String(name)}-start-times`;
   const displayLabel = label || t("selectStartTimes");
-  const timeOptions = generateTimeOptionsGrid();
+  
+  // Use custom generators/validators or defaults
+  const availableTimes = timeGenerator ? timeGenerator() : generateAvailableStartTimes(intervalMinutes);
+  const validateTimes = timeValidator ? timeValidator : 
+    (times: string[], dur: number) => validateStartTimes(times, dur, validationStrategy);
+  
+  const timeOptions = generateTimeOptionsGrid(availableTimes);
 
   // Group times by hour for better grid layout
   const timesByHour = timeOptions.reduce((acc, time) => {
@@ -130,7 +116,7 @@ export const StartTimesSelector = <TFormData extends FieldValues>({
           const wouldCreateOverlap = (timeValue: string): boolean => {
             if (selectedTimes.includes(timeValue)) return false;
             const testTimes = [...selectedTimes, timeValue];
-            return !validateStartTimesWithDuration(testTimes, duration);
+            return !validateTimes(testTimes, duration);
           };
 
           return (

@@ -29,6 +29,7 @@ interface StartTimesManagerProps<TFormData extends FieldValues> {
   description?: string;
   maxSlots?: number;
   duration?: number; // External duration for validation and preview
+  formatTimeSlot?: (hour: number, minutes: number, duration: number) => string;
 }
 
 // Check for duplicate start times (same hour:minute combination)
@@ -57,6 +58,7 @@ export const StartTimesManager = <TFormData extends FieldValues>({
   description,
   maxSlots = 10,
   duration = 2, // Default duration for validation and preview
+  formatTimeSlot,
 }: StartTimesManagerProps<TFormData>) => {
   // Watch current start times
   const startTimes = watch(name) || [];
@@ -72,14 +74,16 @@ export const StartTimesManager = <TFormData extends FieldValues>({
       minutes: 0,
     };
     
-    const updatedStartTimes = [...(startTimes || []), newStartTime];
-    setValue(name, updatedStartTimes as any);
+    const currentTimes: StartTime[] = Array.isArray(startTimes) ? startTimes : [];
+    const updatedStartTimes: StartTime[] = [...currentTimes, newStartTime];
+    setValue(name, updatedStartTimes as TFormData[typeof name]);
   };
   
   // Remove start time
   const removeStartTime = (index: number) => {
-    const updatedStartTimes = (startTimes || []).filter((_: any, i: number) => i !== index);
-    setValue(name, updatedStartTimes as any);
+    const currentTimes: StartTime[] = Array.isArray(startTimes) ? startTimes : [];
+    const updatedStartTimes: StartTime[] = currentTimes.filter((_, i: number) => i !== index);
+    setValue(name, updatedStartTimes as TFormData[typeof name]);
   };
   
   // Validation checks - only check for duplicates now
@@ -126,6 +130,7 @@ export const StartTimesManager = <TFormData extends FieldValues>({
               onRemove={() => removeStartTime(index)}
               showRemove={(startTimes?.length || 0) > 1}
               duration={duration} // Pass external duration for preview
+              formatTimeSlot={formatTimeSlot}
             />
           ))
         )}
