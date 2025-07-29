@@ -18,6 +18,8 @@ interface TimeRangeSelectorProps<TFormData extends FieldValues> {
   startTimeError?: FieldError;
   durationError?: FieldError;
   className?: string;
+  calculateEndTime: (startTime: string, duration: number) => string;
+  isValidTimeRange: (startTime: string, duration: number) => boolean;
 }
 
 // Generate time options for 24h format with 30min intervals
@@ -49,32 +51,6 @@ const durationOptions = [
   { value: 8, label: "8h" },
 ];
 
-// Calculate end time from start time and duration
-const calculateEndTime = (startTime: string, duration: number): string => {
-  if (!startTime || !duration) return "";
-  
-  const [startHour, startMinute] = startTime.split(':').map(Number);
-  const startTotalMinutes = startHour * 60 + startMinute;
-  const durationMinutes = duration * 60;
-  const endTotalMinutes = startTotalMinutes + durationMinutes;
-  
-  const endHour = Math.floor(endTotalMinutes / 60);
-  const endMinute = endTotalMinutes % 60;
-  
-  return `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
-};
-
-// Validate time range doesn't exceed 24:00
-const isValidTimeRange = (startTime: string, duration: number): boolean => {
-  if (!startTime || !duration) return true;
-  
-  const [startHour, startMinute] = startTime.split(':').map(Number);
-  const startTotalMinutes = startHour * 60 + startMinute;
-  const durationMinutes = duration * 60;
-  const endTotalMinutes = startTotalMinutes + durationMinutes;
-  
-  return endTotalMinutes <= 1440; // 24 * 60 minutes
-};
 
 export const TimeRangeSelector = <TFormData extends FieldValues>({
   startTimeField,
@@ -84,6 +60,8 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
   startTimeError,
   durationError,
   className,
+  calculateEndTime,
+  isValidTimeRange,
 }: TimeRangeSelectorProps<TFormData>) => {
   const t = useTranslations("form");
   
@@ -91,8 +69,8 @@ export const TimeRangeSelector = <TFormData extends FieldValues>({
   const duration = watch(durationField);
   
   const timeOptions = generateTimeOptions();
-  const endTime = calculateEndTime(startTime, duration);
-  const isValid = isValidTimeRange(startTime, duration);
+  const endTime = startTime && duration ? calculateEndTime(startTime, duration) : "";
+  const isValid = startTime && duration ? isValidTimeRange(startTime, duration) : true;
 
   return (
     <div className={cn("space-y-4", className)}>
