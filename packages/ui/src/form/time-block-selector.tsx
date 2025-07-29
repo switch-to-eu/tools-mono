@@ -86,25 +86,20 @@ export const TimeBlockSelector: React.FC<TimeBlockSelectorProps> = ({
   className
 }) => {
   const handlePresetClick = (preset: typeof timePresets[0]) => {
-    console.log('Preset clicked:', preset.name, 'Times:', preset.times);
-    
     if (onPresetSelect) {
       // Use dedicated preset handler for better reliability
       onPresetSelect(preset.times, preset.duration);
     } else {
-      // Fallback to individual toggles
-      console.log('Using fallback toggle method');
+      // Fallback to individual toggles - synchronous execution
       if (onClearAll) {
         onClearAll();
       }
       onDurationChange(preset.duration);
       
-      setTimeout(() => {
-        preset.times.forEach(time => {
-          console.log('Toggling time:', time);
-          onTimeToggle(time);
-        });
-      }, 100);
+      // Apply preset times synchronously after clearing and setting duration
+      preset.times.forEach(time => {
+        onTimeToggle(time);
+      });
     }
   };
 
