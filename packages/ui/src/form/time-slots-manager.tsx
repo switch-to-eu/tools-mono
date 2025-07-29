@@ -63,22 +63,20 @@ export const TimeSlotsManager = <TFormData extends FieldValues>({
       updatedTimes = [...selectedStartTimes, timeObj];
     }
     
-    setValue("selectedStartTimes" as FieldPath<TFormData>, updatedTimes as any);
+    setValue("selectedStartTimes" as FieldPath<TFormData>, updatedTimes as TFormData[FieldPath<TFormData>]);
   };
 
   const handleDurationChange = (duration: number) => {
-    setValue("fixedDuration" as FieldPath<TFormData>, duration as any);
+    setValue("fixedDuration" as FieldPath<TFormData>, duration as TFormData[FieldPath<TFormData>]);
   };
 
   const handleClearAll = () => {
-    setValue("selectedStartTimes" as FieldPath<TFormData>, [] as any);
+    setValue("selectedStartTimes" as FieldPath<TFormData>, [] as TFormData[FieldPath<TFormData>]);
   };
 
   const handlePresetSelect = (times: string[], duration: number) => {
-    console.log('Preset handler called with times:', times, 'duration:', duration);
-    
     // Set duration first
-    setValue("fixedDuration" as FieldPath<TFormData>, duration as any);
+    setValue("fixedDuration" as FieldPath<TFormData>, duration as TFormData[FieldPath<TFormData>]);
     
     // Convert time strings to time objects
     const timeObjects = times.map(timeString => {
@@ -86,9 +84,8 @@ export const TimeSlotsManager = <TFormData extends FieldValues>({
       return { hour, minutes };
     });
     
-    console.log('Setting time objects:', timeObjects);
     // Set all times at once
-    setValue("selectedStartTimes" as FieldPath<TFormData>, timeObjects as any);
+    setValue("selectedStartTimes" as FieldPath<TFormData>, timeObjects as TFormData[FieldPath<TFormData>]);
   };
   
   return (
