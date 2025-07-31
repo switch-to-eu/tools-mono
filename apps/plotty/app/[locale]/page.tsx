@@ -37,7 +37,7 @@ export default function Home() {
               <p className="mx-auto mb-8 max-w-2xl text-xl text-neutral-600 sm:mb-10 sm:text-2xl lg:mx-0">
                 {t('hero.description')}
               </p>
-              
+
               <Link href="/create" className="inline-block">
                 <Button
                   variant="default"
@@ -137,17 +137,6 @@ export default function Home() {
                 <CardDescription className="text-lg text-neutral-600 mb-6">
                   {t('benefits.european.description')}
                 </CardDescription>
-                
-                {/* Privacy URL Screenshot */}
-                <div className="rounded-lg overflow-hidden shadow-lg border border-neutral-200">
-                  <Image
-                    src="/screenshots/privacy-url.png"
-                    alt="Admin management interface with encrypted URLs"
-                    width={400}
-                    height={250}
-                    className="w-full h-auto"
-                  />
-                </div>
               </CardHeader>
             </Card>
           </div>
@@ -177,7 +166,7 @@ export default function Home() {
               <p className="text-lg text-neutral-600 mb-6">
                 {t('howItWorks.step1.description')}
               </p>
-              
+
               {/* Timeslots Feature Screenshot */}
               <div className="rounded-lg overflow-hidden shadow-lg border border-neutral-200">
                 <Image
@@ -201,7 +190,7 @@ export default function Home() {
               <p className="text-lg text-neutral-600 mb-6">
                 {t('howItWorks.step2.description')}
               </p>
-              
+
               {/* Voting Results Screenshot */}
               <div className="rounded-lg overflow-hidden shadow-lg border border-neutral-200">
                 <Image
