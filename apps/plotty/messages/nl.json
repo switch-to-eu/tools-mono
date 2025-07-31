@@ -131,53 +131,53 @@
     },
     "HomePage": {
         "hero": {
-            "title": "Plan Afspraken",
-            "subtitle": "zonder gedoe",
-            "description": "Maak polls om de perfecte tijd voor je afspraken te vinden. Eenvoudig, snel en privacy-gericht.",
-            "cta": "Maak een Poll, geen inloggen vereist!",
-            "ctaMobile": "Maak een Poll"
+            "title": "Jouw afspraken",
+            "subtitle": "jouw privacy",
+            "description": "Het Europese alternatief voor big tech planning. Geen tracking, geen advertenties, geen registratie vereist.",
+            "cta": "Maak Privé Poll",
+            "ctaMobile": "Maak Poll"
         },
-        "features": {
-            "title": "Waarom Plotty kiezen?",
-            "description": "Gebouwd met privacy en eenvoud in gedachten, maakt onze planning tool het gemakkelijk om met iedereen af te stemmen.",
-            "fast": {
-                "title": "Bliksemsnelle",
-                "description": "Maak polls in seconden. Geen lange formulieren of ingewikkelde instellingen vereist."
-            },
+        "benefits": {
+            "title": "Waarom duizenden Plotty kiezen",
+            "description": "Eenvoudige planning die jouw privacy respecteert",
             "privacy": {
                 "title": "Privacy Eerst",
-                "description": "Je gegevens worden automatisch na 30 dagen verwijderd. Geen tracking, geen advertenties, geen datamining."
+                "description": "Geen tracking, geen advertenties, geen datamining. Jouw gegevens blijven privé en worden automatisch na 30 dagen verwijderd."
             },
-            "share": {
-                "title": "Overal Delen",
-                "description": "Stuur een eenvoudige link naar deelnemers. Geen accounts vereist voor stemmen."
+            "european": {
+                "title": "Europese Servers",
+                "description": "Gebouwd en gehost in Europa. Jouw versleutelde gegevens verlaten nooit Europese servers."
             }
         },
         "howItWorks": {
-            "title": "Hoe Het Werkt",
-            "description": "Begin in drie eenvoudige stappen",
+            "title": "Zo simpel als 1-2",
+            "description": "Geen ingewikkelde setup, geen account nodig",
             "step1": {
-                "title": "Maak Je Poll",
-                "description": "Voeg je afspraaktitel, beschrijving toe en stel meerdere datums en tijden voor."
+                "title": "Aanmaken",
+                "description": "Voeg je afspraakopties toe in 30 seconden"
             },
             "step2": {
-                "title": "Deel de Link",
-                "description": "Stuur de poll link naar deelnemers via e-mail, chat of elk berichtplatform."
-            },
-            "step3": {
-                "title": "Vind de Beste Tijd",
-                "description": "Bekijk reacties in real-time en identificeer gemakkelijk de meest populaire tijdslots."
+                "title": "Delen",
+                "description": "Stuur de link - deelnemers stemmen direct"
+            }
+        },
+        "trust": {
+            "badges": {
+                "noEmail": "Geen e-mail vereist",
+                "autoDelete": "Automatisch verwijderd na event",
+                "encrypted": "Privé & veilig",
+                "european": "Europese servers"
             }
         },
         "cta": {
-            "title": "Klaar om Je Volgende Afspraak in te Plannen?",
-            "description": "Sluit je aan bij duizenden gebruikers die ons platform vertrouwen voor hun planningsbehoeften.",
-            "button": "Maak Je Eerste Poll",
+            "title": "Probeer het nu",
+            "description": "Geen registratie, geen spam, geen tracking - gewoon planning die werkt.",
+            "button": "Maak Privé Poll",
             "buttonMobile": "Begin"
         },
         "footer": {
             "brand": "Plotty",
-            "tagline": "Privacy-gerichte planning eenvoudig gemaakt. Gebouwd met ❤️ voor betere afspraken."
+            "tagline": "Europese privacy-first planning. Gebouwd met ❤️ voor betere afspraken."
         }
     }
 }

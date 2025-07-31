@@ -131,53 +131,53 @@
     },
     "HomePage": {
         "hero": {
-            "title": "Schedule Meetings",
-            "subtitle": "without hassle",
-            "description": "Create polls to find the perfect time for your meetings. Simple, fast, and privacy-focused.",
-            "cta": "Create a Poll, no login required!",
-            "ctaMobile": "Create a Poll"
+            "title": "Your meetings",
+            "subtitle": "your privacy",
+            "description": "The European alternative to big tech scheduling. No tracking, no ads, no signup required.",
+            "cta": "Create Private Poll",
+            "ctaMobile": "Create Poll"
         },
-        "features": {
-            "title": "Why Choose Plotty?",
-            "description": "Built with privacy and simplicity in mind, our scheduling tool makes it easy to coordinate with anyone.",
-            "fast": {
-                "title": "Lightning Fast",
-                "description": "Create polls in seconds. No lengthy forms or complicated setup required."
-            },
+        "benefits": {
+            "title": "Why you should choose Plotty",
+            "description": "Simple scheduling that respects your privacy",
             "privacy": {
                 "title": "Privacy First",
-                "description": "Your data is automatically deleted after 30 days. No tracking, no ads, no data mining."
+                "description": "No tracking, no ads, no data mining. Your data stays private and is automatically deleted after 30 days after the event is ended."
             },
-            "share": {
-                "title": "Share Anywhere",
-                "description": "Send a simple link to participants. No accounts required for voting."
+            "european": {
+                "title": "European Servers",
+                "description": "Built and hosted in Europe. Your encrypted data never leaves European servers."
             }
         },
         "howItWorks": {
-            "title": "How It Works",
-            "description": "Get started in three simple steps",
+            "title": "Simple as 1-2",
+            "description": "No complicated setup, no account needed",
             "step1": {
-                "title": "Create Your Poll",
-                "description": "Add your meeting title, description, and propose multiple dates and times."
+                "title": "Create",
+                "description": "Add your meeting options in 30 seconds"
             },
             "step2": {
-                "title": "Share the Link",
-                "description": "Send the poll link to participants via email, chat, or any messaging platform."
-            },
-            "step3": {
-                "title": "Find the Best Time",
-                "description": "View responses in real-time and easily identify the most popular time slots."
+                "title": "Share",
+                "description": "Send the link - participants vote instantly"
+            }
+        },
+        "trust": {
+            "badges": {
+                "noEmail": "No email required",
+                "autoDelete": "Auto-deleted after event",
+                "encrypted": "Private & secure",
+                "european": "European servers"
             }
         },
         "cta": {
-            "title": "Ready to Schedule Your Next Meeting?",
-            "description": "Join thousands of users who trust our platform for their scheduling needs.",
-            "button": "Create Your First Poll",
+            "title": "Try it now",
+            "description": "No signup, no spam, no tracking - just scheduling that works.",
+            "button": "Create Private Poll",
             "buttonMobile": "Get Started"
         },
         "footer": {
             "brand": "Plotty",
-            "tagline": "Privacy-focused scheduling made simple. Built with ❤️ for better meetings."
+            "tagline": "European privacy-first scheduling. Built with ❤️ for better meetings."
         }
     }
 }
