@@ -28,5 +28,43 @@
             "arrayMinLength": "Minimaal {{min}} item is vereist",
             "futureDate": "Alle geselecteerde datums moeten vandaag of in de toekomst zijn"
         }
+    },
+    "tools": {
+        "plotty": {
+            "tagline": "Plannen zonder gedoe",
+            "description": "Privacy-first peilingen voor teams. Maak peilingen in 30 seconden, geen registratie vereist.",
+            "cta": "Probeer Plotty"
+        },
+        "nully": {
+            "tagline": "Veilig bestanden delen",
+            "description": "Deel bestanden veilig met automatische verwijdering. Geen accounts, geen tracking.",
+            "cta": "Probeer Nully"
+        },
+        "keepfocus": {
+            "tagline": "Privacy-respecterende productiviteit",
+            "description": "Verhoog productiviteit met focus tracking die jouw privacy respecteert.",
+            "cta": "Probeer KeepFocus"
+        },
+        "more": {
+            "tagline": "Binnenkort",
+            "description": "Extra privacy-first Europese tools in ontwikkeling.",
+            "cta": "Binnenkort"
+        }
+    },
+    "footer": {
+        "description": "Jouw gids naar Europese digitale alternatieven. We helpen je ontdekken, evalueren en overstappen naar EU-gebaseerde tools die jouw privacy en datasoevereiniteit respecteren.",
+        "confidence": "We bevelen niet alleen EU-alternatieven aan—we bouwen ze. Onze eigen apps bewijzen dat Europese software zowel privacy-first als prachtig ontworpen kan zijn.",
+        "toolsTitle": "Tools die we zelf hebben gebouwd",
+        "browseMore": "Bekijk meer EU-alternatieven",
+        "links": "Links",
+        "about": "Over",
+        "privacy": "Privacybeleid",
+        "contact": "Contact",
+        "copyright": "© 2025 Switch-to.eu - Een project van",
+        "tools": {
+            "plotty": "Privacy-first vergaderplanner",
+            "nully": "Veilig bestanden delen",
+            "keepfocus": "Afleidingsvrije productiviteit"
+        }
     }
 }

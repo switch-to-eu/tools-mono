@@ -63,6 +63,17 @@
       "home": "Home",
       "about": "About",
       "contact": "Contact"
+    },
+    "footer": {
+      "description": "Your guide to European digital alternatives. We help you discover, evaluate, and switch to EU-based tools that respect your privacy and data sovereignty.",
+      "confidence": "We don't just recommend EU alternatives—we build them. Our own apps prove that European software can be both privacy-first and beautifully designed.",
+      "toolsTitle": "Tools we've built in house",
+      "browseMore": "Browse more EU alternatives",
+      "links": "Links",
+      "about": "About",
+      "privacy": "Privacy Policy",
+      "contact": "Contact",
+      "copyright": "© 2025 Switch-to.eu - A project by"
     }
   }
 }

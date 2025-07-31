@@ -8,6 +8,7 @@ import { hasLocale, type Locale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 
 import { Header } from "@workspace/ui/blocks/header";
+import { Footer } from "@workspace/ui/blocks/footer";
 import { BrandIndicator } from "@workspace/ui/components/brand-indicator";
 import { routing } from "../../i18n/routing";
 import { Link } from "../../i18n/navigation";
@@ -72,7 +73,7 @@ export default async function LocaleLayout({
                       <span className="text-lg font-black text-blue-600 tracking-wide uppercase sm:text-xl leading-none">
                         Nully
                       </span>
-                      <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" />
+                      <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" asSpan />
                     </div>
                   </div>
                 </Link>
@@ -87,6 +88,7 @@ export default async function LocaleLayout({
               }
             />
             {children}
+            <Footer locale={locale} appName="Nully" />
           </div>
         </NextIntlClientProvider>
       </body>

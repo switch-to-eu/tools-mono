@@ -5,7 +5,8 @@
             "description": "Schedule Meetings without hassle"
         },
         "header": {
-            "createPoll": "Create Poll"
+            "createPoll": "Create Poll",
+            "about": "About"
         }
     },
     "ErrorStates": {
@@ -133,9 +134,10 @@
         "hero": {
             "title": "Your meetings",
             "subtitle": "your privacy",
-            "description": "The European alternative to big tech scheduling. No tracking, no ads, no signup required.",
+            "description": "Create polls instantly - no registration, no email, no hassle. Just simple scheduling that respects your privacy.",
             "cta": "Create Private Poll",
-            "ctaMobile": "Create Poll"
+            "ctaMobile": "Create Poll",
+            "disclaimer": "No signup required"
         },
         "benefits": {
             "title": "Why you should choose Plotty",
@@ -174,10 +176,159 @@
             "description": "No signup, no spam, no tracking - just scheduling that works.",
             "button": "Create Private Poll",
             "buttonMobile": "Get Started"
+        }
+    },
+    "AboutPage": {
+        "hero": {
+            "title": "About Plotty",
+            "subtitle": "The European alternative to big tech scheduling. Built for privacy, designed for simplicity, hosted in Europe.",
+            "badges": {
+                "european": "European Servers",
+                "encrypted": "End-to-End Encrypted",
+                "noTracking": "No Tracking"
+            }
         },
-        "footer": {
-            "brand": "Plotty",
-            "tagline": "European privacy-first scheduling. Built with ❤️ for better meetings."
+        "platform": {
+            "title": "Part of Switch-to.eu",
+            "description": "Plotty is proudly part of the Switch-to.eu initiative - a growing platform of European digital tools that put your privacy first. We're building alternatives to big tech surveillance capitalism, one tool at a time.",
+            "benefits": {
+                "sovereignty": {
+                    "title": "Digital Sovereignty",
+                    "description": "Keep your data in European hands, under European law. No foreign governments, no surveillance capitalism."
+                },
+                "privacy": {
+                    "title": "Privacy by Design",
+                    "description": "Every tool is built from the ground up with privacy as the foundation, not an afterthought."
+                },
+                "innovation": {
+                    "title": "European Innovation",
+                    "description": "Proving that European tech can be both privacy-respecting and cutting-edge."
+                }
+            },
+            "cta": "Explore Switch-to.eu"
+        },
+        "plotty": {
+            "title": "What is Plotty?",
+            "subtitle": "Plotty makes scheduling meetings as simple as it should be - without sacrificing your privacy or requiring yet another account.",
+            "features": {
+                "instant": {
+                    "title": "Instant Setup",
+                    "description": "Create polls in 30 seconds. No signup, no email verification, no hassle."
+                },
+                "realtime": {
+                    "title": "Real-time Collaboration",
+                    "description": "Watch responses come in live. Everyone sees updates instantly."
+                },
+                "private": {
+                    "title": "Truly Private",
+                    "description": "End-to-end encrypted data that automatically deletes after your event."
+                }
+            },
+            "perfectFor": {
+                "title": "Perfect for",
+                "teams": {
+                    "title": "Remote Teams",
+                    "description": "Quick standup scheduling across time zones"
+                },
+                "events": {
+                    "title": "Event Planning",
+                    "description": "Family gatherings, meetups, conferences"
+                },
+                "privacy": {
+                    "title": "Privacy-Conscious",
+                    "description": "Anyone who values data protection"
+                }
+            }
+        },
+        "technical": {
+            "title": "How Plotty Works",
+            "subtitle": "Modern technology stack designed for privacy, performance, and user experience.",
+            "architecture": {
+                "title": "Privacy-First Architecture",
+                "encryption": {
+                    "title": "Client-Side Encryption",
+                    "description": "Your data is encrypted in your browser before it ever leaves your device"
+                },
+                "realtime": {
+                    "title": "Real-Time Updates",
+                    "description": "Server-sent events keep everyone synchronized without polling"
+                },
+                "storage": {
+                    "title": "Minimal Storage",
+                    "description": "Only encrypted data stored, automatically deleted after expiration"
+                }
+            },
+            "details": {
+                "security": {
+                    "title": "Security & Privacy",
+                    "encryption": "AES-GCM 256-bit encryption with WebCrypto API",
+                    "zeroKnowledge": "Zero-knowledge architecture - we can't see your data",
+                    "autoDelete": "Automatic deletion after 30 days post-event",
+                    "noTracking": "No analytics, cookies, or tracking scripts"
+                },
+                "performance": {
+                    "title": "Real-Time Performance",
+                    "sse": "Server-Sent Events for instant live updates",
+                    "trpc": "tRPC for type-safe, efficient API communication",
+                    "optimistic": "Optimistic updates for instant UI feedback",
+                    "responsive": "Mobile-first responsive design"
+                },
+                "scheduling": {
+                    "title": "Advanced Scheduling",
+                    "flexible": "All-day or specific time range options",
+                    "multiple": "Multiple start times with fixed durations",
+                    "granular": "30-minute granularity for precise scheduling",
+                    "optimal": "Automatic best time detection and highlighting"
+                },
+                "modern": {
+                    "title": "Modern Tech Stack",
+                    "nextjs": "Next.js 15 with app router and internationalization",
+                    "database": "PostgreSQL with Drizzle ORM on European servers",
+                    "typescript": "Full TypeScript for reliability and maintainability",
+                    "hosting": "European hosting with 99.9% uptime guarantee"
+                }
+            }
+        },
+        "openSource": {
+            "title": "Open Source & Transparent",
+            "description": "Plotty is completely open source. Every line of code is available for inspection, contribution, and verification. Because privacy tools should be transparent.",
+            "cta": "View Source Code",
+            "benefits": {
+                "transparency": {
+                    "title": "Full Transparency",
+                    "description": "Audit every feature, verify our privacy claims, see exactly how your data is handled"
+                },
+                "community": {
+                    "title": "Community Driven",
+                    "description": "Built by the community, for the community. Contribute features, report issues, shape the future"
+                },
+                "security": {
+                    "title": "Security Through Openness",
+                    "description": "Open source means vulnerabilities are found and fixed faster, making Plotty more secure"
+                }
+            }
+        },
+        "europe": {
+            "title": "Why Europe Matters",
+            "subtitle": "Your data deserves better than surveillance capitalism. European digital infrastructure offers real alternatives.",
+            "gdpr": {
+                "title": "GDPR Compliance",
+                "description": "Built with the world's strongest privacy regulations in mind. Your rights are protected by design, not by accident."
+            },
+            "sovereignty": {
+                "title": "Data Sovereignty",
+                "description": "Your data stays in Europe, under European law. No foreign surveillance, no government backdoors."
+            },
+            "infrastructure": {
+                "title": "European Infrastructure",
+                "description": "Fast, reliable servers in European data centers. Low latency, high privacy, full compliance."
+            }
+        },
+        "cta": {
+            "title": "Ready to try Plotty?",
+            "description": "Join thousands who've switched to privacy-respecting scheduling. No signup required, instant setup.",
+            "createPoll": "Create Your First Poll",
+            "learnMore": "Back to Home"
         }
     }
 }

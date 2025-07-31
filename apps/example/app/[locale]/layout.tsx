@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 
 import { TRPCReactProvider } from "@/lib/trpc-client";
 import { Header } from "@workspace/ui/blocks/header";
+import { Footer } from "@workspace/ui/blocks/footer";
 import { Button } from "@workspace/ui/components/button";
 import { BrandIndicator } from "@workspace/ui/components/brand-indicator";
 import { routing } from "../../i18n/routing";
@@ -73,7 +74,7 @@ export default async function LocaleLayout({
                                             </div>
                                             <div className="flex flex-col">
                                                 <span className="text-lg font-black text-blue-600 tracking-wide uppercase sm:text-xl leading-none">Example</span>
-                                                <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" />
+                                                <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" asSpan />
                                             </div>
                                         </div>
                                     </Link>
@@ -98,6 +99,7 @@ export default async function LocaleLayout({
                                 }
                             />
                             {children}
+                            <Footer locale={locale} />
                         </div>
                     </TRPCReactProvider>
                 </NextIntlClientProvider>

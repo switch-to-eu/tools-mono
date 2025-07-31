@@ -38,17 +38,22 @@ export default function Home() {
                 {t('hero.description')}
               </p>
 
-              <Link href="/create" className="inline-block">
-                <Button
-                  variant="default"
-                  size="lg"
-                  className="px-8 py-4 text-lg font-semibold shadow-xl transition-all hover:scale-105"
-                >
-                  <Shield className="mr-3 h-6 w-6" />
-                  <span className="hidden sm:inline">{t('hero.cta')}</span>
-                  <span className="sm:hidden">{t('hero.ctaMobile')}</span>
-                </Button>
-              </Link>
+              <div className="inline-block">
+                <Link href="/create" className="inline-block">
+                  <Button
+                    variant="default"
+                    size="lg"
+                    className="px-8 py-4 text-lg font-semibold shadow-xl transition-all hover:scale-105"
+                  >
+                    <Shield className="mr-3 h-6 w-6" />
+                    <span className="hidden sm:inline">{t('hero.cta')}</span>
+                    <span className="sm:hidden">{t('hero.ctaMobile')}</span>
+                  </Button>
+                </Link>
+                <p className="mt-2 text-sm text-neutral-500 text-left">
+                  {t('hero.disclaimer')}
+                </p>
+              </div>
             </div>
 
             {/* Hero Screenshot */}
@@ -217,7 +222,7 @@ export default function Home() {
           <p className="mx-auto mb-8 max-w-2xl text-xl text-white/90 sm:mb-10">
             {t('cta.description')}
           </p>
-          <div>
+          <div className="inline-block">
             <Link href="/create" className="inline-block">
               <Button
                 variant="secondary"
@@ -229,22 +234,13 @@ export default function Home() {
                 <span className="sm:hidden">{t('cta.buttonMobile')}</span>
               </Button>
             </Link>
+            <p className="mt-2 text-sm text-white/70 text-center">
+              {t('hero.disclaimer')}
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 py-8 text-white">
-        <div className="container mx-auto text-center">
-          <div className="mb-4 flex items-center justify-center gap-2">
-            <Calendar className="h-6 w-6" />
-            <span className="text-lg font-semibold">{t('footer.brand')}</span>
-          </div>
-          <p className="text-sm text-gray-400">
-            {t('footer.tagline')}
-          </p>
-        </div>
-      </footer>
     </>
   );
 }

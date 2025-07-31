@@ -5,7 +5,8 @@
             "description": "Plan Afspraken zonder gedoe"
         },
         "header": {
-            "createPoll": "Maak Poll"
+            "createPoll": "Maak Poll",
+            "about": "Over"
         }
     },
     "ErrorStates": {
@@ -133,9 +134,10 @@
         "hero": {
             "title": "Jouw afspraken",
             "subtitle": "jouw privacy",
-            "description": "Het Europese alternatief voor big tech planning. Geen tracking, geen advertenties, geen registratie vereist.",
+            "description": "Maak direct polls - geen registratie, geen email, geen gedoe. Gewoon eenvoudige planning die jouw privacy respecteert.",
             "cta": "Maak Privé Poll",
-            "ctaMobile": "Maak Poll"
+            "ctaMobile": "Maak Poll",
+            "disclaimer": "Geen registratie vereist"
         },
         "benefits": {
             "title": "Waarom duizenden Plotty kiezen",
@@ -178,6 +180,159 @@
         "footer": {
             "brand": "Plotty",
             "tagline": "Europese privacy-first planning. Gebouwd met ❤️ voor betere afspraken."
+        }
+    },
+    "AboutPage": {
+        "hero": {
+            "title": "Over Plotty",
+            "subtitle": "Het Europese alternatief voor big tech planning. Gebouwd voor privacy, ontworpen voor eenvoud, gehost in Europa.",
+            "badges": {
+                "european": "Europese Servers",
+                "encrypted": "End-to-End Versleuteld",
+                "noTracking": "Geen Tracking"
+            }
+        },
+        "platform": {
+            "title": "Onderdeel van Switch-to.eu",
+            "description": "Plotty is trots onderdeel van het Switch-to.eu initiatief - een groeiend platform van Europese digitale tools die jouw privacy voorop stellen. We bouwen alternatieven voor big tech surveillance kapitalisme, één tool tegelijk.",
+            "benefits": {
+                "sovereignty": {
+                    "title": "Digitale Soevereiniteit",
+                    "description": "Houd je data in Europese handen, onder Europese wet. Geen buitenlandse regeringen, geen surveillance kapitalisme."
+                },
+                "privacy": {
+                    "title": "Privacy by Design",
+                    "description": "Elke tool is vanaf de grond opgebouwd met privacy als fundament, niet als bijgedachte."
+                },
+                "innovation": {
+                    "title": "Europese Innovatie",
+                    "description": "Bewezen dat Europese tech zowel privacy-respecterend als geavanceerd kan zijn."
+                }
+            },
+            "cta": "Verken Switch-to.eu"
+        },
+        "plotty": {
+            "title": "Wat is Plotty?",
+            "subtitle": "Plotty maakt afspraken plannen zo eenvoudig als het zou moeten zijn - zonder je privacy op te offeren of weer een account aan te maken.",
+            "features": {
+                "instant": {
+                    "title": "Directe Setup",
+                    "description": "Maak polls in 30 seconden. Geen registratie, geen email verificatie, geen gedoe."
+                },
+                "realtime": {
+                    "title": "Real-time Samenwerking",
+                    "description": "Zie reacties live binnenkomen. Iedereen ziet updates direct."
+                },
+                "private": {
+                    "title": "Echt Privé",
+                    "description": "End-to-end versleutelde data die automatisch verwijdert na je evenement."
+                }
+            },
+            "perfectFor": {
+                "title": "Perfect voor",
+                "teams": {
+                    "title": "Remote Teams",
+                    "description": "Snelle standup planning over tijdzones heen"
+                },
+                "events": {
+                    "title": "Evenement Planning",
+                    "description": "Familie bijeenkomsten, meetups, conferenties"
+                },
+                "privacy": {
+                    "title": "Privacy-Bewust",
+                    "description": "Iedereen die waarde hecht aan databescherming"
+                }
+            }
+        },
+        "technical": {
+            "title": "Hoe Plotty Werkt",
+            "subtitle": "Moderne technologie stack ontworpen voor privacy, prestaties en gebruikerservaring.",
+            "architecture": {
+                "title": "Privacy-First Architectuur",
+                "encryption": {
+                    "title": "Client-Side Versleuteling",
+                    "description": "Je data wordt versleuteld in je browser voordat het je apparaat verlaat"
+                },
+                "realtime": {
+                    "title": "Real-Time Updates",
+                    "description": "Server-sent events houden iedereen gesynchroniseerd zonder polling"
+                },
+                "storage": {
+                    "title": "Minimale Opslag",
+                    "description": "Alleen versleutelde data opgeslagen, automatisch verwijderd na vervaldatum"
+                }
+            },
+            "details": {
+                "security": {
+                    "title": "Beveiliging & Privacy",
+                    "encryption": "AES-GCM 256-bit versleuteling met WebCrypto API",
+                    "zeroKnowledge": "Zero-knowledge architectuur - wij kunnen je data niet zien",
+                    "autoDelete": "Automatische verwijdering na 30 dagen post-evenement",
+                    "noTracking": "Geen analytics, cookies of tracking scripts"
+                },
+                "performance": {
+                    "title": "Real-Time Prestaties",
+                    "sse": "Server-Sent Events voor directe live updates",
+                    "trpc": "tRPC voor type-safe, efficiënte API communicatie",
+                    "optimistic": "Optimistische updates voor directe UI feedback",
+                    "responsive": "Mobile-first responsive ontwerp"
+                },
+                "scheduling": {
+                    "title": "Geavanceerde Planning",
+                    "flexible": "Hele dag of specifieke tijdsopties",
+                    "multiple": "Meerdere starttijden met vaste duur",
+                    "granular": "30-minuten nauwkeurigheid voor precisie planning",
+                    "optimal": "Automatische beste tijd detectie en highlighting"
+                },
+                "modern": {
+                    "title": "Moderne Tech Stack",
+                    "nextjs": "Next.js 15 met app router en internationalisatie",
+                    "database": "PostgreSQL met Drizzle ORM op Europese servers",
+                    "typescript": "Volledige TypeScript voor betrouwbaarheid en onderhoudbaarheid",
+                    "hosting": "Europese hosting met 99.9% uptime garantie"
+                }
+            }
+        },
+        "openSource": {
+            "title": "Open Source & Transparant",
+            "description": "Plotty is volledig open source. Elke regel code is beschikbaar voor inspectie, bijdragen en verificatie. Omdat privacy tools transparant moeten zijn.",
+            "cta": "Bekijk Broncode",
+            "benefits": {
+                "transparency": {
+                    "title": "Volledige Transparantie",
+                    "description": "Controleer elke functie, verifieer onze privacy claims, zie precies hoe je data wordt behandeld"
+                },
+                "community": {
+                    "title": "Community Gedreven",
+                    "description": "Gebouwd door de community, voor de community. Draag functies bij, meld problemen, vorm de toekomst"
+                },
+                "security": {
+                    "title": "Beveiliging Door Openheid",
+                    "description": "Open source betekent dat kwetsbaarheden sneller worden gevonden en opgelost, wat Plotty veiliger maakt"
+                }
+            }
+        },
+        "europe": {
+            "title": "Waarom Europa Ertoe Doet",
+            "subtitle": "Je data verdient beter dan surveillance kapitalisme. Europese digitale infrastructuur biedt echte alternatieven.",
+            "gdpr": {
+                "title": "GDPR Compliance",
+                "description": "Gebouwd met 's werelds sterkste privacy regelgeving in gedachten. Je rechten zijn beschermd by design, niet per ongeluk."
+            },
+            "sovereignty": {
+                "title": "Data Soevereiniteit",
+                "description": "Je data blijft in Europa, onder Europese wet. Geen buitenlandse surveillance, geen regering backdoors."
+            },
+            "infrastructure": {
+                "title": "Europese Infrastructuur",
+                "description": "Snelle, betrouwbare servers in Europese datacenters. Lage latency, hoge privacy, volledige compliance."
+            }
+        },
+        "cta": {
+            "title": "Klaar om Plotty te proberen?",
+            "description": "Sluit je aan bij duizenden die zijn overgestapt naar privacy-respecterende planning. Geen registratie vereist, directe setup.",
+            "createPoll": "Maak Je Eerste Poll",
+            "learnMore": "Terug naar Home"
         }
     }
 }
