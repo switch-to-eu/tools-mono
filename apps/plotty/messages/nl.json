@@ -156,11 +156,13 @@
             "description": "Geen ingewikkelde setup, geen account nodig",
             "step1": {
                 "title": "Aanmaken",
-                "description": "Voeg je afspraakopties toe in 30 seconden"
+                "description": "Voeg je afspraakopties toe in 30 seconden",
+                "caption": "Optioneel: Voeg specifieke tijdsloten toe"
             },
             "step2": {
                 "title": "Delen",
-                "description": "Stuur de link - deelnemers stemmen direct"
+                "description": "Stuur de link - deelnemers stemmen direct",
+                "caption": "Zie resultaten in real-time"
             }
         },
         "trust": {

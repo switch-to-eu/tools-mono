@@ -156,11 +156,13 @@
             "description": "No complicated setup, no account needed",
             "step1": {
                 "title": "Create",
-                "description": "Add your meeting options in 30 seconds"
+                "description": "Add your meeting options in 30 seconds",
+                "caption": "Optional: Add specific time slots"
             },
             "step2": {
                 "title": "Share",
-                "description": "Send the link - participants vote instantly"
+                "description": "Send the link - participants vote instantly",
+                "caption": "See results in real-time"
             }
         },
         "trust": {

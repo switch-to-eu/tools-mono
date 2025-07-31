@@ -182,7 +182,7 @@ export default function Home() {
                   className="w-full h-auto"
                 />
               </div>
-              <p className="text-sm text-neutral-500 mt-2">Optional: Add specific time slots</p>
+              <p className="text-sm text-neutral-500 mt-2">{t('howItWorks.step1.caption')}</p>
             </div>
 
             <div className="group text-center">
@@ -206,7 +206,7 @@ export default function Home() {
                   className="w-full h-auto"
                 />
               </div>
-              <p className="text-sm text-neutral-500 mt-2">See results in real-time</p>
+              <p className="text-sm text-neutral-500 mt-2">{t('howItWorks.step2.caption')}</p>
             </div>
           </div>
         </div>
