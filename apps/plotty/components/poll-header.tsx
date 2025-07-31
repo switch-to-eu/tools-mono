@@ -1,8 +1,9 @@
 import { format } from "date-fns";
-import { Calendar, Users, CheckCircle, FileText } from "lucide-react";
+import { Calendar, Users, CheckCircle, FileText, Clock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SectionCard, SectionHeader, SectionContent } from "@workspace/ui/blocks/section-card";
 import type { DecryptedPoll } from "@/lib/interfaces";
+import { formatTimeSlotRange } from "@/lib/time-utils";
 
 interface BestTime {
   date: string;
@@ -47,8 +48,18 @@ export function PollInfo({ poll }: PollInfoProps) {
           </div>
           <div className="flex items-center gap-2 text-gray-600">
             <Calendar className="h-4 w-4" />
-            <span>{poll.dates.length} {t('dates')}</span>
+            {poll.allowHourSelection && poll.selectedStartTimes && poll.fixedDuration && poll.selectedStartTimes.length > 0 ? (
+              <span>{poll.dates.length * poll.selectedStartTimes.length} {t('timeSlots')}</span>
+            ) : (
+              <span>{poll.dates.length} {t('dates')}</span>
+            )}
           </div>
+          {poll.allowHourSelection && poll.fixedDuration && (
+            <div className="flex items-center gap-2 text-gray-600">
+              <Clock className="h-4 w-4" />
+              <span>{poll.fixedDuration}h {t('duration')}</span>
+            </div>
+          )}
         </div>
       </SectionContent>
     </SectionCard>
@@ -75,7 +86,19 @@ export function BestTimeHighlight({ poll, bestTime }: BestTimeHighlightProps) {
       />
       <SectionContent className="text-center">
         <h3 className="text-xl font-semibold text-gray-900">
-          {format(new Date(bestTime.date), "EEEE, MMMM d")}
+          {bestTime.date.includes('T') ? (
+            // For timed polls: show date + time range
+            <>
+              {format(new Date(bestTime.date.split('T')[0]!), "EEEE, MMMM d")}
+              <br />
+              <span className="text-lg text-blue-600 font-medium">
+                {formatTimeSlotRange(bestTime.date.split('T')[1]!, poll.fixedDuration || 1)}
+              </span>
+            </>
+          ) : (
+            // For date-only polls: show just the date
+            format(new Date(bestTime.date), "EEEE, MMMM d")
+          )}
         </h3>
       </SectionContent>
     </SectionCard>

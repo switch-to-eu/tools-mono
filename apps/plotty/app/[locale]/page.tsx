@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <div className="relative overflow-hidden px-4 py-12 sm:py-16 lg:py-20">
+      <div className="relative overflow-hidden py-12 sm:py-16 lg:py-20">
         {/* Background gradient */}
         <div className="absolute inset-0 gradient-bg-purple-blue"></div>
 
@@ -31,7 +31,7 @@ export default function Home() {
             <span className="text-neutral-900">{t('hero.subtitle')}</span>
           </h1>
 
-          <p className="mx-auto mb-6 max-w-2xl px-4 text-lg text-neutral-600 sm:mb-8 sm:text-xl">
+          <p className="mx-auto mb-6 max-w-2xl text-lg text-neutral-600 sm:mb-8 sm:text-xl">
             {t('hero.description')}
           </p>
           <Link href="/create" className="flex flex-row justify-center">
@@ -52,13 +52,13 @@ export default function Home() {
       </div>
 
       {/* Features Section */}
-      <div className="bg-white px-4 py-12 sm:py-16">
+      <div className="bg-white py-12 sm:py-16">
         <div className="container mx-auto">
           <div className="mb-8 text-center sm:mb-12">
             <h2 className="mb-3 text-3xl font-bold text-neutral-900 sm:mb-4 sm:text-4xl">
               {t('features.title')}
             </h2>
-            <p className="mx-auto max-w-2xl px-4 text-base text-neutral-600 sm:text-lg">
+            <p className="mx-auto max-w-2xl text-base text-neutral-600 sm:text-lg">
               {t('features.description')}
             </p>
           </div>
@@ -110,13 +110,13 @@ export default function Home() {
       </div>
 
       {/* How It Works Section */}
-      <div className="px-4 py-12 sm:py-16">
+      <div className="py-12 sm:py-16">
         <div className="container mx-auto">
           <div className="mb-8 text-center sm:mb-12">
             <h2 className="mb-3 text-3xl font-bold text-neutral-900 sm:mb-4 sm:text-4xl">
               {t('howItWorks.title')}
             </h2>
-            <p className="px-4 text-base text-neutral-600 sm:text-lg">
+            <p className="text-base text-neutral-600 sm:text-lg">
               {t('howItWorks.description')}
             </p>
           </div>
@@ -129,7 +129,7 @@ export default function Home() {
               <h3 className="mb-2 text-xl font-semibold text-neutral-900">
                 {t('howItWorks.step1.title')}
               </h3>
-              <p className="px-2 text-base text-neutral-600">
+              <p className="text-base text-neutral-600">
                 {t('howItWorks.step1.description')}
               </p>
             </div>
@@ -141,7 +141,7 @@ export default function Home() {
               <h3 className="mb-2 text-xl font-semibold text-neutral-900">
                 {t('howItWorks.step2.title')}
               </h3>
-              <p className="px-2 text-base text-neutral-600">
+              <p className="text-base text-neutral-600">
                 {t('howItWorks.step2.description')}
               </p>
             </div>
@@ -153,7 +153,7 @@ export default function Home() {
               <h3 className="mb-2 text-xl font-semibold text-neutral-900">
                 {t('howItWorks.step3.title')}
               </h3>
-              <p className="px-2 text-base text-neutral-600">
+              <p className="text-base text-neutral-600">
                 {t('howItWorks.step3.description')}
               </p>
             </div>
@@ -162,16 +162,16 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="relative overflow-hidden gradient-purple-blue-green px-4 py-12 sm:py-16">
+      <div className="relative overflow-hidden gradient-purple-blue-green py-12 sm:py-16">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 container mx-auto text-center">
-          <h2 className="mb-3 px-4 text-3xl font-bold text-white sm:mb-4 sm:text-4xl">
+          <h2 className="mb-3 text-3xl font-bold text-white sm:mb-4 sm:text-4xl">
             {t('cta.title')}
           </h2>
-          <p className="mx-auto mb-6 max-w-2xl px-4 text-base text-white/90 sm:mb-8 sm:text-lg">
+          <p className="mx-auto mb-6 max-w-2xl text-base text-white/90 sm:mb-8 sm:text-lg">
             {t('cta.description')}
           </p>
-          <div className="px-4">
+          <div>
             <Link href="/create" className="inline-block w-full sm:w-auto">
               <Button
                 variant="secondary"
@@ -188,7 +188,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 px-4 py-8 text-white">
+      <footer className="bg-gray-900 py-8 text-white">
         <div className="container mx-auto text-center">
           <div className="mb-4 flex items-center justify-center gap-2">
             <Calendar className="h-6 w-6" />

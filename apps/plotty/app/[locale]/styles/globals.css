@@ -2,3 +2,12 @@
 @import "@workspace/ui/globals.css";
 
 @source '../../../node_modules/@workspace/ui/src';
+
+/* Plotty-specific accent color overrides */
+.focus-ring-accent {
+  @apply focus-visible:ring-purple-600/30 focus-visible:ring-[2px];
+}
+
+.focus-ring-accent-strong {
+  @apply focus-visible:ring-purple-600/50 focus-visible:ring-[3px];
+}

@@ -18,6 +18,7 @@ import {
 
 import type { DecryptedPoll } from "@/lib/interfaces";
 import { LoadingButton } from "@workspace/ui/components/loading-button";
+import { generateTimeSlotsFromStartTimes, formatTimeSlotRange } from "@/lib/time-utils";
 
 type AvailabilityStatus = 'available' | 'unavailable' | 'unknown';
 
@@ -63,19 +64,50 @@ export function AvailabilityGrid({
         name: participant.name,
         isCurrentUser: false,
       })),
-    timeSlots: poll.dates.map((date) => ({
-      id: date,
-      date: date,
-    })),
+    // Generate slots from duration + start times if time selection is enabled
+    timeSlots: poll.allowHourSelection && poll.selectedStartTimes && poll.fixedDuration
+      ? poll.dates.flatMap(date =>
+          poll.selectedStartTimes!.map(startTime => ({
+            id: `${date}T${startTime}`,
+            date: date,
+            startTime: startTime,
+            duration: poll.fixedDuration!,
+            displayName: `${formatDate(date)} ${formatTimeSlotRange(startTime, poll.fixedDuration!)}`
+          }))
+        )
+      : poll.dates.map((date) => ({
+          id: date,
+          date: date,
+          displayName: formatDate(date)
+        })),
     availabilityData: poll.participants.flatMap((participant) =>
-      poll.dates.map((date) => ({
-        participantId: participant.id,
-        timeSlotId: date,
-        status: participant.availability[date] ? 'available' as const : 'unavailable' as const,
-      }))
+      poll.allowHourSelection && poll.selectedStartTimes && poll.fixedDuration
+        ? poll.dates.flatMap(date =>
+            poll.selectedStartTimes!.map(startTime => ({
+              participantId: participant.id,
+              timeSlotId: `${date}T${startTime}`,
+              status: participant.availability[`${date}T${startTime}`] ? 'available' as const : 'unavailable' as const,
+            }))
+          )
+        : poll.dates.map((date) => ({
+            participantId: participant.id,
+            timeSlotId: date,
+            status: participant.availability[date] ? 'available' as const : 'unavailable' as const,
+          }))
     ),
-    eventOptionsCount: poll.dates.length,
+    eventOptionsCount: poll.allowHourSelection && poll.selectedStartTimes && poll.fixedDuration
+      ? poll.dates.length * poll.selectedStartTimes.length
+      : poll.dates.length,
   };
+
+  // Helper function to format date consistently
+  function formatDate(date: string): string {
+    return new Date(date).toLocaleDateString('en-US', { 
+      weekday: 'short', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  }
 
   // Calculate availability counts for each time slot to find the most popular ones
   const availabilityCounts = transformedData.timeSlots.map(slot => ({
@@ -146,9 +178,12 @@ export function AvailabilityGrid({
 
   const handleClear = () => {
     const clearedAvailability: Record<string, boolean> = {};
-    poll.dates.forEach((date: string) => {
-      clearedAvailability[date] = false;
+    
+    // Clear all time slots (either dates or date+time combinations)
+    transformedData.timeSlots.forEach((slot) => {
+      clearedAvailability[slot.id] = false;
     });
+    
     setCurrentUserSelections(clearedAvailability);
     setHasUnsavedChanges(true);
     onSave?.(currentUserName, clearedAvailability);
@@ -294,7 +329,7 @@ export function AvailabilityGrid({
         {/* Scrollable Content Area */}
         <div className="flex-1 overflow-x-auto">
           <div className="min-w-max">
-            {/* Date Headers */}
+            {/* Date/Time Headers */}
             <div className="flex border-b border-primary-color bg-gray-50 h-[120px]">
               {transformedData.timeSlots.map((slot) => {
                 const availableCount = transformedData.availabilityData.filter(
@@ -302,18 +337,38 @@ export function AvailabilityGrid({
                 ).length;
 
                 const isMostPopular = mostPopularSlots.has(slot.id);
+                const isTimedPoll = poll.allowHourSelection && poll.selectedStartTimes && poll.fixedDuration;
 
                 return (
-                  <div key={slot.id} className={`w-20 flex-shrink-0 border-r border-primary-color px-2 py-4 text-center flex flex-col justify-end ${isMostPopular ? 'bg-green-50 border-green-200' : ''
+                  <div key={slot.id} className={`w-24 sm:w-28 flex-shrink-0 border-r border-primary-color px-2 py-4 text-center flex flex-col justify-end ${isMostPopular ? 'bg-green-50 border-green-200' : ''
                     }`}>
-                    <div className="text-xs text-gray-600 mb-1">
-                      {new Date(slot.date).toLocaleDateString('en-US', { weekday: 'short' })}
-                    </div>
-                    <div className={`text-sm font-semibold mb-1 ${isMostPopular ? 'text-green-800' : 'text-gray-900'
-                      }`}>
-                      {new Date(slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                    </div>
-                    <div className="text-xs text-gray-500 mb-2">{t('allDay')}</div>
+                    {isTimedPoll && 'startTime' in slot ? (
+                      // Time range display for timed polls
+                      <>
+                        <div className="text-xs text-gray-600 mb-1">
+                          {new Date(slot.date).toLocaleDateString('en-US', { weekday: 'short' })}
+                        </div>
+                        <div className={`text-xs font-semibold mb-1 ${isMostPopular ? 'text-green-800' : 'text-gray-900'
+                          }`}>
+                          {new Date(slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        </div>
+                        <div className="text-xs text-gray-700 mb-2 font-medium">
+                          {formatTimeSlotRange(slot.startTime, slot.duration)}
+                        </div>
+                      </>
+                    ) : (
+                      // All-day display for date-only polls
+                      <>
+                        <div className="text-xs text-gray-600 mb-1">
+                          {new Date(slot.date).toLocaleDateString('en-US', { weekday: 'short' })}
+                        </div>
+                        <div className={`text-sm font-semibold mb-1 ${isMostPopular ? 'text-green-800' : 'text-gray-900'
+                          }`}>
+                          {new Date(slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        </div>
+                        <div className="text-xs text-gray-500 mb-2">{t('allDay')}</div>
+                      </>
+                    )}
                     <div className="flex items-center justify-center gap-1 text-xs">
                       {isMostPopular && (
                         <svg className="h-3 w-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
@@ -341,7 +396,7 @@ export function AvailabilityGrid({
                 return (
                   <div
                     key={slot.id}
-                    className={`flex w-20 flex-shrink-0 items-center justify-center border-r border-gray-200 ${isMostPopular ? 'bg-green-50' : ''
+                    className={`flex w-24 sm:w-28 flex-shrink-0 items-center justify-center border-r border-gray-200 ${isMostPopular ? 'bg-green-50' : ''
                       }`}
                   >
                     {renderAvailabilityIcon(status, true, () => {
@@ -367,7 +422,7 @@ export function AvailabilityGrid({
                     return (
                       <div
                         key={slot.id}
-                        className={`flex w-20 flex-shrink-0 items-center justify-center border-r border-gray-200 ${isMostPopular ? 'bg-green-50' : ''
+                        className={`flex w-24 sm:w-28 flex-shrink-0 items-center justify-center border-r border-gray-200 ${isMostPopular ? 'bg-green-50' : ''
                           }`}
                       >
                         {renderAvailabilityIcon(status, false)}

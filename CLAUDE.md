@@ -282,6 +282,46 @@ This project follows a monorepo structure managed by Turborepo with the followin
 - Clarity and Correctness: Ensure all code is clear, correct, and ready for use in a production environment.
 - Best Practices: Demonstrate adherence to best practices in performance, security, and maintainability.
 
+## Translation System
+
+**Last Updated**: 2025-01-29
+
+The monorepo uses a **dual translation system** following separation of concerns:
+
+### File Structure
+```
+packages/ui/src/translations/     # Shared UI translations
+├── en.json                       # Generic form labels, validation messages
+└── nl.json
+
+apps/{app}/messages/              # App-specific translations  
+├── en.json                       # Business domain terms, app content
+└── nl.json
+```
+
+### Usage Patterns
+
+**Shared UI Components:**
+```tsx
+// packages/ui/src/form/start-time-entry.tsx
+const t = useTranslations("form"); // Uses packages/ui/src/translations/
+<Label>{t('hour')}</Label>         // "Hour" / "Uur"
+```
+
+**App Components:**
+```tsx
+// apps/plotty/components/poll-form.tsx  
+const t = useTranslations("PollForm"); // Uses apps/plotty/messages/
+<h2>{t('sections.event.title')}</h2>   // "Event" / "Gebeurtenis"
+```
+
+### What Goes Where
+
+**Shared UI translations:** Form labels, validation messages, generic UI text
+**App-specific translations:** Business domain terms, feature descriptions, app-specific content
+
+**Rule:** If it contains business domain concepts (Poll, Task, etc.) → app-specific. If it's generic UI → shared.
+
 ## Migrating Old Code
 
 Everything in `_OLD` is old code and READ ONLY. We have this folder to migrate to the new Turborepo system. When migrating:

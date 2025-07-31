@@ -13,8 +13,8 @@ export function PollLoading({ showAdminActions = false }: PollLoadingProps) {
   const t = useTranslations('PollLoading');
 
   return (
-    <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
-      <div className="container mx-auto max-w-4xl space-y-8 !px-0 sm:!px-6 lg:!px-8">
+    <div className="py-0 sm:py-12 lg:py-16">
+      <div className="container mx-auto max-w-4xl space-y-8">
         {/* Poll Info Skeleton */}
         <SectionCard>
           <SectionHeader

@@ -28,7 +28,7 @@ export default function TransferPage() {
   }, [router, locale]);
 
   return (
-    <main className="container mx-auto p-4">
+    <main className="container mx-auto py-4">
       <div className="flex flex-col items-center justify-center min-h-[400px]">
         <p>Creating a new room...</p>
       </div>

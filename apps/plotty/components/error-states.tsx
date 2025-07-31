@@ -7,8 +7,8 @@ export function MissingKeyError() {
   const t = useTranslations('ErrorStates.missingKey');
 
   return (
-    <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
-      <div className="container mx-auto max-w-2xl !px-0 sm:!px-6 lg:!px-8">
+    <div className="py-0 sm:py-12 lg:py-16">
+      <div className="container mx-auto max-w-2xl">
         <Card className="border-0 shadow-sm">
           <CardContent className="p-8 text-center">
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">
@@ -40,8 +40,8 @@ export function PollNotFoundError({ isAdmin = false }: PollNotFoundErrorProps) {
   const t = useTranslations('ErrorStates.pollNotFound');
 
   return (
-    <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
-      <div className="container mx-auto max-w-2xl !px-0 sm:!px-6 lg:!px-8">
+    <div className="py-0 sm:py-12 lg:py-16">
+      <div className="container mx-auto max-w-2xl">
         <Card className="border-0 shadow-sm">
           <CardContent className="p-8 text-center">
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">
@@ -72,8 +72,8 @@ export function DecryptionError({ error }: DecryptionErrorProps) {
   const t = useTranslations('ErrorStates.decryption');
 
   return (
-    <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
-      <div className="container mx-auto max-w-2xl !px-0 sm:!px-6 lg:!px-8">
+    <div className="py-0 sm:py-12 lg:py-16">
+      <div className="container mx-auto max-w-2xl">
         <Card className="border-0 shadow-sm">
           <CardContent className="p-8 text-center">
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">

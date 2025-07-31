@@ -35,6 +35,10 @@ export default function CreatePoll() {
         location: formData.location,
         dates: formData.selectedDates.map(date => date.toISOString().split("T")[0]!),
         participants: [], // Initialize empty participants array
+        // Include new time selection fields
+        fixedDuration: formData.fixedDuration,
+        selectedStartTimes: formData.selectedStartTimes,
+        allowHourSelection: formData.enableTimeSelection,
       };
 
       // Encrypt the poll data
@@ -71,8 +75,8 @@ export default function CreatePoll() {
 
   return (
     <>
-      <div className="py-0 sm:py-12 lg:py-16 sm:px-4">
-        <div className="container mx-auto max-w-4xl space-y-8 !px-0 sm:!px-6 lg:!px-8">
+      <div className="py-0 sm:py-4 lg:py-6">
+        <div className="container mx-auto max-w-4xl space-y-8">
           <PollForm
             onSubmit={handlePollSubmit}
             isLoading={isLoading}

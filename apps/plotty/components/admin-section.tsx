@@ -198,6 +198,18 @@ export function AdminSection({
                 location: poll.location ?? "",
                 selectedDates: poll.dates.map(date => new Date(date)),
                 expirationDays: 30, // Default for editing
+                // Time selection fields
+                enableTimeSelection: poll.allowHourSelection ?? false,
+                fixedDuration: poll.fixedDuration,
+                selectedStartTimes: poll.selectedStartTimes?.map(timeString => {
+                  const [hourStr, minuteStr] = timeString.split(':');
+                  const hour = parseInt(hourStr || '0', 10);
+                  const minutes = parseInt(minuteStr || '0', 10);
+                  return {
+                    hour: isNaN(hour) ? 0 : Math.max(0, Math.min(23, hour)),
+                    minutes: isNaN(minutes) ? 0 : Math.max(0, Math.min(59, minutes)),
+                  };
+                }) ?? [],
               }}
             />
           </SectionContent>

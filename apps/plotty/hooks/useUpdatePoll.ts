@@ -29,6 +29,10 @@ export function useUpdatePoll({
         dates: formData.selectedDates.map(
           (date) => date.toISOString().split("T")[0]!
         ),
+        // Include new time selection fields
+        fixedDuration: formData.fixedDuration,
+        selectedStartTimes: formData.selectedStartTimes,
+        allowHourSelection: formData.enableTimeSelection,
       };
 
       const encryptedData = await encryptData(updatedPollData, encryptionKey);

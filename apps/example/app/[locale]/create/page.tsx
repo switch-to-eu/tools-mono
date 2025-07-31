@@ -56,7 +56,7 @@ export default function CreatePage() {
     }
 
     return (
-        <main className="container mx-auto px-4 py-12 max-w-2xl">
+        <main className="container mx-auto py-12 max-w-2xl">
             <div className="mb-8">
                 <Link
                     href="/"

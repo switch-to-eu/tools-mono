@@ -33,6 +33,8 @@
         "eventDetails": "Gebeurtenis details en informatie",
         "responses": "reacties",
         "dates": "datums",
+        "timeSlots": "tijdsloten",
+        "duration": "duur",
         "bestTime": {
             "title": "Beste Beschikbare Tijd",
             "description": "{count} van {total} deelnemers beschikbaar ({percentage}%)"
@@ -81,6 +83,18 @@
             "calendar": {
                 "title": "Kalender",
                 "description": "Selecteer mogelijke datums of tijden voor je gebeurtenis"
+            },
+            "timing": {
+                "title": "Tijdselectie",
+                "description": "Optioneel: Specificeer tijdsbereiken voor alle geselecteerde datums",
+                "toggleDescription": "Kies specifieke uren in plaats van hele dag evenementen",
+                "durationDescription": "Hoe lang moet elke tijdsslot duren?",
+                "startTimesDescription": "Selecteer de starttijden voor je tijdsslots"
+            },
+            "timeSlots": {
+                "title": "Tijdslots",
+                "description": "Selecteer specifieke starttijden voor je {duration}u slots",
+                "startTimesDescription": "Voeg de tijden toe waarop je evenement zou kunnen starten"
             }
         },
         "fields": {
@@ -109,6 +123,10 @@
             "savingText": "Opslaan...",
             "createPoll": "Maak Poll",
             "creatingText": "Je poll wordt aangemaakt..."
+        },
+        "timeFields": {
+            "hour": "Uur",
+            "minutes": "Minuten"
         }
     },
     "HomePage": {

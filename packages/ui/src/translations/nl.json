@@ -1,15 +1,32 @@
 {
     "form": {
         "optional": "(Optioneel)",
+        "enableSpecificTimes": "Specifieke tijden inschakelen",
+        "fixedDuration": "Duur voor elke tijdsslot",
+        "selectStartTimes": "Selecteer starttijden",
+        "hour": "Uur",
+        "minutes": "Minuten",
+        "startTime": "Starttijd",
+        "duration": "Duur",
+        "selectStartTime": "Selecteer starttijd",
+        "selectDuration": "Selecteer duur",
+        "timeRange": "Tijdsbereik",
+        "timeRangeExceeds": "Tijdsbereik overschrijdt 24:00. Selecteer een eerdere starttijd of kortere duur.",
+        "timeSelectionDescription": "Kies specifieke tijdsbereiken in plaats van hele dag evenementen",
+        "timeSelectionEnabledMessage": "Tijdselectie ingeschakeld! Je kunt nu specifieke uren kiezen wanneer je evenement kan plaatsvinden.",
         "errors": {
             "required": "Dit veld is verplicht",
             "invalid": "Ongeldige waarde",
+            "invalidStartTime": "Ongeldige starttijd",
+            "invalidDuration": "Ongeldige duur",
             "email": "Voer een geldig e-mailadres in",
             "minLength": "Minimaal {{min}} tekens vereist",
             "maxLength": "Maximaal {{max}} tekens toegestaan",
             "min": "Waarde moet minimaal {{min}} zijn",
             "max": "Waarde mag maximaal {{max}} zijn",
-            "pattern": "Ongeldig formaat"
+            "pattern": "Ongeldig formaat",
+            "arrayMinLength": "Minimaal {{min}} item is vereist",
+            "futureDate": "Alle geselecteerde datums moeten vandaag of in de toekomst zijn"
         }
     }
 }
