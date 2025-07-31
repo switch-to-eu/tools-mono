@@ -8,6 +8,7 @@ import { hasLocale, type Locale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 
 import { Header } from "@workspace/ui/blocks/header";
+import { BrandIndicator } from "@workspace/ui/components/brand-indicator";
 import { routing } from "../../i18n/routing";
 import { Link } from "../../i18n/navigation";
 import { LanguageSelector } from "@components/language-selector";
@@ -63,11 +64,16 @@ export default async function LocaleLayout({
             <Header
               logo={
                 <Link href="/">
-                  <div className="flex items-center gap-2 text-lg font-black transition-opacity hover:opacity-80 sm:text-xl">
-                    <MonitorDown className="h-4 w-4 text-blue-600" />
-                    <span className="tracking-wide uppercase text-blue-600">
-                      Nully
-                    </span>
+                  <div className="flex items-start gap-2 transition-opacity hover:opacity-80">
+                    <div className="flex items-center justify-center mt-1">
+                      <MonitorDown className="h-4 w-4 text-blue-600" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-lg font-black text-blue-600 tracking-wide uppercase sm:text-xl leading-none">
+                        Nully
+                      </span>
+                      <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" />
+                    </div>
                   </div>
                 </Link>
               }
