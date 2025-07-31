@@ -3,12 +3,7 @@
 import { Github, ExternalLink } from "lucide-react";
 import { cn } from "../lib/utils";
 import { getTranslation } from "../lib/translations";
-
-interface Tool {
-  name: string;
-  descriptionKey: string;
-  href: string;
-}
+import { tools } from "../data/tools";
 
 interface FooterProps {
   className?: string;
@@ -17,24 +12,6 @@ interface FooterProps {
   privacyUrl?: string;
   appName?: string;
 }
-
-const tools: Tool[] = [
-  {
-    name: "Plotty",
-    descriptionKey: "footer.tools.plotty",
-    href: "https://plotty.eu",
-  },
-  {
-    name: "Nully",
-    descriptionKey: "footer.tools.nully",
-    href: "https://nully.eu",
-  },
-  {
-    name: "KeepFocus",
-    descriptionKey: "footer.tools.keepfocus",
-    href: "https://keepfocus.eu",
-  },
-];
 
 export function Footer({ className, locale = "en", aboutUrl, privacyUrl, appName }: FooterProps) {
   const switchToEuUrl = `https://switch-to.eu/${locale}`;
@@ -90,7 +67,7 @@ export function Footer({ className, locale = "en", aboutUrl, privacyUrl, appName
               {tools.map((tool) => (
                 <li key={tool.name}>
                   <a
-                    href={tool.href}
+                    href={tool.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group block hover:text-white transition-colors"
@@ -99,7 +76,7 @@ export function Footer({ className, locale = "en", aboutUrl, privacyUrl, appName
                       {tool.name}
                     </div>
                     <div className="text-sm text-gray-500 group-hover:text-gray-300">
-                      {t(tool.descriptionKey)}
+                      {t(`footer.tools.${tool.id}`)}
                     </div>
                   </a>
                 </li>

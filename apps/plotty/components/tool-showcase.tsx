@@ -4,38 +4,77 @@ import { ExternalLink, ArrowRight } from "lucide-react";
 import { tools, type Tool } from "@workspace/ui/data/tools";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { cva } from "class-variance-authority";
 
-
-const colorSchemes = {
-  blue: {
-    bg: 'bg-blue-50',
-    border: 'border-blue-200',
-    text: 'text-blue-600',
-    darkText: 'text-blue-900',
-    button: 'bg-blue-600 hover:bg-blue-700'
+const cardBackground = cva("absolute inset-0", {
+  variants: {
+    color: {
+      blue: "bg-blue-50",
+      green: "bg-green-50",
+      purple: "bg-purple-50",
+      gray: "bg-gray-50"
+    }
   },
-  green: {
-    bg: 'bg-green-50',
-    border: 'border-green-200', 
-    text: 'text-green-600',
-    darkText: 'text-green-900',
-    button: 'bg-green-600 hover:bg-green-700'
-  },
-  purple: {
-    bg: 'bg-purple-50',
-    border: 'border-purple-200',
-    text: 'text-purple-600', 
-    darkText: 'text-purple-900',
-    button: 'bg-purple-600 hover:bg-purple-700'
-  },
-  gray: {
-    bg: 'bg-gray-50',
-    border: 'border-gray-200',
-    text: 'text-gray-500',
-    darkText: 'text-gray-700',
-    button: 'bg-gray-400'
+  defaultVariants: {
+    color: "gray"
   }
-};
+});
+
+const cardBorder = cva("", {
+  variants: {
+    color: {
+      blue: "border-blue-200",
+      green: "border-green-200",
+      purple: "border-purple-200",
+      gray: "border-gray-200"
+    }
+  },
+  defaultVariants: {
+    color: "gray"
+  }
+});
+
+const cardText = cva("", {
+  variants: {
+    color: {
+      blue: "text-blue-600",
+      green: "text-green-600",
+      purple: "text-purple-600",
+      gray: "text-gray-500"
+    }
+  },
+  defaultVariants: {
+    color: "gray"
+  }
+});
+
+const cardDarkText = cva("", {
+  variants: {
+    color: {
+      blue: "text-blue-900",
+      green: "text-green-900",
+      purple: "text-purple-900",
+      gray: "text-gray-700"
+    }
+  },
+  defaultVariants: {
+    color: "gray"
+  }
+});
+
+const cardButton = cva("inline-flex items-center gap-2 px-4 py-2 rounded-md font-medium text-white transition-colors text-sm", {
+  variants: {
+    color: {
+      blue: "bg-blue-600 hover:bg-blue-700",
+      green: "bg-green-600 hover:bg-green-700",
+      purple: "bg-purple-600 hover:bg-purple-700",
+      gray: "bg-gray-400"
+    }
+  },
+  defaultVariants: {
+    color: "gray"
+  }
+});
 
 interface ToolShowcaseProps {
   className?: string;
@@ -43,7 +82,7 @@ interface ToolShowcaseProps {
 
 function ToolCard({ tool, index }: { tool: Tool; index: number }) {
   const t = useTranslations('tools');
-  const colors = colorSchemes[tool.color as keyof typeof colorSchemes] || colorSchemes.gray;
+  const colorVariant = (tool.color as "blue" | "green" | "purple" | "gray") || "gray";
   const isActive = tool.status === 'active' || tool.status === 'beta';
   const isReversed = index % 2 === 1;
 
@@ -55,12 +94,12 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
 
   return (
     <div 
-      className={`group relative overflow-hidden rounded-lg bg-white border ${colors.border} shadow-sm hover:shadow-md transition-shadow ${
+      className={`group relative overflow-hidden rounded-lg bg-white border ${cardBorder({ color: colorVariant })} shadow-sm hover:shadow-md transition-shadow ${
         isActive ? 'cursor-pointer' : 'opacity-60'
       }`}
       onClick={handleClick}
     >
-      <div className={`absolute inset-0 ${colors.bg}`} />
+      <div className={cardBackground({ color: colorVariant })} />
       
       <div className={`relative flex ${isReversed ? 'flex-row-reverse' : 'flex-row'} items-center min-h-[200px]`}>
         {/* Screenshot Side */}
@@ -78,15 +117,15 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
         {/* Content Side */}
         <div className="flex-1 p-6">
           <div className="flex items-center justify-between mb-3">
-            <h3 className={`text-xl font-bold ${colors.darkText}`}>
+            <h3 className={`text-xl font-bold ${cardDarkText({ color: colorVariant })}`}>
               {tool.name}
             </h3>
             {isActive && (
-              <ExternalLink className={`h-4 w-4 ${colors.text} opacity-60`} />
+              <ExternalLink className={`h-4 w-4 ${cardText({ color: colorVariant })} opacity-60`} />
             )}
           </div>
 
-          <p className={`text-base font-medium ${colors.text} mb-2`}>
+          <p className={`text-base font-medium ${cardText({ color: colorVariant })} mb-2`}>
             {t(`${tool.id}.tagline`)}
           </p>
 
@@ -95,7 +134,7 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
           </p>
 
           {isActive ? (
-            <button className={`inline-flex items-center gap-2 px-4 py-2 rounded-md font-medium text-white ${colors.button} transition-colors text-sm`}>
+            <button className={cardButton({ color: colorVariant })}>
               {t(`${tool.id}.cta`)}
               <ArrowRight className="h-3 w-3" />
             </button>

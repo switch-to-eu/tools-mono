@@ -25,8 +25,7 @@ import {
   CardContent,
 } from "@workspace/ui/components/card";
 
-import { Button } from "@workspace/ui/components/button";
-import { ToolShowcase } from "@workspace/ui/components/tool-showcase";
+import { ToolShowcase } from "../../../components/tool-showcase";
 import { useTranslations } from "next-intl";
 
 export default function AboutPage() {

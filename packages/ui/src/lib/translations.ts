@@ -11,10 +11,14 @@ export function getTranslation(locale: string, key: string): string {
 
     // Navigate through nested object using dot notation
     const keys = key.split('.');
-    let value: any = localeTranslations;
+    let value: unknown = localeTranslations;
 
     for (const k of keys) {
-        value = value?.[k];
+        if (value !== null && typeof value === 'object' && k in value) {
+            value = (value as Record<string, unknown>)[k];
+        } else {
+            return key;
+        }
     }
 
     return typeof value === 'string' ? value : key;
