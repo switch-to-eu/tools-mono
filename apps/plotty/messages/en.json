@@ -178,6 +178,147 @@
             "buttonMobile": "Get Started"
         }
     },
+    "PrivacyPage": {
+        "hero": {
+            "title": "Privacy Policy",
+            "subtitle": "Your privacy is our priority. This policy explains how Plotty handles your data with complete transparency.",
+            "lastUpdated": "Last updated: January 31, 2025"
+        },
+        "sections": {
+            "whoWeAre": {
+                "title": "Who We Are",
+                "content": "Plotty is part of Switch-to.eu, a European initiative building privacy-first digital tools. We're committed to creating scheduling software that respects your privacy and operates under European data protection standards."
+            },
+            "dataCollection": {
+                "title": "What Data We Collect",
+                "subtitle": "We collect only the minimum data necessary to provide our scheduling service:",
+                "pollData": {
+                    "title": "Poll Information",
+                    "description": "Event title, description, location, selected dates and times you provide when creating polls"
+                },
+                "participantData": {
+                    "title": "Participant Responses",
+                    "description": "Names and availability selections provided by poll participants"
+                },
+                "technicalData": {
+                    "title": "Technical Information",
+                    "description": "Basic server logs for security and performance monitoring (no personal identification)"
+                },
+                "noData": {
+                    "title": "What We Don't Collect",
+                    "description": "No email addresses, no IP tracking, no behavioral analytics, no advertising profiles, no cookies for tracking"
+                }
+            },
+            "dataProtection": {
+                "title": "How We Protect Your Data",
+                "encryption": {
+                    "title": "Client-Side Encryption",
+                    "description": "All poll data is encrypted in your browser using AES-256-GCM before transmission. We use the WebCrypto API for secure, client-side encryption."
+                },
+                "zeroKnowledge": {
+                    "title": "Zero-Knowledge Architecture",
+                    "description": "The encryption key never reaches our servers. We cannot decrypt or access your poll content - only you and people with the poll link can view the data."
+                },
+                "europeanServers": {
+                    "title": "European Infrastructure",
+                    "description": "All data is stored on European servers under strict European data protection laws. Your data never leaves European jurisdiction."
+                },
+                "security": {
+                    "title": "Technical Security",
+                    "description": "HTTPS encryption, secure database connections, regular security updates, and minimal data retention policies."
+                }
+            },
+            "dataRetention": {
+                "title": "Data Retention",
+                "automatic": {
+                    "title": "Automatic Deletion",
+                    "description": "All poll data is automatically deleted 30 days after the event date. This includes all participant responses and poll details."
+                },
+                "immediate": {
+                    "title": "Immediate Deletion",
+                    "description": "Poll creators can delete their polls instantly at any time using the admin link."
+                },
+                "logs": {
+                    "title": "Technical Logs",
+                    "description": "Anonymous server logs are retained for 7 days for security monitoring, then automatically deleted."
+                }
+            },
+            "thirdParty": {
+                "title": "Third-Party Services",
+                "hosting": {
+                    "title": "European Hosting",
+                    "description": "Hosted on European servers with GDPR-compliant infrastructure providers."
+                },
+                "noTracking": {
+                    "title": "No Third-Party Tracking",
+                    "description": "We don't use Google Analytics, Facebook pixels, advertising networks, or any tracking services."
+                },
+                "openSource": {
+                    "title": "Open Source Dependencies",
+                    "description": "Built using open-source libraries that don't collect personal data."
+                }
+            },
+            "userRights": {
+                "title": "Your Rights",
+                "access": {
+                    "title": "Right to Access",
+                    "description": "You can view all your poll data through the poll and admin links."
+                },
+                "deletion": {
+                    "title": "Right to Deletion",
+                    "description": "Delete your polls instantly using the admin link, or wait for automatic deletion after 30 days."
+                },
+                "portability": {
+                    "title": "Data Portability",
+                    "description": "Export your poll data as JSON through the admin interface."
+                },
+                "noConsent": {
+                    "title": "No Consent Required",
+                    "description": "Since we use client-side encryption and don't track users, no consent is required for our minimal data processing."
+                }
+            },
+            "international": {
+                "title": "International Data Transfers",
+                "noTransfers": {
+                    "title": "Data Stays in Europe",
+                    "description": "Your encrypted data never leaves European servers. All processing occurs within the European Union under GDPR protection."
+                }
+            },
+            "contact": {
+                "title": "Contact & Questions",
+                "privacy": {
+                    "title": "Privacy Questions",
+                    "description": "For privacy-related questions, contact us through the Switch-to.eu platform."
+                },
+                "authority": {
+                    "title": "Supervisory Authority",
+                    "description": "You have the right to lodge a complaint with your local data protection authority if you have concerns about our data handling."
+                }
+            },
+            "changes": {
+                "title": "Policy Updates",
+                "notification": {
+                    "title": "How We Notify Changes",
+                    "description": "Policy updates will be posted on this page with the revision date. Since we don't collect email addresses, we cannot notify users directly."
+                },
+                "consent": {
+                    "title": "Continued Use",
+                    "description": "Continued use of Plotty after policy updates constitutes acceptance of the new terms."
+                }
+            }
+        },
+        "summary": {
+            "title": "Privacy Summary",
+            "points": [
+                "Zero-knowledge, client-side encryption",
+                "No tracking, analytics, or advertising",
+                "Automatic data deletion after 30 days",
+                "European servers and GDPR compliance",
+                "Open source and fully transparent",
+                "No accounts or email addresses required"
+            ]
+        }
+    },
     "AboutPage": {
         "hero": {
             "title": "About Plotty",

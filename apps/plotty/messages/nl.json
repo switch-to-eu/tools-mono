@@ -334,5 +334,146 @@
             "createPoll": "Maak Je Eerste Poll",
             "learnMore": "Terug naar Home"
         }
+    },
+    "PrivacyPage": {
+        "hero": {
+            "title": "Privacybeleid",
+            "subtitle": "Jouw privacy is onze prioriteit. Dit beleid legt uit hoe Plotty jouw gegevens behandelt met volledige transparantie.",
+            "lastUpdated": "Laatst bijgewerkt: 31 januari 2025"
+        },
+        "sections": {
+            "whoWeAre": {
+                "title": "Wie Wij Zijn",
+                "content": "Plotty is onderdeel van Switch-to.eu, een Europees initiatief dat privacy-first digitale tools bouwt. Wij zetten ons in voor het creëren van planningssoftware die jouw privacy respecteert en werkt onder Europese gegevensbeschermingsnormen."
+            },
+            "dataCollection": {
+                "title": "Welke Gegevens Wij Verzamelen",
+                "subtitle": "We verzamelen alleen de minimale gegevens die nodig zijn om onze planningsservice te leveren:",
+                "pollData": {
+                    "title": "Poll Informatie",
+                    "description": "Evenementtitel, beschrijving, locatie, geselecteerde datums en tijden die je opgeeft bij het maken van polls"
+                },
+                "participantData": {
+                    "title": "Deelnemer Reacties",
+                    "description": "Namen en beschikbaarheidsselecties van poll deelnemers"
+                },
+                "technicalData": {
+                    "title": "Technische Informatie",
+                    "description": "Basis server logs voor beveiliging en prestatiemonitoring (geen persoonlijke identificatie)"
+                },
+                "noData": {
+                    "title": "Wat We Niet Verzamelen",
+                    "description": "Geen e-mailadressen, geen IP tracking, geen gedragsanalytics, geen advertentieprofielen, geen tracking cookies"
+                }
+            },
+            "dataProtection": {
+                "title": "Hoe We Jouw Gegevens Beschermen",
+                "encryption": {
+                    "title": "Client-Side Versleuteling",
+                    "description": "Alle poll gegevens worden versleuteld in jouw browser met AES-256-GCM voordat ze worden verzonden. We gebruiken de WebCrypto API voor veilige, client-side versleuteling."
+                },
+                "zeroKnowledge": {
+                    "title": "Zero-Knowledge Architectuur",
+                    "description": "De versleutelingssleutel bereikt nooit onze servers. Wij kunnen jouw poll inhoud niet ontsleutelen of bekijken - alleen jij en mensen met de poll link kunnen de gegevens zien."
+                },
+                "europeanServers": {
+                    "title": "Europese Infrastructuur",
+                    "description": "Alle gegevens worden opgeslagen op Europese servers onder strikte Europese gegevensbeschermingswetten. Jouw gegevens verlaten nooit Europese jurisdictie."
+                },
+                "security": {
+                    "title": "Technische Beveiliging",
+                    "description": "HTTPS versleuteling, veilige database verbindingen, regelmatige beveiligingsupdates en minimale gegevensbewaarbeleid."
+                }
+            },
+            "dataRetention": {
+                "title": "Gegevensbewaring",
+                "automatic": {
+                    "title": "Automatische Verwijdering",
+                    "description": "Alle poll gegevens worden automatisch verwijderd 30 dagen na de evenementdatum. Dit omvat alle deelnemersreacties en poll details."
+                },
+                "immediate": {
+                    "title": "Directe Verwijdering",
+                    "description": "Poll makers kunnen hun polls op elk moment direct verwijderen via de beheerder link."
+                },
+                "logs": {
+                    "title": "Technische Logs",
+                    "description": "Anonieme server logs worden 7 dagen bewaard voor beveiligingsmonitoring, daarna automatisch verwijderd."
+                }
+            },
+            "thirdParty": {
+                "title": "Externe Services",
+                "hosting": {
+                    "title": "Europese Hosting",
+                    "description": "Gehost op Europese servers met GDPR-conforme infrastructuurproviders."
+                },
+                "noTracking": {
+                    "title": "Geen Externe Tracking",
+                    "description": "We gebruiken geen Google Analytics, Facebook pixels, advertentienetwerken of tracking services."
+                },
+                "openSource": {
+                    "title": "Open Source Dependencies",
+                    "description": "Gebouwd met open-source bibliotheken die geen persoonlijke gegevens verzamelen."
+                }
+            },
+            "userRights": {
+                "title": "Jouw Rechten",
+                "access": {
+                    "title": "Recht op Toegang",
+                    "description": "Je kunt al jouw poll gegevens bekijken via de poll en beheerder links."
+                },
+                "deletion": {
+                    "title": "Recht op Verwijdering",
+                    "description": "Verwijder je polls direct via de beheerder link, of wacht op automatische verwijdering na 30 dagen."
+                },
+                "portability": {
+                    "title": "Gegevensportabiliteit",
+                    "description": "Exporteer je poll gegevens als JSON via de beheerder interface."
+                },
+                "noConsent": {
+                    "title": "Geen Toestemming Vereist",
+                    "description": "Omdat we client-side versleuteling gebruiken en geen gebruikers tracken, is geen toestemming vereist voor onze minimale gegevensverwerking."
+                }
+            },
+            "international": {
+                "title": "Internationale Gegevensoverdrachten",
+                "noTransfers": {
+                    "title": "Gegevens Blijven in Europa",
+                    "description": "Jouw versleutelde gegevens verlaten nooit Europese servers. Alle verwerking vindt plaats binnen de Europese Unie onder GDPR bescherming."
+                }
+            },
+            "contact": {
+                "title": "Contact & Vragen",
+                "privacy": {
+                    "title": "Privacy Vragen",
+                    "description": "Voor privacy-gerelateerde vragen, neem contact met ons op via het Switch-to.eu platform."
+                },
+                "authority": {
+                    "title": "Toezichthoudende Autoriteit",
+                    "description": "Je hebt het recht om een klacht in te dienen bij je lokale gegevensbeschermingsautoriteit als je zorgen hebt over onze gegevensbehandeling."
+                }
+            },
+            "changes": {
+                "title": "Beleidswijzigingen",
+                "notification": {
+                    "title": "Hoe We Wijzigingen Melden",
+                    "description": "Beleidswijzigingen worden geplaatst op deze pagina met de revisiedatum. Omdat we geen e-mailadressen verzamelen, kunnen we gebruikers niet direct informeren."
+                },
+                "consent": {
+                    "title": "Voortgezet Gebruik",
+                    "description": "Voortgezet gebruik van Plotty na beleidswijzigingen betekent acceptatie van de nieuwe voorwaarden."
+                }
+            }
+        },
+        "summary": {
+            "title": "Privacy Samenvatting",
+            "points": [
+                "Zero-knowledge, client-side versleuteling",
+                "Geen tracking, analytics of advertenties",
+                "Automatische gegevensverwijdering na 30 dagen",
+                "Europese servers en GDPR compliance",
+                "Open source en volledig transparant",
+                "Geen accounts of e-mailadressen vereist"
+            ]
+        }
     }
 }
