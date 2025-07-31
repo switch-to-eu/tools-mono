@@ -52,7 +52,7 @@ export function PollForm({
       selectedDates: initialData?.selectedDates ?? [],
       expirationDays: initialData?.expirationDays ?? 30,
       enableTimeSelection: initialData?.enableTimeSelection ?? false,
-      fixedDuration: initialData?.fixedDuration ?? 2,
+      fixedDuration: initialData?.fixedDuration ?? 1,
       selectedStartTimes: initialData?.selectedStartTimes ?? [],
     },
   });
@@ -119,16 +119,6 @@ export function PollForm({
               schema={pollSchema}
             />
 
-            {/* Time Type Decision - moved from separate section for better UX flow */}
-            <div className="pt-4 border-t border-gray-200">
-              <TimeSelectionToggle<PollFormData>
-                name="enableTimeSelection"
-                control={control}
-                error={errors.enableTimeSelection}
-                description={t('sections.timing.toggleDescription')}
-              />
-
-            </div>
           </div>
         </SectionContent>
       </SectionCard>
@@ -258,26 +248,39 @@ export function PollForm({
         </SectionContent>
       </SectionCard>
 
-      {/* Time Slots Section - Only shown when time selection is enabled */}
-      {enableTimeSelection && (
-        <SectionCard className="mb-6">
-          <SectionHeader
-            icon={<Clock className="h-5 w-5" />}
-            title={t('sections.timeSlots.title')}
-            description={t('sections.timeSlots.description', { duration: fixedDuration })}
-          />
-          <SectionContent>
-            <TimeSlotsManager<PollFormData>
-              name="selectedStartTimes"
-              setValue={setValue}
-              watch={watch}
-              error={errors.selectedStartTimes as any}
-              label={t('sections.timeSlots.title')}
-              description={t('sections.timeSlots.startTimesDescription')}
+      {/* Time Section - Always present */}
+      <SectionCard className="mb-6">
+        <SectionHeader
+          icon={<Clock className="h-5 w-5" />}
+          title="Time"
+          description="Configure timing for your event"
+        />
+        <SectionContent>
+          <div className="space-y-6">
+            {/* All Day / Time Slots Toggle */}
+            <TimeSelectionToggle<PollFormData>
+              name="enableTimeSelection"
+              control={control}
+              error={errors.enableTimeSelection}
+              description={t('sections.timing.toggleDescription')}
             />
-          </SectionContent>
-        </SectionCard>
-      )}
+
+            {/* Time Slots Manager - Only shown when time selection is enabled */}
+            {enableTimeSelection && (
+              <TimeSlotsManager<PollFormData>
+                name="selectedStartTimes"
+                setValue={setValue}
+                watch={watch}
+                error={errors.selectedStartTimes as any}
+                label={t('sections.timeSlots.title')}
+                description={t('sections.timeSlots.startTimesDescription')}
+                selectedTimesFieldName="selectedStartTimes"
+                durationFieldName="fixedDuration"
+              />
+            )}
+          </div>
+        </SectionContent>
+      </SectionCard>
 
       {/* Action Buttons */}
       <div className={`pt-4 sm:pt-6 ${hideMobileSubmit ? "hidden sm:block" : ""}`}>

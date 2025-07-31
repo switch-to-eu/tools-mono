@@ -69,7 +69,7 @@ export const FormInput = <TFormData extends FieldValues>({
       <Input
         id={inputId}
         className={cn(
-          "h-10 border-gray-300",
+          "h-10",
           error && "border-red-500",
           className
         )}

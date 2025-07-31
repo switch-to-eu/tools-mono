@@ -59,3 +59,11 @@
 .shadow-card-hover {
   @apply shadow-xl shadow-purple-200/60;
 }
+
+.focus-ring-accent {
+  @apply focus-visible:ring-blue-600/30 focus-visible:ring-[2px];
+}
+
+.focus-ring-accent-strong {
+  @apply focus-visible:ring-blue-600/50 focus-visible:ring-[3px];
+}

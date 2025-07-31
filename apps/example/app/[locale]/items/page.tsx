@@ -32,7 +32,7 @@ export default function ItemsPage() {
 
     if (isLoading) {
         return (
-            <main className="container mx-auto px-4 py-12">
+            <main className="container mx-auto py-12">
                 <div className="text-center">
                     <p className="text-gray-600">{t("loading")}</p>
                 </div>
@@ -41,7 +41,7 @@ export default function ItemsPage() {
     }
 
     return (
-        <main className="container mx-auto px-4 py-12">
+        <main className="container mx-auto py-12">
             <div className="mb-8">
                 <Link
                     href="/"

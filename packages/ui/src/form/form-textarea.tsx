@@ -66,7 +66,7 @@ export const FormTextArea = <TFormData extends FieldValues>({
         id={inputId}
         rows={rows}
         className={cn(
-          "min-h-[100px] w-full resize-none rounded-md border border-gray-300 px-3 py-2 text-sm transition-[color,box-shadow] outline-none focus-visible:border-purple-400 focus-visible:ring-purple-100 focus-visible:ring-1",
+          "min-h-[100px] w-full resize-none rounded-md border-0 bg-gray-50 px-3 py-2 text-sm transition-[color,box-shadow] outline-none focus-visible:bg-white focus-ring-accent",
           error && "border-red-500",
           className
         )}

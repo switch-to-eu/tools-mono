@@ -43,8 +43,6 @@ export const polls = createTable(
     index("idx_polls_expires_at").on(table.expiresAt),
     index("idx_polls_created_at").on(table.createdAt),
     index("idx_polls_admin_token").on(table.adminToken),
-    // Conditional index for encrypted data (only when not null)
-    index("idx_polls_encrypted_data").on(table.encryptedData),
   ],
 );
 

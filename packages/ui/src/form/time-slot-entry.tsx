@@ -119,7 +119,7 @@ export const TimeSlotEntry = <TFormData extends FieldValues>({
           <select
             value={hour}
             onChange={(e) => handleHourChange(Number(e.target.value))}
-            className="h-10 w-full rounded-md border border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            className="h-10 w-full rounded-md border border-0 bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           >
             {hourOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -134,7 +134,7 @@ export const TimeSlotEntry = <TFormData extends FieldValues>({
           <Label className="text-sm font-medium text-neutral-700">
             Minutes
           </Label>
-          <div className="flex rounded-md border border-gray-300 bg-background">
+          <div className="flex rounded-md border border-0 bg-background">
             {minuteOptions.map((option) => (
               <button
                 key={option.value}
@@ -162,7 +162,7 @@ export const TimeSlotEntry = <TFormData extends FieldValues>({
           <select
             value={duration}
             onChange={(e) => handleDurationChange(Number(e.target.value))}
-            className="h-10 w-full rounded-md border border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            className="h-10 w-full rounded-md border border-0 bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           >
             {durationOptions.map((option) => (
               <option key={option.value} value={option.value}>

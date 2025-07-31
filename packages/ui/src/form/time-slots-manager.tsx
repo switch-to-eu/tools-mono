@@ -35,10 +35,11 @@ export const TimeSlotsManager = <TFormData extends FieldValues>({
 }: TimeSlotsManagerProps<TFormData>) => {
   // Watch current values using provided field names
   const selectedStartTimes = watch(selectedTimesFieldName) || [];
-  const fixedDuration = watch(durationFieldName) || 2;
+  const fixedDuration = watch(durationFieldName) || 1;
   
   // Convert start times to string array for the selector
   const selectedTimes = React.useMemo(() => {
+    if (!Array.isArray(selectedStartTimes)) return [];
     return selectedStartTimes.map((time: any) => {
       if (typeof time === 'string') return time;
       if (time?.hour !== undefined && time?.minutes !== undefined) {

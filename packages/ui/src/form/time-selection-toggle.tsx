@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-import { useTranslations } from "next-intl";
 import type {
-  UseFormRegister,
   FieldError,
   FieldPath,
   FieldValues,
@@ -11,8 +9,7 @@ import type {
 } from "react-hook-form";
 import { Controller } from "react-hook-form";
 
-import { Checkbox } from "@workspace/ui/components/checkbox";
-import { Label } from "@workspace/ui/components/label";
+import { Switch } from "@workspace/ui/components/switch";
 import { cn } from "@workspace/ui/lib/utils";
 
 interface TimeSelectionToggleProps<TFormData extends FieldValues> {
@@ -32,8 +29,6 @@ export const TimeSelectionToggle = <TFormData extends FieldValues>({
   disabled = false,
   description,
 }: TimeSelectionToggleProps<TFormData>) => {
-  const t = useTranslations("form");
-
   const toggleId = `${String(name)}-toggle`;
 
   return (
@@ -42,51 +37,42 @@ export const TimeSelectionToggle = <TFormData extends FieldValues>({
         name={name}
         control={control}
         render={({ field }) => (
-          <div className={cn(
-            "border rounded-lg p-4 transition-colors",
-            field.value ? "bg-blue-50 border-blue-200" : "bg-neutral-50 border-neutral-200"
-          )}>
-            <div className="flex items-start space-x-3">
-              <Checkbox
+          <div className="flex items-center justify-between p-4 rounded-lg border bg-gray-50 border-gray-200">
+            <div className="flex items-center gap-4">
+              <span className={cn(
+                "text-sm font-medium transition-colors",
+                !field.value ? "text-gray-900" : "text-gray-500"
+              )}>
+                All Day
+              </span>
+              
+              <Switch
                 id={toggleId}
                 checked={field.value || false}
                 onCheckedChange={field.onChange}
                 disabled={disabled}
-                className={cn(
-                  error && "border-red-500",
-                  "h-5 w-5 mt-0.5"
-                )}
+                className={cn(error && "ring-2 ring-red-500")}
               />
-              <div className="flex-1 space-y-2">
-                <Label
-                  htmlFor={toggleId}
-                  className={cn(
-                    "text-sm font-medium cursor-pointer block",
-                    disabled && "cursor-not-allowed opacity-50",
-                    field.value ? "text-blue-900" : "text-neutral-700"
-                  )}
-                >
-                  {t("enableSpecificTimes")}
-                </Label>
-                <p className={cn(
-                  "text-sm",
-                  field.value ? "text-blue-700" : "text-neutral-500"
-                )}>
-                  {description || t("timeSelectionDescription")}
-                </p>
-                {field.value && (
-                  <div className="bg-blue-100 border border-blue-200 rounded-md p-2 text-xs text-blue-800">
-                    ✨ <strong>{t("timeSelectionEnabledMessage")}</strong>
-                  </div>
-                )}
-              </div>
+              
+              <span className={cn(
+                "text-sm font-medium transition-colors",
+                field.value ? "text-gray-900" : "text-gray-500"
+              )}>
+                Time Slots
+              </span>
             </div>
+            
+            {description && (
+              <p className="text-sm text-gray-600 ml-4">
+                {description}
+              </p>
+            )}
           </div>
         )}
       />
 
       {error?.message && (
-        <p className="text-sm text-red-500">
+        <p className="text-sm text-red-500 mt-2">
           {error.message}
         </p>
       )}

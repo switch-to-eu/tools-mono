@@ -110,7 +110,7 @@ export const StartTimeEntry = <TFormData extends FieldValues>({
           <select
             value={hour}
             onChange={(e) => handleHourChange(Number(e.target.value))}
-            className="h-10 w-full rounded-md border border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            className="h-10 w-full rounded-md border border-0 bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           >
             {hourOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -125,7 +125,7 @@ export const StartTimeEntry = <TFormData extends FieldValues>({
           <Label className="text-sm font-medium text-neutral-700">
             {t('minutes')}
           </Label>
-          <div className="grid grid-cols-4 gap-1 rounded-md border border-gray-300 bg-background p-1">
+          <div className="grid grid-cols-4 gap-1 rounded-md border border-0 bg-background p-1">
             {minuteOptions.map((option) => (
               <button
                 key={option.value}
