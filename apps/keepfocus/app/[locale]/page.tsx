@@ -13,25 +13,32 @@ export default function HomePage() {
   return (
     <TasksProvider>
       <PomodoroSettingsProvider>
-        <main className="container mx-auto py-8 max-w-6xl">
+        <main className="container mx-auto min-h-screen flex flex-col">
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Hero Section */}
+          <div className="text-center py-8 mb-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-3">
+              Focus. Work. <span className="text-blue-600">Achieve.</span>
+            </h1>
+            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              🍅 Pomodoro Technique
+            </div>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Break your work into focused 25-minute sessions. Stay productive, avoid burnout, and accomplish more with proven time management.
+            </p>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 pb-16">
 
             {/* Timer Section */}
-            <div className="space-y-6">
+            <div className="flex flex-col">
               <PomodoroTimer />
-
-              {/* Settings Dialog */}
-              <div className="w-full max-w-md mx-auto">
-                <SettingsDialog />
-              </div>
             </div>
 
             {/* Todo List Section */}
-            <div className="space-y-6">
-              <div>
-                <TodoList />
-              </div>
+            <div className="flex flex-col">
+              <TodoList />
             </div>
           </div>
         </main>

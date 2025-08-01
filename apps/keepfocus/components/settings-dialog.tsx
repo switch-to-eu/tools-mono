@@ -12,7 +12,11 @@ import { Separator } from '@workspace/ui/components/separator';
 import { usePomodoroSettings } from '../hooks/use-pomodoro-settings';
 import { PomodoroSettings, DEFAULT_SETTINGS } from '../lib/types';
 
-export function SettingsDialog() {
+interface SettingsDialogProps {
+  trigger?: React.ReactNode;
+}
+
+export function SettingsDialog({ trigger }: SettingsDialogProps = {}) {
   const t = useTranslations();
   const { settings, updateSettings } = usePomodoroSettings();
   const [localSettings, setLocalSettings] = useState<PomodoroSettings>(settings);
@@ -48,14 +52,16 @@ export function SettingsDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="default"
-          className="w-full bg-white border-gray-300 hover:bg-gray-50 justify-center"
-        >
-          <Settings className="w-4 h-4 mr-2" />
-          {t('pomodoro.settings.openSettings')}
-        </Button>
+        {trigger || (
+          <Button
+            variant="outline"
+            size="default"
+            className="w-full bg-white border-gray-300 hover:bg-gray-50 justify-center"
+          >
+            <Settings className="w-4 h-4 mr-2" />
+            {t('pomodoro.settings.openSettings')}
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="bg-white sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
