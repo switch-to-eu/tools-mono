@@ -32,16 +32,8 @@ RUN if [ -f .gitmodules ]; then \
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Accept DATABASE_URL as build argument
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
-
-# Run database migrations and build the plotty app
-RUN corepack enable && \
-    cd apps/plotty && \
-    pnpm db:migrate && \
-    cd ../.. && \
-    pnpm run build --filter=@workspace/plotty
+# Build the plotty app
+RUN corepack enable && pnpm run build --filter=@workspace/plotty
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -60,6 +52,11 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/static ./apps/plotty/.next/static
 
+# Copy migration files and drizzle config for runtime migrations
+COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle ./apps/plotty/drizzle
+COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle.config.ts ./apps/plotty/drizzle.config.ts
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/drizzle-kit ./node_modules/drizzle-kit
+
 USER nextjs
 
 # server.js is created by next build from the standalone output
@@ -68,8 +65,10 @@ ENV HOSTNAME="0.0.0.0"
 
 COPY --chown=nextjs:nodejs <<EOF /app/start.sh
 #!/bin/sh
-echo "Starting server..."
+echo "Running database migrations..."
 cd /app/apps/plotty
+npx drizzle-kit migrate
+echo "Starting server..."
 exec node server.js
 EOF
 
