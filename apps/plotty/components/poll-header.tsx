@@ -91,7 +91,7 @@ export function BestTimeHighlight({ poll, bestTime }: BestTimeHighlightProps) {
             <>
               {format(new Date(bestTime.date.split('T')[0]!), "EEEE, MMMM d")}
               <br />
-              <span className="text-lg text-blue-600 font-medium">
+              <span className="text-lg text-primary-color font-medium">
                 {formatTimeSlotRange(bestTime.date.split('T')[1]!, poll.fixedDuration || 1)}
               </span>
             </>

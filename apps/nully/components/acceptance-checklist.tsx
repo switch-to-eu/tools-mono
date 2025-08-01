@@ -43,7 +43,7 @@ export function AcceptanceChecklist({ onAccepted }: AcceptanceChecklistProps) {
             <Link
               href="/policy"
               target="_blank"
-              className="text-blue-600 hover:underline"
+              className="text-primary-color hover:underline"
             >
               Policy
             </Link>
@@ -66,7 +66,7 @@ export function AcceptanceChecklist({ onAccepted }: AcceptanceChecklistProps) {
             <Link
               href="/user-agreement"
               target="_blank"
-              className="text-blue-600 hover:underline"
+              className="text-primary-color hover:underline"
             >
               User Agreement
             </Link>

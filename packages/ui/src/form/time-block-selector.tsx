@@ -237,7 +237,7 @@ export const TimeBlockSelector: React.FC<TimeBlockSelectorProps> = ({
                 <span className="text-lg group-hover:scale-110 transition-transform">{preset.icon}</span>
                 <div>
                   <div className="font-medium text-sm text-purple-900">{preset.name}</div>
-                  <div className="text-xs text-purple-600">
+                  <div className="text-xs text-primary-color">
                     {preset.times.length} slots • {preset.duration}h each
                   </div>
                 </div>

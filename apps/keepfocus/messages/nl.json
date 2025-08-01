@@ -5,12 +5,16 @@
       "description": "Focus met de Pomodoro Techniek. 25-minuten werksessies, 5-minuten pauzes, en taakbeheer om productiviteit te verhogen."
     },
     "header": {
-      "createItem": "Item Aanmaken"
+      "createItem": "Item Aanmaken",
+      "about": "Over"
     }
   },
   "homepage": {
     "title": "KeepFocus",
     "subtitle": "Pomodoro Timer & Taakbeheer",
+    "heroTitle": "Focus. Werk. Presteer",
+    "technique": "🍅 Pomodoro Techniek",
+    "heroDescription": "Verdeel je werk in gefocuste 25-minuten sessies. Blijf productief, voorkom burn-out, en bereik meer met bewezen tijdmanagement.",
     "createButton": "Nieuw Item Aanmaken",
     "features": {
       "title": "Functies",
@@ -91,10 +95,24 @@
       "setActive": "Instellen als actieve taak",
       "deactivate": "Taak deactiveren",
       "noActiveTask": "Geen actieve taak - algemene focussessie",
-      "dragToReorder": "Sleep om taken te herordenen"
+      "dragToReorder": "Sleep om taken te herordenen",
+      "emptyState": {
+        "readyToFocus": "Klaar om te focussen?",
+        "addFirstTask": "Voeg je eerste taak hierboven toe om te beginnen",
+        "allTasksCompleted": "Gefeliciteerd! Alle taken voltooid",
+        "tasksFinished": "Goed gedaan met het afmaken van je taken!"
+      },
+      "actions": {
+        "moveUp": "Omhoog verplaatsen",
+        "moveDown": "Omlaag verplaatsen",
+        "deleteTask": "Taak verwijderen"
+      },
+      "pomodoro": "pomodoro",
+      "pomodoros": "pomodoro's"
     },
     "settings": {
       "title": "Pomodoro Instellingen",
+      "description": "Pas je pomodoro timer voorkeuren aan.",
       "openSettings": "Instellingen Openen",
       "timerDurations": "Timer Duur",
       "workSession": "Werksessie",
@@ -130,6 +148,298 @@
       "breakComplete": "Pauzetijd is voorbij! Klaar om te focussen?",
       "longBreakComplete": "Lange pauze voltooid! Tijd om weer aan het werk te gaan.",
       "permissionDenied": "Bureaubladmeldingen zijn uitgeschakeld. Schakel ze in via je browserinstellingen voor betere productiviteitstracking."
+    }
+  },
+  "AboutPage": {
+    "hero": {
+      "title": "Over KeepFocus",
+      "subtitle": "De privacy-first Pomodoro timer die je helpt beter te focussen, slimmer te werken, en meer te bereiken zonder je gegevens te compromitteren.",
+      "badges": {
+        "european": "Europees gebouwd",
+        "localData": "Alleen lokale gegevens",
+        "noTracking": "Geen tracking"
+      }
+    },
+    "keepfocus": {
+      "title": "Wat is KeepFocus?",
+      "subtitle": "KeepFocus is een moderne Pomodoro timer en taakbeheer app die volledig in je browser draait. Gebouwd met privacy in gedachten, helpt het je focussen met de bewezen Pomodoro techniek.",
+      "features": {
+        "pomodoro": {
+          "title": "Pomodoro Techniek",
+          "description": "25-minuten focussessies gevolgd door 5-minuten pauzes. Bewezen methode om concentratie en productiviteit te verbeteren."
+        },
+        "tasks": {
+          "title": "Taakbeheer",
+          "description": "Organiseer je werk met een eenvoudige takenlijst. Houd pomodoro's bij per taak en blijf georganiseerd."
+        },
+        "focus": {
+          "title": "Afleidingsvrij",
+          "description": "Schone, minimalistische interface ontworpen om afleidingen te verminderen en je te helpen focussen op wat er echt toe doet."
+        }
+      },
+      "perfectFor": {
+        "title": "Perfect voor",
+        "professionals": {
+          "title": "Professionals",
+          "description": "Beheer werktaken, vergaderingen en projecten met gefocuste tijdblokken"
+        },
+        "students": {
+          "title": "Studenten",
+          "description": "Studiesessies, huiswerk en onderzoek met beter tijdmanagement"
+        },
+        "anyone": {
+          "title": "Iedereen",
+          "description": "Iedereen die focus wil verbeteren en betere werkgewoonten wil opbouwen"
+        }
+      }
+    },
+    "technical": {
+      "title": "Gebouwd voor Privacy & Prestaties",
+      "subtitle": "KeepFocus is ontworpen met jouw privacy en productiviteit in gedachten. Alle gegevens blijven op je apparaat, zonder accounts of tracking vereist.",
+      "architecture": {
+        "title": "Hoe KeepFocus Werkt",
+        "localStorage": {
+          "title": "Lokale Opslag",
+          "description": "Al je taken en instellingen worden lokaal in je browser opgeslagen. Geen cloud synchronisatie, geen gegevensverzameling."
+        },
+        "webWorkers": {
+          "title": "Achtergrond Timers",
+          "description": "Gebruikt Web Workers om ervoor te zorgen dat timers blijven lopen zelfs wanneer het tabblad op de achtergrond is."
+        },
+        "privacy": {
+          "title": "Privacy Eerst",
+          "description": "Geen analytics, geen tracking, geen accounts. Je productiviteitsgegevens behoren alleen jou toe."
+        }
+      },
+      "details": {
+        "privacy": {
+          "title": "Privacy & Beveiliging",
+          "localData": "Alle gegevens lokaal opgeslagen in je browser",
+          "noAnalytics": "Geen analytics of tracking scripts",
+          "noAccounts": "Geen gebruikersaccounts of registratie vereist",
+          "offline": "Werkt volledig offline na eerste laadbeurt"
+        },
+        "performance": {
+          "title": "Prestaties & Betrouwbaarheid",
+          "webWorkers": "Achtergrond Web Workers voor nauwkeurige timing",
+          "notifications": "Native browsermeldingen",
+          "responsive": "Responsief ontwerp voor alle apparaten",
+          "instant": "Instant laden en vloeiende interacties"
+        },
+        "pomodoro": {
+          "title": "Pomodoro Functies",
+          "customizable": "Volledig aanpasbare timer duur",
+          "autoStart": "Auto-start opties voor naadloze workflow",
+          "notifications": "Geluid en bureaubladmeldingen",
+          "statistics": "Houd dagelijkse pomodoro voltooiingsstatistieken bij"
+        },
+        "modern": {
+          "title": "Moderne Technologie",
+          "nextjs": "Gebouwd met Next.js 14 en App Router",
+          "typescript": "Volledige TypeScript voor betrouwbaarheid",
+          "tailwind": "Tailwind CSS voor mooie styling",
+          "pwa": "Progressive Web App mogelijkheden"
+        }
+      }
+    },
+    "openSource": {
+      "title": "Open Source & Transparant",
+      "description": "KeepFocus is volledig open source. Je kunt de code inspecteren, verbeteringen bijdragen, of je eigen instantie draaien.",
+      "cta": "Bekijk Broncode",
+      "benefits": {
+        "transparency": {
+          "title": "Volledige Transparantie",
+          "description": "Elke regel code is open voor inspectie. Geen verborgen tracking of gegevensverzameling."
+        },
+        "community": {
+          "title": "Community Gedreven",
+          "description": "Gebouwd door en voor de community. Bijdragen en feedback zijn altijd welkom."
+        },
+        "security": {
+          "title": "Beveiliging Eerst",
+          "description": "Open source betekent dat beveiligingsexperts de code kunnen controleren op kwetsbaarheden."
+        }
+      }
+    },
+    "platform": {
+      "title": "Onderdeel van Switch-to.eu",
+      "description": "KeepFocus is onderdeel van het Switch-to.eu platform - het promoten van Europese digitale soevereiniteit en privacy-first alternatieven voor Big Tech.",
+      "benefits": {
+        "sovereignty": {
+          "title": "Digitale Soevereiniteit",
+          "description": "Europees gebouwde tools die EU privacy wetten en digitale rechten respecteren"
+        },
+        "privacy": {
+          "title": "Privacy by Design",
+          "description": "Geen gegevenswinning, geen surveillance kapitalisme, alleen tools die voor jou werken"
+        },
+        "innovation": {
+          "title": "Innovatie",
+          "description": "Bewijzen dat Europese software mooi, functioneel en privacy-first kan zijn"
+        }
+      },
+      "cta": "Verken Switch-to.eu"
+    },
+    "cta": {
+      "title": "Klaar om Beter te Focussen?",
+      "description": "Begin vandaag nog met de Pomodoro techniek met een privacy-first timer die jouw productiviteit voorop stelt.",
+      "startFocusing": "Begin met Focussen",
+      "learnMore": "Meer Informatie"
+    }
+  },
+  "footer": {
+    "description": "Jouw gids naar Europese digitale alternatieven. We helpen je ontdekken, evalueren en overstappen naar EU-gebaseerde tools die jouw privacy en data soevereiniteit respecteren.",
+    "confidence": "We bevelen niet alleen EU alternatieven aan—we bouwen ze. Onze eigen apps bewijzen dat Europese software zowel privacy-first als mooi ontworpen kan zijn.",
+    "toolsTitle": "Tools die we intern hebben gebouwd",
+    "browseMore": "Bekijk meer EU alternatieven",
+    "links": "Links",
+    "about": "Over",
+    "privacy": "Privacybeleid",
+    "contact": "Contact",
+    "copyright": "© 2025 Switch-to.eu - Een project van"
+  },
+  "PrivacyPage": {
+    "hero": {
+      "title": "Privacybeleid",
+      "subtitle": "Jouw privacy is onze prioriteit. Dit beleid legt uit hoe KeepFocus jouw gegevens behandelt met volledige transparantie.",
+      "lastUpdated": "Laatst bijgewerkt: 31 januari 2025"
+    },
+    "summary": {
+      "title": "Privacy Samenvatting",
+      "points": [
+        "Alle gegevens lokaal opgeslagen in je browser - nooit geüpload naar servers",
+        "Geen gebruikersaccounts, e-mailadressen of persoonlijke informatie verzameld",
+        "Geen analytics, tracking of gedragsmonitoring",
+        "Geen cookies gebruikt voor tracking doeleinden",
+        "Volledige transparantie met open source code"
+      ]
+    },
+    "sections": {
+      "whoWeAre": {
+        "title": "Wie Wij Zijn",
+        "content": "KeepFocus is onderdeel van Switch-to.eu, een Europees initiatief dat privacy-first digitale tools bouwt. Wij zetten ons in voor het creëren van productiviteitssoftware die jouw privacy respecteert en werkt onder Europese gegevensbeschermingsnormen."
+      },
+      "dataCollection": {
+        "title": "Welke Gegevens Wij Verzamelen",
+        "subtitle": "KeepFocus is ontworpen om minimale gegevens te verzamelen die nodig zijn om de kernfunctionaliteit te bieden:",
+        "taskData": {
+          "title": "Taak Informatie",
+          "description": "Taaktitels, beschrijvingen, voltooiingsstatus en pomodoro tellingen die je aanmaakt - alleen opgeslagen in de lokale opslag van je browser"
+        },
+        "settingsData": {
+          "title": "Instellingen & Voorkeuren",
+          "description": "Timer duur, meldingsvoorkeuren en andere aanpassingsopties - lokaal opgeslagen in je browser"
+        },
+        "technicalData": {
+          "title": "Technische Informatie",
+          "description": "Basis server logs voor beveiliging en prestatiemonitoring (geen persoonlijke identificatie of tracking)"
+        },
+        "noData": {
+          "title": "Wat We Niet Verzamelen",
+          "description": "Geen e-mailadressen, geen IP tracking, geen gedragsanalytics, geen advertentieprofielen, geen tracking cookies, geen cloud synchronisatiegegevens"
+        }
+      },
+      "dataProtection": {
+        "title": "Hoe We Jouw Gegevens Beschermen",
+        "localStorage": {
+          "title": "Alleen Lokale Opslag",
+          "description": "Al jouw taken, instellingen en timer gegevens worden uitsluitend opgeslagen in de lokale opslag van je browser. Deze gegevens verlaten nooit je apparaat of worden verzonden naar onze servers."
+        },
+        "clientSide": {
+          "title": "Client-Side Verwerking",
+          "description": "Alle pomodoro timer functionaliteit, taakbeheer en gegevensverwerking gebeurt volledig in je browser. Geen server-side verwerking van persoonlijke gegevens."
+        },
+        "europeanServers": {
+          "title": "Europese Infrastructuur",
+          "description": "(Alleen voor hosting) App hosting gebruikt Europese servers onder strikte Europese gegevensbeschermingswetten. Geen persoonlijke gegevens worden opgeslagen op servers."
+        },
+        "security": {
+          "title": "Technische Beveiliging",
+          "description": "HTTPS versleuteling, veilige hostinginfrastructuur, regelmatige beveiligingsupdates en open source transparantie voor code auditing."
+        }
+      },
+      "dataRetention": {
+        "title": "Gegevensbewaring",
+        "automatic": {
+          "title": "Automatisch Gegevensbeheer",
+          "description": "Jouw taken en instellingen blijven bestaan in de lokale opslag van je browser totdat je ze handmatig verwijdert of je browsergegevens wist."
+        },
+        "immediate": {
+          "title": "Onmiddellijke Controle",
+          "description": "Je kunt al jouw gegevens onmiddellijk verwijderen door de lokale opslag van je browser te wissen of de gegevensbeheerfuncties van je browser te gebruiken."
+        },
+        "logs": {
+          "title": "Server Logs",
+          "description": "Basis server toegangslogs (geen persoonlijke gegevens) worden 30 dagen bewaard voor beveiligingsmonitoring en prestatie-optimalisatie."
+        }
+      },
+      "thirdParty": {
+        "title": "Derde Partij Services",
+        "hosting": {
+          "title": "Hosting Infrastructuur",
+          "description": "We gebruiken Europese hosting providers die voldoen aan GDPR en EU gegevensbeschermingsnormen. Geen persoonlijke gegevens worden gedeeld met hosting providers."
+        },
+        "noTracking": {
+          "title": "Geen Analytics of Tracking",
+          "description": "We gebruiken geen Google Analytics, Facebook tracking of andere derde partij analytics services. Geen gedragsgegevens worden verzameld of gedeeld."
+        },
+        "notifications": {
+          "title": "Browser Meldingen",
+          "description": "Bureaubladmeldingen gebruiken de native meldings-API van je browser. Geen gegevens worden naar derde partijen gestuurd voor meldingsbezorging."
+        },
+        "openSource": {
+          "title": "Open Source Transparantie",
+          "description": "Onze code is publiek beschikbaar voor inspectie. Je kunt verifiëren dat er geen verborgen tracking of gegevensverzameling plaatsvindt."
+        }
+      },
+      "userRights": {
+        "title": "Jouw Rechten",
+        "access": {
+          "title": "Recht op Toegang",
+          "description": "Je kunt te allen tijde toegang krijgen tot al jouw gegevens via de ontwikkelaarstools van je browser of door lokale opslag te inspecteren."
+        },
+        "deletion": {
+          "title": "Recht op Verwijdering",
+          "description": "Verwijder al jouw gegevens onmiddellijk door de lokale opslag van je browser te wissen of de ingebouwde gegevensbeheerfuncties van de browser te gebruiken."
+        },
+        "portability": {
+          "title": "Gegevensportabiliteit",
+          "description": "Exporteer je taken en instellingengegevens uit de lokale opslag van je browser op elk moment met standaard browsertools."
+        },
+        "noConsent": {
+          "title": "Geen Toestemming Vereist",
+          "description": "Omdat er geen persoonlijke gegevens worden verzameld of verwerkt aan de serverzijde, zijn expliciete toestemmingsmechanismen niet vereist voor basis app functionaliteit."
+        }
+      },
+      "international": {
+        "title": "Internationale Gegevensoverdrachten",
+        "noTransfers": {
+          "title": "Geen Gegevensoverdrachten",
+          "description": "Omdat alle persoonlijke gegevens in je browser blijven, zijn er geen internationale gegevensoverdrachten. App hosting vindt plaats binnen Europese Unie jurisdictie."
+        }
+      },
+      "contact": {
+        "title": "Contact & Vragen",
+        "privacy": {
+          "title": "Privacy Vragen",
+          "description": "Voor privacy-gerelateerde vragen of zorgen, neem contact met ons op via onze hoofdwebsite op Switch-to.eu of open een issue op onze GitHub repository."
+        },
+        "authority": {
+          "title": "Gegevensbeschermingsautoriteit",
+          "description": "Als je zorgen hebt over onze privacypraktijken, kun je contact opnemen met je lokale Europese gegevensbeschermingsautoriteit, hoewel er minimale gegevensverwerking plaatsvindt."
+        }
+      },
+      "changes": {
+        "title": "Beleidswijzigingen",
+        "notification": {
+          "title": "Wijzigingsmeldingen",
+          "description": "Significante wijzigingen in het privacybeleid worden aangekondigd op onze website en GitHub repository. Controleer deze pagina periodiek voor updates."
+        },
+        "consent": {
+          "title": "Voortgezet Gebruik",
+          "description": "Voortgezet gebruik van KeepFocus na privacybeleidswijzigingen vormt acceptatie van de wijzigingen."
+        }
+      }
     }
   }
 }

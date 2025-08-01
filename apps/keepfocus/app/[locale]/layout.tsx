@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { TRPCReactProvider } from "@/lib/trpc-client";
 import { Header } from "@workspace/ui/blocks/header";
 import { Footer } from "@workspace/ui/blocks/footer";
+import { Button } from "@workspace/ui/components/button";
 import { BrandIndicator } from "@workspace/ui/components/brand-indicator";
 import { routing } from "../../i18n/routing";
 import { Link } from "../../i18n/navigation";
@@ -69,20 +70,34 @@ export default async function LocaleLayout({
                   <Link href="/">
                     <div className="flex items-start gap-2 transition-opacity hover:opacity-80">
                       <div className="flex items-center justify-center mt-1">
-                        <Package className="h-4 w-4 text-blue-600" />
+                        <Package className="h-4 w-4 text-primary-color" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-lg font-black text-blue-600 tracking-wide uppercase sm:text-xl leading-none">KeepFocus</span>
+                        <span className="text-lg font-black text-primary-color tracking-wide uppercase sm:text-xl leading-none">KeepFocus</span>
                         <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" asSpan />
                       </div>
                     </div>
                   </Link>
                 }
                 navigation={
-                  <LanguageSelector locale={locale} />
+                  <div className="flex items-center gap-2">
+                    <LanguageSelector locale={locale} />
+                    <Link href="/about">
+                      <Button className="bg-primary hover:bg-primary/90" size="sm">
+                        {t('about')}
+                      </Button>
+                    </Link>
+                  </div>
                 }
                 mobileNavigation={
-                  <LanguageSelector locale={locale} />
+                  <div className="flex items-center gap-2">
+                    <LanguageSelector locale={locale} />
+                    <Link href="/about">
+                      <Button className="bg-primary text-primary-foreground hover:bg-primary/90" size="sm">
+                        {t('about')}
+                      </Button>
+                    </Link>
+                  </div>
                 }
               />
               {children}

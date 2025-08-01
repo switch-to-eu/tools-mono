@@ -5,12 +5,16 @@
       "description": "Focus with the Pomodoro Technique. 25-minute work sessions, 5-minute breaks, and task management to boost productivity."
     },
     "header": {
-      "createItem": "Create Item"
+      "createItem": "Create Item",
+      "about": "About"
     }
   },
   "homepage": {
     "title": "KeepFocus",
     "subtitle": "Pomodoro Timer & Task Manager",
+    "heroTitle": "Focus. Work. Achieve",
+    "technique": "🍅 Pomodoro Technique",
+    "heroDescription": "Break your work into focused 25-minute sessions. Stay productive, avoid burnout, and accomplish more with proven time management.",
     "createButton": "Create New Item",
     "features": {
       "title": "Features",
@@ -91,10 +95,24 @@
       "setActive": "Set as active task",
       "deactivate": "Deactivate task",
       "noActiveTask": "No active task - general focus session",
-      "dragToReorder": "Drag to reorder tasks"
+      "dragToReorder": "Drag to reorder tasks",
+      "emptyState": {
+        "readyToFocus": "Ready to focus?",
+        "addFirstTask": "Add your first task above to get started",
+        "allTasksCompleted": "Congratulations! All tasks completed",
+        "tasksFinished": "Great job finishing your tasks!"
+      },
+      "actions": {
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "deleteTask": "Delete task"
+      },
+      "pomodoro": "pomodoro",
+      "pomodoros": "pomodoros"
     },
     "settings": {
       "title": "Pomodoro Settings",
+      "description": "Customize your pomodoro timer preferences.",
       "openSettings": "Open Settings",
       "timerDurations": "Timer Durations",
       "workSession": "Work Session",
@@ -141,6 +159,287 @@
       "privacy": "Privacy Policy",
       "contact": "Contact",
       "copyright": "© 2025 Switch-to.eu - A project by"
+    }
+  },
+  "AboutPage": {
+    "hero": {
+      "title": "About KeepFocus",
+      "subtitle": "The privacy-first Pomodoro timer that helps you focus better, work smarter, and achieve more without compromising your data.",
+      "badges": {
+        "european": "European-built",
+        "localData": "Local data only",
+        "noTracking": "No tracking"
+      }
+    },
+    "keepfocus": {
+      "title": "What is KeepFocus?",
+      "subtitle": "KeepFocus is a modern Pomodoro timer and task management app that runs entirely in your browser. Built with privacy in mind, it helps you focus using the proven Pomodoro technique.",
+      "features": {
+        "pomodoro": {
+          "title": "Pomodoro Technique",
+          "description": "25-minute focus sessions followed by 5-minute breaks. Proven method to improve concentration and productivity."
+        },
+        "tasks": {
+          "title": "Task Management",
+          "description": "Organize your work with a simple task list. Track pomodoros completed per task and stay organized."
+        },
+        "focus": {
+          "title": "Distraction-Free",
+          "description": "Clean, minimal interface designed to reduce distractions and help you maintain focus on what matters most."
+        }
+      },
+      "perfectFor": {
+        "title": "Perfect for",
+        "professionals": {
+          "title": "Professionals",
+          "description": "Manage work tasks, meetings, and projects with focused time blocks"
+        },
+        "students": {
+          "title": "Students",
+          "description": "Study sessions, homework, and research with better time management"
+        },
+        "anyone": {
+          "title": "Anyone",
+          "description": "Anyone wanting to improve focus and build better work habits"
+        }
+      }
+    },
+    "technical": {
+      "title": "Built for Privacy & Performance",
+      "subtitle": "KeepFocus is designed with your privacy and productivity in mind. All data stays on your device, with no accounts or tracking required.",
+      "architecture": {
+        "title": "How KeepFocus Works",
+        "localStorage": {
+          "title": "Local Storage",
+          "description": "All your tasks and settings are stored locally in your browser. No cloud sync, no data collection."
+        },
+        "webWorkers": {
+          "title": "Background Timers",
+          "description": "Uses Web Workers to ensure timers continue running even when the tab is in the background."
+        },
+        "privacy": {
+          "title": "Privacy First",
+          "description": "No analytics, no tracking, no accounts. Your productivity data belongs to you alone."
+        }
+      },
+      "details": {
+        "privacy": {
+          "title": "Privacy & Security",
+          "localData": "All data stored locally in your browser",
+          "noAnalytics": "No analytics or tracking scripts",
+          "noAccounts": "No user accounts or registration required",
+          "offline": "Works completely offline after first load"
+        },
+        "performance": {
+          "title": "Performance & Reliability",
+          "webWorkers": "Background Web Workers for accurate timing",
+          "notifications": "Native browser notifications",
+          "responsive": "Responsive design for all devices",
+          "instant": "Instant loading and smooth interactions"
+        },
+        "pomodoro": {
+          "title": "Pomodoro Features",
+          "customizable": "Fully customizable timer durations",
+          "autoStart": "Auto-start options for seamless workflow",
+          "notifications": "Sound and desktop notifications",
+          "statistics": "Track daily pomodoro completion stats"
+        },
+        "modern": {
+          "title": "Modern Technology",
+          "nextjs": "Built with Next.js 14 and App Router",
+          "typescript": "Full TypeScript for reliability",
+          "tailwind": "Tailwind CSS for beautiful styling",
+          "pwa": "Progressive Web App capabilities"
+        }
+      }
+    },
+    "openSource": {
+      "title": "Open Source & Transparent",
+      "description": "KeepFocus is completely open source. You can inspect the code, contribute improvements, or run your own instance.",
+      "cta": "View Source Code",
+      "benefits": {
+        "transparency": {
+          "title": "Full Transparency",
+          "description": "Every line of code is open for inspection. No hidden tracking or data collection."
+        },
+        "community": {
+          "title": "Community Driven",
+          "description": "Built by and for the community. Contributions and feedback are always welcome."
+        },
+        "security": {
+          "title": "Security First",
+          "description": "Open source means security experts can audit the code for vulnerabilities."
+        }
+      }
+    },
+    "platform": {
+      "title": "Part of Switch-to.eu",
+      "description": "KeepFocus is part of the Switch-to.eu platform - promoting European digital sovereignty and privacy-first alternatives to Big Tech.",
+      "benefits": {
+        "sovereignty": {
+          "title": "Digital Sovereignty",
+          "description": "European-built tools that respect EU privacy laws and digital rights"
+        },
+        "privacy": {
+          "title": "Privacy by Design",
+          "description": "No data harvesting, no surveillance capitalism, just tools that work for you"
+        },
+        "innovation": {
+          "title": "Innovation",
+          "description": "Proving that European software can be beautiful, functional, and privacy-first"
+        }
+      },
+      "cta": "Explore Switch-to.eu"
+    },
+    "cta": {
+      "title": "Ready to Focus Better?",
+      "description": "Start using the Pomodoro technique today with a privacy-first timer that puts your productivity first.",
+      "startFocusing": "Start Focusing",
+      "learnMore": "Learn More"
+    }
+  },
+  "PrivacyPage": {
+    "hero": {
+      "title": "Privacy Policy",
+      "subtitle": "Your privacy is our priority. This policy explains how KeepFocus handles your data with complete transparency.",
+      "lastUpdated": "Last updated: January 31, 2025"
+    },
+    "summary": {
+      "title": "Privacy Summary",
+      "points": [
+        "All data stored locally in your browser - never uploaded to servers",
+        "No user accounts, email addresses, or personal information collected",
+        "No analytics, tracking, or behavioral monitoring",
+        "No cookies used for tracking purposes",
+        "Complete transparency with open source code"
+      ]
+    },
+    "sections": {
+      "whoWeAre": {
+        "title": "Who We Are",
+        "content": "KeepFocus is part of Switch-to.eu, a European initiative building privacy-first digital tools. We're committed to creating productivity software that respects your privacy and operates under European data protection standards."
+      },
+      "dataCollection": {
+        "title": "What Data We Collect",
+        "subtitle": "KeepFocus is designed to collect minimal data necessary to provide its core functionality:",
+        "taskData": {
+          "title": "Task Information",
+          "description": "Task titles, descriptions, completion status, and pomodoro counts you create - stored only in your browser's local storage"
+        },
+        "settingsData": {
+          "title": "Settings & Preferences",
+          "description": "Timer durations, notification preferences, and other customization options - stored locally in your browser"
+        },
+        "technicalData": {
+          "title": "Technical Information",
+          "description": "Basic server logs for security and performance monitoring (no personal identification or tracking)"
+        },
+        "noData": {
+          "title": "What We Don't Collect",
+          "description": "No email addresses, no IP tracking, no behavioral analytics, no advertising profiles, no tracking cookies, no cloud synchronization data"
+        }
+      },
+      "dataProtection": {
+        "title": "How We Protect Your Data",
+        "localStorage": {
+          "title": "Local Storage Only",
+          "description": "All your tasks, settings, and timer data are stored exclusively in your browser's local storage. This data never leaves your device or gets transmitted to our servers."
+        },
+        "clientSide": {
+          "title": "Client-Side Processing",
+          "description": "All pomodoro timer functionality, task management, and data processing happens entirely in your browser. No server-side processing of personal data."
+        },
+        "europeanServers": {
+          "title": "European Infrastructure",
+          "description": "(For hosting only) App hosting uses European servers under strict European data protection laws. No personal data is stored on servers."
+        },
+        "security": {
+          "title": "Technical Security",
+          "description": "HTTPS encryption, secure hosting infrastructure, regular security updates, and open source transparency for code auditing."
+        }
+      },
+      "dataRetention": {
+        "title": "Data Retention",
+        "automatic": {
+          "title": "Automatic Data Management",
+          "description": "Your tasks and settings persist in your browser's local storage until you manually delete them or clear your browser data."
+        },
+        "immediate": {
+          "title": "Immediate Control",
+          "description": "You can delete all your data instantly by clearing your browser's local storage or using your browser's data management features."
+        },
+        "logs": {
+          "title": "Server Logs",
+          "description": "Basic server access logs (no personal data) are retained for 30 days for security monitoring and performance optimization."
+        }
+      },
+      "thirdParty": {
+        "title": "Third-Party Services",
+        "hosting": {
+          "title": "Hosting Infrastructure",
+          "description": "We use European hosting providers that comply with GDPR and EU data protection standards. No personal data is shared with hosting providers."
+        },
+        "noTracking": {
+          "title": "No Analytics or Tracking",
+          "description": "We don't use Google Analytics, Facebook tracking, or any other third-party analytics services. No behavioral data is collected or shared."
+        },
+        "notifications": {
+          "title": "Browser Notifications",
+          "description": "Desktop notifications use your browser's native notification API. No data is sent to third parties for notification delivery."
+        },
+        "openSource": {
+          "title": "Open Source Transparency",
+          "description": "Our code is publicly available for inspection. You can verify that no hidden tracking or data collection occurs."
+        }
+      },
+      "userRights": {
+        "title": "Your Rights",
+        "access": {
+          "title": "Right to Access",
+          "description": "You can access all your data at any time through your browser's developer tools or by inspecting local storage."
+        },
+        "deletion": {
+          "title": "Right to Deletion",
+          "description": "Delete all your data instantly by clearing your browser's local storage or using the browser's built-in data management features."
+        },
+        "portability": {
+          "title": "Data Portability",
+          "description": "Export your tasks and settings data from your browser's local storage at any time using standard browser tools."
+        },
+        "noConsent": {
+          "title": "No Consent Required",
+          "description": "Since no personal data is collected or processed server-side, explicit consent mechanisms are not required for basic app functionality."
+        }
+      },
+      "international": {
+        "title": "International Data Transfers",
+        "noTransfers": {
+          "title": "No Data Transfers",
+          "description": "Since all personal data stays in your browser, there are no international data transfers. App hosting occurs within European Union jurisdiction."
+        }
+      },
+      "contact": {
+        "title": "Contact & Questions",
+        "privacy": {
+          "title": "Privacy Questions",
+          "description": "For privacy-related questions or concerns, contact us through our main website at Switch-to.eu or open an issue on our GitHub repository."
+        },
+        "authority": {
+          "title": "Data Protection Authority",
+          "description": "If you have concerns about our privacy practices, you can contact your local European data protection authority, though note that minimal data processing occurs."
+        }
+      },
+      "changes": {
+        "title": "Policy Updates",
+        "notification": {
+          "title": "Change Notifications",
+          "description": "Significant privacy policy changes will be announced on our website and GitHub repository. Check this page periodically for updates."
+        },
+        "consent": {
+          "title": "Continued Use",
+          "description": "Continued use of KeepFocus after privacy policy updates constitutes acceptance of the changes."
+        }
+      }
     }
   }
 }

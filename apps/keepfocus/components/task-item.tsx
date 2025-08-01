@@ -133,7 +133,7 @@ export function TaskItem({
         {pomodoros > 0 && (
           <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
             <Timer className="w-3 h-3" />
-            {pomodoros} pomodoro{pomodoros !== 1 ? 's' : ''}
+            {pomodoros} {pomodoros === 1 ? t('pomodoro') : t('pomodoros')}
           </div>
         )}
       </div>
@@ -148,8 +148,8 @@ export function TaskItem({
             className={cn(
               "h-8 w-8 p-0",
               isActive
-                ? "bg-blue-100 text-blue-600"
-                : "text-gray-400 hover:text-blue-600 hover:bg-blue-50"
+                ? "bg-blue-100 text-primary-color"
+                : "text-gray-400 hover:text-primary-color hover:bg-blue-50"
             )}
             title={isActive ? t('deactivate') : t('setActive')}
           >
@@ -178,7 +178,7 @@ export function TaskItem({
             size="sm"
             onClick={onMoveUp}
             className="h-8 w-8 p-0 text-gray-400 hover:text-gray-600"
-            title="Move up"
+            title={t('actions.moveUp')}
           >
             <ChevronUp className="w-4 h-4" />
           </Button>
@@ -190,7 +190,7 @@ export function TaskItem({
             size="sm"
             onClick={onMoveDown}
             className="h-8 w-8 p-0 text-gray-400 hover:text-gray-600"
-            title="Move down"
+            title={t('actions.moveDown')}
           >
             <ChevronDown className="w-4 h-4" />
           </Button>
@@ -201,7 +201,7 @@ export function TaskItem({
           size="sm"
           onClick={onDelete}
           className="h-8 w-8 p-0 text-gray-400 hover:text-red-600 hover:bg-red-50"
-          title="Delete task"
+          title={t('actions.deleteTask')}
         >
           <Trash2 className="w-4 h-4" />
         </Button>
