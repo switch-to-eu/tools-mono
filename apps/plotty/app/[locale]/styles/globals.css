@@ -8,6 +8,10 @@
   @apply bg-gradient-to-r from-purple-600 to-blue-600;
 }
 
+.header-bg {
+  @apply bg-gradient-to-br from-purple-600/10 via-blue-500/5 to-transparent;
+}
+
 .text-primary-color {
   @apply text-purple-600;
 }
