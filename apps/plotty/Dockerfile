@@ -32,8 +32,8 @@ RUN if [ -f .gitmodules ]; then \
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Enable pnpm and build the plotty app
-RUN corepack enable pnpm && pnpm run build --filter=@workspace/plotty
+# Enable corepack and build the plotty app
+RUN corepack enable && pnpm run build --filter=@workspace/plotty
 
 # Production image, copy all the files and run next
 FROM base AS runner
