@@ -69,10 +69,10 @@ export default async function LocaleLayout({
                   <Link href="/">
                     <div className="flex items-start gap-2 transition-opacity hover:opacity-80">
                       <div className="flex items-center justify-center mt-1">
-                        <Package className="h-4 w-4 text-blue-600" />
+                        <Package className="h-4 w-4 text-primary-color" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-lg font-black text-blue-600 tracking-wide uppercase sm:text-xl leading-none">KeepFocus</span>
+                        <span className="text-lg font-black text-primary-color tracking-wide uppercase sm:text-xl leading-none">KeepFocus</span>
                         <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" asSpan />
                       </div>
                     </div>

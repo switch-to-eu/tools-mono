@@ -51,7 +51,7 @@ export default function AboutPage() {
 
             <div className="flex flex-wrap justify-center gap-6 text-lg">
               <div className="flex items-center gap-2 text-neutral-700">
-                <MapPin className="h-5 w-5 text-blue-600" />
+                <MapPin className="h-5 w-5 text-primary-color" />
                 {t('hero.badges.european')}
               </div>
               <div className="flex items-center gap-2 text-neutral-700">
@@ -59,7 +59,7 @@ export default function AboutPage() {
                 {t('hero.badges.encrypted')}
               </div>
               <div className="flex items-center gap-2 text-neutral-700">
-                <Eye className="h-5 w-5 text-purple-600" />
+                <Eye className="h-5 w-5 text-primary-color" />
                 {t('hero.badges.noTracking')}
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function AboutPage() {
             <Card className="border-0 bg-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">
               <CardHeader className="text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                  <Clock className="h-6 w-6 text-blue-600" />
+                  <Clock className="h-6 w-6 text-primary-color" />
                 </div>
                 <CardTitle className="text-xl text-neutral-900">
                   {t('plotty.features.instant.title')}
@@ -112,7 +112,7 @@ export default function AboutPage() {
             <Card className="border-0 bg-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">
               <CardHeader className="text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-                  <Shield className="h-6 w-6 text-purple-600" />
+                  <Shield className="h-6 w-6 text-primary-color" />
                 </div>
                 <CardTitle className="text-xl text-neutral-900">
                   {t('plotty.features.private.title')}
@@ -181,7 +181,7 @@ export default function AboutPage() {
               <div className="grid gap-6 md:grid-cols-3">
                 <div className="text-center">
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                    <Lock className="h-6 w-6 text-blue-600" />
+                    <Lock className="h-6 w-6 text-primary-color" />
                   </div>
                   <h4 className="font-semibold text-neutral-900 mb-2">{t('technical.architecture.encryption.title')}</h4>
                   <p className="text-sm text-neutral-600">{t('technical.architecture.encryption.description')}</p>
@@ -197,7 +197,7 @@ export default function AboutPage() {
 
                 <div className="text-center">
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-                    <Database className="h-6 w-6 text-purple-600" />
+                    <Database className="h-6 w-6 text-primary-color" />
                   </div>
                   <h4 className="font-semibold text-neutral-900 mb-2">{t('technical.architecture.storage.title')}</h4>
                   <p className="text-sm text-neutral-600">{t('technical.architecture.storage.description')}</p>
@@ -211,7 +211,7 @@ export default function AboutPage() {
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-2">
-                  <Shield className="h-6 w-6 text-blue-600" />
+                  <Shield className="h-6 w-6 text-primary-color" />
                   <CardTitle className="text-xl text-neutral-900">
                     {t('technical.details.security.title')}
                   </CardTitle>
@@ -273,7 +273,7 @@ export default function AboutPage() {
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-2">
-                  <Clock className="h-6 w-6 text-purple-600" />
+                  <Clock className="h-6 w-6 text-primary-color" />
                   <CardTitle className="text-xl text-neutral-900">
                     {t('technical.details.scheduling.title')}
                   </CardTitle>
@@ -368,7 +368,7 @@ export default function AboutPage() {
 
               <div className="text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                  <Users className="h-6 w-6 text-blue-600" />
+                  <Users className="h-6 w-6 text-primary-color" />
                 </div>
                 <h4 className="font-semibold text-neutral-900 mb-2">{t('openSource.benefits.community.title')}</h4>
                 <p className="text-sm text-neutral-600">{t('openSource.benefits.community.description')}</p>
@@ -376,7 +376,7 @@ export default function AboutPage() {
 
               <div className="text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-                  <Shield className="h-6 w-6 text-purple-600" />
+                  <Shield className="h-6 w-6 text-primary-color" />
                 </div>
                 <h4 className="font-semibold text-neutral-900 mb-2">{t('openSource.benefits.security.title')}</h4>
                 <p className="text-sm text-neutral-600">{t('openSource.benefits.security.description')}</p>
@@ -416,7 +416,7 @@ export default function AboutPage() {
 
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                <Lock className="h-6 w-6 text-blue-600" />
+                <Lock className="h-6 w-6 text-primary-color" />
               </div>
               <h4 className="font-semibold text-neutral-900 mb-2">{t('platform.benefits.privacy.title')}</h4>
               <p className="text-sm text-neutral-600">{t('platform.benefits.privacy.description')}</p>
@@ -424,7 +424,7 @@ export default function AboutPage() {
 
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-                <Zap className="h-6 w-6 text-purple-600" />
+                <Zap className="h-6 w-6 text-primary-color" />
               </div>
               <h4 className="font-semibold text-neutral-900 mb-2">{t('platform.benefits.innovation.title')}</h4>
               <p className="text-sm text-neutral-600">{t('platform.benefits.innovation.description')}</p>
@@ -459,14 +459,14 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/create"
-              className="inline-block bg-white text-purple-600 shadow-xl transition-all hover:scale-105 hover:bg-neutral-100 px-8 py-4 text-lg font-semibold h-auto rounded-md inline-flex items-center justify-center gap-2"
+              className="inline-block bg-white text-primary-color shadow-xl transition-all hover:scale-105 hover:bg-neutral-100 px-8 py-4 text-lg font-semibold h-auto rounded-md inline-flex items-center justify-center gap-2"
             >
               <Shield className="mr-3 h-6 w-6" />
               {t('cta.createPoll')}
             </a>
             <a
               href="/"
-              className="inline-block border-white text-white hover:bg-white hover:text-purple-600 px-8 py-4 text-lg font-semibold h-auto rounded-md inline-flex items-center justify-center gap-2 border bg-transparent shadow-xs transition-all"
+              className="inline-block border-white text-white hover:bg-white hover:text-primary-color px-8 py-4 text-lg font-semibold h-auto rounded-md inline-flex items-center justify-center gap-2 border bg-transparent shadow-xs transition-all"
             >
               {t('cta.learnMore')}
             </a>

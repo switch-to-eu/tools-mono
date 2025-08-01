@@ -18,7 +18,7 @@ export default function HomePage() {
           {/* Hero Section */}
           <div className="text-center py-8 mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-3">
-              Focus. Work. <span className="text-blue-600">Achieve.</span>
+              Focus. Work. <span className="text-primary-color">Achieve.</span>
             </h1>
             <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
               🍅 Pomodoro Technique

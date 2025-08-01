@@ -97,7 +97,7 @@ export default function Home() {
               {t('trust.badges.encrypted')}
             </div>
             <div className="flex items-center gap-2 text-sm text-neutral-600">
-              <MapPin className="h-5 w-5 text-blue-600" />
+              <MapPin className="h-5 w-5 text-primary-color" />
               {t('trust.badges.european')}
             </div>
           </div>
@@ -227,7 +227,7 @@ export default function Home() {
               <Button
                 variant="secondary"
                 size="lg"
-                className="bg-white text-purple-600 shadow-xl transition-all hover:scale-105 hover:bg-neutral-100 px-8 py-4 text-lg font-semibold"
+                className="bg-white text-primary-color shadow-xl transition-all hover:scale-105 hover:bg-neutral-100 px-8 py-4 text-lg font-semibold"
               >
                 <Shield className="mr-3 h-6 w-6" />
                 <span className="hidden sm:inline">{t('cta.button')}</span>

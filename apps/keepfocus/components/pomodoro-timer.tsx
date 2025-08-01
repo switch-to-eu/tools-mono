@@ -102,7 +102,7 @@ export function PomodoroTimer({
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                    <div className="w-8 h-8 bg-blue-100 text-primary-color rounded-full flex items-center justify-center text-sm font-bold">3</div>
                     <div>
                       <h4 className="font-medium">Long Break (15 minutes)</h4>
                       <p className="text-sm text-gray-600">After 4 pomodoros, take a longer break</p>
@@ -167,7 +167,7 @@ export function PomodoroTimer({
           </Button>
           <Button
             onClick={reset}
-            variant="outline"
+            variant="warning"
             size="lg"
             className="flex items-center gap-2"
           >
@@ -176,7 +176,7 @@ export function PomodoroTimer({
           </Button>
           <Button
             onClick={skip}
-            variant="outline"
+            variant="secondary"
             size="lg"
             className="flex items-center gap-2"
           >

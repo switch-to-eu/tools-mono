@@ -71,10 +71,10 @@ export default async function LocaleLayout({
                   <Link href="/">
                     <div className="flex items-start gap-2 transition-opacity hover:opacity-80">
                       <div className="flex items-center justify-center mt-1">
-                        <Calendar className="h-4 w-4 text-purple-600" />
+                        <Calendar className="h-4 w-4 text-primary-color" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-lg font-black text-purple-600 tracking-wide uppercase sm:text-xl leading-none">Plotty</span>
+                        <span className="text-lg font-black text-primary-color tracking-wide uppercase sm:text-xl leading-none">Plotty</span>
                         <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" asSpan />
                       </div>
                     </div>

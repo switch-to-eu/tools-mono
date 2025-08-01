@@ -67,7 +67,7 @@ export default async function HomePage({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <Card key={index} className="p-6 text-center">
-              <div className="flex justify-center mb-4 text-blue-600">
+              <div className="flex justify-center mb-4 text-primary-color">
                 {feature.icon}
               </div>
               <h3 className="font-semibold text-lg mb-2 text-gray-900">
@@ -84,7 +84,7 @@ export default async function HomePage({
       <div className="text-center">
         <p className="text-gray-500 text-sm">
           Ready to start transferring files? Check out the{" "}
-          <Link href="/transfer" className="text-blue-600 hover:text-blue-800">
+          <Link href="/transfer" className="text-primary-color hover:text-blue-800">
             transfer page
           </Link>{" "}
           to see P2P file sharing in action.

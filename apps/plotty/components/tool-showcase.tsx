@@ -37,9 +37,9 @@ const cardBorder = cva("", {
 const cardText = cva("", {
   variants: {
     color: {
-      blue: "text-blue-600",
+      blue: "text-primary-color",
       green: "text-green-600",
-      purple: "text-purple-600",
+      purple: "text-primary-color",
       gray: "text-gray-500"
     }
   },

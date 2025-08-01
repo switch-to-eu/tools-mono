@@ -214,7 +214,7 @@ export function PollForm({
                                 );
                               }}
                             >
-                              <div className="text-center text-xs font-medium tracking-wide uppercase text-purple-600 group-hover:text-purple-700">
+                              <div className="text-center text-xs font-medium tracking-wide uppercase text-primary-color group-hover:text-purple-700">
                                 {date
                                   .toLocaleDateString("en-US", {
                                     month: "short",
@@ -224,7 +224,7 @@ export function PollForm({
                               <div className="text-xl leading-none font-bold text-purple-800 group-hover:text-purple-900">
                                 {date.getDate()}
                               </div>
-                              <div className="text-xs font-medium text-purple-600 group-hover:text-purple-700">
+                              <div className="text-xs font-medium text-primary-color group-hover:text-purple-700">
                                 {date
                                   .toLocaleDateString("en-US", {
                                     weekday: "short",
@@ -239,7 +239,7 @@ export function PollForm({
                 ) : (
                   <div className="text-center py-8 px-4 rounded-lg bg-purple-50 border-2 border-dashed border-purple-300">
                     <Calendar className="h-8 w-8 text-purple-400 mx-auto mb-2" />
-                    <p className="text-sm text-purple-600 font-medium">
+                    <p className="text-sm text-primary-color font-medium">
                       {t('calendar.noDatesSelected')}
                     </p>
                     <p className="text-xs text-purple-500 mt-1">

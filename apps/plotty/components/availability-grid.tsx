@@ -299,7 +299,7 @@ export function AvailabilityGrid({
                       setNameInput(currentUserName);
                       setShowNameDialog(true);
                     }}
-                    className="text-blue-600 hover:text-blue-800 ml-1 p-1 hover:bg-blue-100 rounded transition-colors"
+                    className="text-primary-color hover:text-blue-800 ml-1 p-1 hover:bg-blue-100 rounded transition-colors"
                   >
                     <Edit className="h-3 w-3" />
                   </button>

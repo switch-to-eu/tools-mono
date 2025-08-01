@@ -2,3 +2,12 @@
 @import "@workspace/ui/globals.css";
 
 @source '../../../node_modules/@workspace/ui/src';
+
+/* KeepFocus-specific color overrides */
+.gradient-primary {
+  @apply bg-gradient-to-r from-blue-500 to-blue-700;
+}
+
+.text-primary-color {
+  @apply text-blue-600;
+}

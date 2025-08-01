@@ -148,8 +148,8 @@ export function TaskItem({
             className={cn(
               "h-8 w-8 p-0",
               isActive
-                ? "bg-blue-100 text-blue-600"
-                : "text-gray-400 hover:text-blue-600 hover:bg-blue-50"
+                ? "bg-blue-100 text-primary-color"
+                : "text-gray-400 hover:text-primary-color hover:bg-blue-50"
             )}
             title={isActive ? t('deactivate') : t('setActive')}
           >
