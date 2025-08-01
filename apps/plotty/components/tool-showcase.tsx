@@ -126,16 +126,16 @@ function ToolCard({ tool, index }: { tool: Tool; index: number }) {
           </div>
 
           <p className={`text-base font-medium ${cardText({ color: colorVariant })} mb-2`}>
-            {t(`${tool.id}.tagline`)}
+            {t(`${tool.id}.tagline` as any)}
           </p>
 
           <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-            {t(`${tool.id}.description`)}
+            {t(`${tool.id}.description` as any)}
           </p>
 
           {isActive ? (
             <button className={cardButton({ color: colorVariant })}>
-              {t(`${tool.id}.cta`)}
+              {t(`${tool.id}.cta` as any)}
               <ArrowRight className="h-3 w-3" />
             </button>
           ) : (

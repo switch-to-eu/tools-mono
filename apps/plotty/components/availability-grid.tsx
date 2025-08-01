@@ -26,7 +26,7 @@ interface AvailabilityGridProps {
   poll: DecryptedPoll;
   currentParticipantId: string | null;
   isSaving: boolean;
-  onSave?: (name: string, availability: Record<string, boolean>) => void;
+  onSave?: (name: string, availability: Record<string, boolean | string[]>) => void;
 }
 
 export function AvailabilityGrid({
@@ -38,7 +38,7 @@ export function AvailabilityGrid({
   const t = useTranslations('AvailabilityGrid');
 
   // Local state to track user's changes before submitting
-  const [currentUserSelections, setCurrentUserSelections] = useState<Record<string, boolean>>({});
+  const [currentUserSelections, setCurrentUserSelections] = useState<Record<string, boolean | string[]>>({});
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [showNameDialog, setShowNameDialog] = useState(false);
   const [currentUserName, setCurrentUserName] = useState("");
@@ -177,7 +177,7 @@ export function AvailabilityGrid({
   };
 
   const handleClear = () => {
-    const clearedAvailability: Record<string, boolean> = {};
+    const clearedAvailability: Record<string, boolean | string[]> = {};
     
     // Clear all time slots (either dates or date+time combinations)
     transformedData.timeSlots.forEach((slot) => {
@@ -342,7 +342,7 @@ export function AvailabilityGrid({
                 return (
                   <div key={slot.id} className={`w-24 sm:w-28 flex-shrink-0 border-r border-primary-color px-2 py-4 text-center flex flex-col justify-end ${isMostPopular ? 'bg-green-50 border-green-200' : ''
                     }`}>
-                    {isTimedPoll && 'startTime' in slot ? (
+                    {isTimedPoll && 'startTime' in slot && 'duration' in slot ? (
                       // Time range display for timed polls
                       <>
                         <div className="text-xs text-gray-600 mb-1">
@@ -353,7 +353,7 @@ export function AvailabilityGrid({
                           {new Date(slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </div>
                         <div className="text-xs text-gray-700 mb-2 font-medium">
-                          {formatTimeSlotRange(slot.startTime, slot.duration)}
+                          {formatTimeSlotRange(slot.startTime as string, slot.duration as number)}
                         </div>
                       </>
                     ) : (

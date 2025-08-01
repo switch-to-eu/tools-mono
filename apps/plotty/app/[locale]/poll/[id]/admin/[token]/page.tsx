@@ -12,7 +12,7 @@ import { AdminSection } from "@components/admin-section";
 import { PollLoading } from "@components/poll-loading";
 
 import { AvailabilityGrid } from "@components/availability-grid";
-import type { PollFormData } from "@/lib/schemas";
+import type { ProcessedPollFormData } from "@components/poll-form";
 
 export default function AdminPage() {
   const params = useParams();
@@ -55,12 +55,12 @@ export default function AdminPage() {
     adminToken: token,
   });
 
-  const onSave = async (name: string, availability: Record<string, boolean>) => {
+  const onSave = async (name: string, availability: Record<string, boolean | string[]>) => {
     if (!poll) return;
     await submitVote(poll, { name, availability });
   };
 
-  const handleUpdatePoll = async (formData: PollFormData) => {
+  const handleUpdatePoll = async (formData: ProcessedPollFormData) => {
     if (!poll) return;
     await updatePoll(poll, formData);
   };
