@@ -52,10 +52,12 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/static ./apps/plotty/.next/static
 
-# Copy migration files and drizzle config for runtime migrations
+# Copy migration files and install drizzle-kit for runtime migrations
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle ./apps/plotty/drizzle
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle.config.ts ./apps/plotty/drizzle.config.ts
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/drizzle-kit ./node_modules/drizzle-kit
+
+# Install drizzle-kit globally for migrations
+RUN npm install -g drizzle-kit@0.30.6
 
 USER nextjs
 
@@ -67,7 +69,7 @@ COPY --chown=nextjs:nodejs <<EOF /app/start.sh
 #!/bin/sh
 echo "Running database migrations..."
 cd /app/apps/plotty
-npx drizzle-kit migrate
+drizzle-kit migrate
 echo "Starting server..."
 exec node server.js
 EOF
