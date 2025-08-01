@@ -49,7 +49,7 @@ export function SectionHeader({
   className
 }: SectionHeaderProps) {
   return (
-    <div className={cn("border-b border-gray-200 px-6 py-4 gradient-bg-purple-blue", className)}>
+    <div className={cn("border-b border-gray-200 px-6 py-4 header-bg", className)}>
       <div className="flex items-center gap-2">
         {icon && <span className="text-primary-color">{icon}</span>}
         <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
