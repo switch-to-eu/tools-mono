@@ -137,7 +137,8 @@
             "description": "Maak direct polls - geen registratie, geen email, geen gedoe. Gewoon eenvoudige planning die jouw privacy respecteert.",
             "cta": "Maak Privé Poll",
             "ctaMobile": "Maak Poll",
-            "disclaimer": "Geen registratie vereist"
+            "disclaimer": "Geen registratie vereist",
+            "floatingBadge": "30 seconden om aan te maken"
         },
         "benefits": {
             "title": "Waarom duizenden Plotty kiezen",

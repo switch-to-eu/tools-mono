@@ -72,7 +72,7 @@ export default async function LocaleLayout({
                         <Package className="h-4 w-4 text-blue-600" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-lg font-black text-blue-600 tracking-wide uppercase sm:text-xl leading-none">Keepfocus</span>
+                        <span className="text-lg font-black text-blue-600 tracking-wide uppercase sm:text-xl leading-none">KeepFocus</span>
                         <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" asSpan />
                       </div>
                     </div>

@@ -137,7 +137,8 @@
             "description": "Create polls instantly - no registration, no email, no hassle. Just simple scheduling that respects your privacy.",
             "cta": "Create Private Poll",
             "ctaMobile": "Create Poll",
-            "disclaimer": "No signup required"
+            "disclaimer": "No signup required",
+            "floatingBadge": "30 seconds to create"
         },
         "benefits": {
             "title": "Why you should choose Plotty",
