@@ -67,10 +67,21 @@ ENV HOSTNAME="0.0.0.0"
 
 COPY --chown=nextjs:nodejs <<EOF /app/start.sh
 #!/bin/sh
-echo "Running database migrations..."
+set -e
+echo "=== Starting Plotty Application ==="
+echo "Environment: \$NODE_ENV"
+echo "Database URL configured: \$(test -n "\$DATABASE_URL" && echo "YES" || echo "NO")"
+
+echo "=== Running database migrations ==="
 cd /app/apps/plotty
-drizzle-kit migrate
-echo "Starting server..."
+if drizzle-kit migrate; then
+    echo "✓ Database migrations completed successfully"
+else
+    echo "✗ Database migrations failed"
+    exit 1
+fi
+
+echo "=== Starting Next.js server ==="
 exec node server.js
 EOF
 
