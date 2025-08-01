@@ -32,6 +32,10 @@ RUN if [ -f .gitmodules ]; then \
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Accept DATABASE_URL as build argument
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
+
 # Run database migrations and build the plotty app
 RUN corepack enable && \
     cd apps/plotty && \
