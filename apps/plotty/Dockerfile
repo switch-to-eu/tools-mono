@@ -52,12 +52,10 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/static ./apps/plotty/.next/static
 
-# Copy migration files and install drizzle-kit for runtime migrations
+# Copy migration files and drizzle dependencies for runtime migrations
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle ./apps/plotty/drizzle
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle.config.ts ./apps/plotty/drizzle.config.ts
-
-# Install drizzle-kit globally for migrations
-RUN npm install -g drizzle-kit@0.30.6
+COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/node_modules ./apps/plotty/node_modules
 
 USER nextjs
 
@@ -74,7 +72,7 @@ echo "Database URL configured: \$(test -n "\$DATABASE_URL" && echo "YES" || echo
 
 echo "=== Running database migrations ==="
 cd /app/apps/plotty
-if drizzle-kit migrate; then
+if npx drizzle-kit migrate; then
     echo "✓ Database migrations completed successfully"
 else
     echo "✗ Database migrations failed"
