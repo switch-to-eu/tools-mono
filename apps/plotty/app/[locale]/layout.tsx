@@ -7,7 +7,9 @@ import { getTranslations } from "next-intl/server";
 
 import { TRPCReactProvider } from "@/lib/trpc-client";
 import { Header } from "@workspace/ui/blocks/header";
+import { Footer } from "@workspace/ui/blocks/footer";
 import { Button } from "@workspace/ui/components/button";
+import { BrandIndicator } from "@workspace/ui/components/brand-indicator";
 import { hasLocale, Locale, NextIntlClientProvider } from "next-intl";
 import { routing } from "i18n/routing";
 import { notFound } from "next/navigation";
@@ -67,15 +69,25 @@ export default async function LocaleLayout({
               <Header
                 logo={
                   <Link href="/">
-                    <div className="flex items-center gap-2 text-lg font-black transition-opacity hover:opacity-80 sm:text-xl">
-                      <Calendar className="h-4 w-4 text-purple-600" />
-                      <span className="text-purple-600 tracking-wide uppercase">Plotty</span>
+                    <div className="flex items-start gap-2 transition-opacity hover:opacity-80">
+                      <div className="flex items-center justify-center mt-1">
+                        <Calendar className="h-4 w-4 text-purple-600" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-lg font-black text-purple-600 tracking-wide uppercase sm:text-xl leading-none">Plotty</span>
+                        <BrandIndicator locale={locale} variant="compact" className="-mt-0.5" asSpan />
+                      </div>
                     </div>
                   </Link>
                 }
                 navigation={
                   <div className="flex items-center gap-2">
                     <LanguageSelector locale={locale} />
+                    <Link href="/about">
+                      <Button variant="ghost" size="sm">
+                        {t('about')}
+                      </Button>
+                    </Link>
                     <Link href="/create">
                       <Button size="sm">
                         <Plus className="mr-2 h-4 w-4" />
@@ -93,6 +105,7 @@ export default async function LocaleLayout({
                 }
               />
               {children}
+              <Footer locale={locale} appName="Plotty" />
             </div>
           </TRPCReactProvider>
         </NextIntlClientProvider>

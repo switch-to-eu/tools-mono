@@ -130,6 +130,17 @@
       "breakComplete": "Break time is over! Ready to focus?",
       "longBreakComplete": "Long break finished! Time to get back to work.",
       "permissionDenied": "Desktop notifications are disabled. Enable them in your browser settings for better productivity tracking."
+    },
+    "footer": {
+      "description": "Your guide to European digital alternatives. We help you discover, evaluate, and switch to EU-based tools that respect your privacy and data sovereignty.",
+      "confidence": "We don't just recommend EU alternatives—we build them. Our own apps prove that European software can be both privacy-first and beautifully designed.",
+      "toolsTitle": "Tools we've built in house",
+      "browseMore": "Browse more EU alternatives",
+      "links": "Links",
+      "about": "About",
+      "privacy": "Privacy Policy",
+      "contact": "Contact",
+      "copyright": "© 2025 Switch-to.eu - A project by"
     }
   }
 }

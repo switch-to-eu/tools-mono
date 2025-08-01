@@ -48,6 +48,7 @@
     "./blocks/*": "./src/blocks/*.tsx",
     "./form/*": "./src/form/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
+    "./data/*": "./src/data/*.ts",
     "./translations": "./src/translations",
     "./translations/*": "./src/translations/*",
     "./translations/nl.json": "./src/translations/nl.json",
