@@ -150,9 +150,19 @@ export function TodoList({
         <div className="space-y-2">
           {activeTasks.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
-              <CheckCircle2 className="w-16 h-16 mx-auto mb-4 text-gray-200" />
-              <h3 className="text-lg font-medium text-gray-600 mb-2">Ready to focus?</h3>
-              <p className="text-sm">Add your first task above to get started</p>
+              <CheckCircle2 className={`w-16 h-16 mx-auto mb-4 ${completedTasks.length > 0 ? 'text-green-400' : 'text-gray-200'}`} />
+              <h3 className="text-lg font-medium text-gray-600 mb-2">
+                {completedTasks.length > 0 
+                  ? t('pomodoro.tasks.emptyState.allTasksCompleted')
+                  : t('pomodoro.tasks.emptyState.readyToFocus')
+                }
+              </h3>
+              <p className="text-sm">
+                {completedTasks.length > 0 
+                  ? t('pomodoro.tasks.emptyState.tasksFinished')
+                  : t('pomodoro.tasks.emptyState.addFirstTask')
+                }
+              </p>
             </div>
           ) : (
             <DndContext

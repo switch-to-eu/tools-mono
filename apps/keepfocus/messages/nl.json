@@ -11,6 +11,9 @@
   "homepage": {
     "title": "KeepFocus",
     "subtitle": "Pomodoro Timer & Taakbeheer",
+    "heroTitle": "Focus. Werk. Presteer.",
+    "technique": "🍅 Pomodoro Techniek",
+    "heroDescription": "Verdeel je werk in gefocuste 25-minuten sessies. Blijf productief, voorkom burn-out, en bereik meer met bewezen tijdmanagement.",
     "createButton": "Nieuw Item Aanmaken",
     "features": {
       "title": "Functies",
@@ -91,10 +94,24 @@
       "setActive": "Instellen als actieve taak",
       "deactivate": "Taak deactiveren",
       "noActiveTask": "Geen actieve taak - algemene focussessie",
-      "dragToReorder": "Sleep om taken te herordenen"
+      "dragToReorder": "Sleep om taken te herordenen",
+      "emptyState": {
+        "readyToFocus": "Klaar om te focussen?",
+        "addFirstTask": "Voeg je eerste taak hierboven toe om te beginnen",
+        "allTasksCompleted": "Gefeliciteerd! Alle taken voltooid",
+        "tasksFinished": "Goed gedaan met het afmaken van je taken!"
+      },
+      "actions": {
+        "moveUp": "Omhoog verplaatsen",
+        "moveDown": "Omlaag verplaatsen",
+        "deleteTask": "Taak verwijderen"
+      },
+      "pomodoro": "pomodoro",
+      "pomodoros": "pomodoro's"
     },
     "settings": {
       "title": "Pomodoro Instellingen",
+      "description": "Pas je pomodoro timer voorkeuren aan.",
       "openSettings": "Instellingen Openen",
       "timerDurations": "Timer Duur",
       "workSession": "Werksessie",

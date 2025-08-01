@@ -11,6 +11,9 @@
   "homepage": {
     "title": "KeepFocus",
     "subtitle": "Pomodoro Timer & Task Manager",
+    "heroTitle": "Focus. Work. Achieve.",
+    "technique": "🍅 Pomodoro Technique", 
+    "heroDescription": "Break your work into focused 25-minute sessions. Stay productive, avoid burnout, and accomplish more with proven time management.",
     "createButton": "Create New Item",
     "features": {
       "title": "Features",
@@ -91,10 +94,24 @@
       "setActive": "Set as active task",
       "deactivate": "Deactivate task",
       "noActiveTask": "No active task - general focus session",
-      "dragToReorder": "Drag to reorder tasks"
+      "dragToReorder": "Drag to reorder tasks",
+      "emptyState": {
+        "readyToFocus": "Ready to focus?",
+        "addFirstTask": "Add your first task above to get started",
+        "allTasksCompleted": "Congratulations! All tasks completed",
+        "tasksFinished": "Great job finishing your tasks!"
+      },
+      "actions": {
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "deleteTask": "Delete task"
+      },
+      "pomodoro": "pomodoro",
+      "pomodoros": "pomodoros"
     },
     "settings": {
       "title": "Pomodoro Settings",
+      "description": "Customize your pomodoro timer preferences.",
       "openSettings": "Open Settings",
       "timerDurations": "Timer Durations",
       "workSession": "Work Session",

@@ -18,13 +18,21 @@ export default function HomePage() {
           {/* Hero Section */}
           <div className="text-center py-8 mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-3">
-              Focus. Work. <span className="text-primary-color">Achieve.</span>
+              {t('homepage.heroTitle').split('.').map((part, index, array) => (
+                <span key={index}>
+                  {index === array.length - 1 ? (
+                    <span className="text-primary-color">{part}.</span>
+                  ) : (
+                    `${part}. `
+                  )}
+                </span>
+              ))}
             </h1>
             <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
-              🍅 Pomodoro Technique
+              {t('homepage.technique')}
             </div>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Break your work into focused 25-minute sessions. Stay productive, avoid burnout, and accomplish more with proven time management.
+              {t('homepage.heroDescription')}
             </p>
           </div>
 

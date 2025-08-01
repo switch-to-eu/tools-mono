@@ -230,7 +230,7 @@ export const usePomodoroTimer = ({
     };
     workerRef.current.postMessage(message);
     setTimeLeft(TIMER_DURATIONS[phase]);
-  }, [phase, TIMER_DURATIONS, isRunning]);
+  }, [phase, TIMER_DURATIONS]); // Removed isRunning from dependencies
 
   const start = useCallback(async () => {
     if (settings.desktopNotifications) {

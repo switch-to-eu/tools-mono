@@ -67,7 +67,7 @@ export function SettingsDialog({ trigger }: SettingsDialogProps = {}) {
         <DialogHeader>
           <DialogTitle>{t('pomodoro.settings.title')}</DialogTitle>
           <DialogDescription>
-            Customize your pomodoro timer preferences.
+            {t('pomodoro.settings.description')}
           </DialogDescription>
         </DialogHeader>
 
