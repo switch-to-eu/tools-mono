@@ -2,10 +2,9 @@
 
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { PollForm } from "@components/poll-form";
+import { PollForm, type ProcessedPollFormData } from "@components/poll-form";
 import { generateEncryptionKey, encryptData } from "@/lib/crypto";
 import { toast } from "sonner";
-import type { PollFormData } from "@/lib/schemas";
 import { calculateExpirationDate } from "@/lib/expiration";
 import { api } from "@/lib/trpc-client";
 import { LoadingButton } from "@workspace/ui/components/loading-button";
@@ -21,7 +20,7 @@ export default function CreatePoll() {
   // Use tRPC mutation
   const createPollMutation = api.poll.create.useMutation();
 
-  const handlePollSubmit = async (formData: PollFormData) => {
+  const handlePollSubmit = async (formData: ProcessedPollFormData) => {
     setIsLoading(true);
 
     try {

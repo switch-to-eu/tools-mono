@@ -37,7 +37,7 @@ export function useVote({ pollId, encryptionKey }: UseVoteOptions) {
   // Submit vote
   const submitVote = async (
     poll: DecryptedPoll,
-    data: { name: string; availability: Record<string, boolean> }
+    data: { name: string; availability: Record<string, boolean | string[]> }
   ) => {
     if (!poll) {
       toast.error("Poll data not available");

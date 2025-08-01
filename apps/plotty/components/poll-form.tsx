@@ -15,8 +15,13 @@ import { TimeSlotsManager } from "@workspace/ui/form/time-slots-manager";
 import { pollSchema, type PollFormData } from "@/lib/schemas";
 import { SectionCard, SectionHeader, SectionContent } from "@workspace/ui/blocks/section-card";
 
+// Type for processed form data that gets sent to the onSubmit handler
+export type ProcessedPollFormData = Omit<PollFormData, 'selectedStartTimes'> & {
+  selectedStartTimes?: string[]; // Converted to string format
+};
+
 interface PollFormProps {
-  onSubmit: (data: PollFormData) => Promise<void>;
+  onSubmit: (data: ProcessedPollFormData) => Promise<void>;
   onCancel?: () => void;
   isLoading?: boolean;
   submitText?: string;
@@ -44,7 +49,7 @@ export function PollForm({
     watch,
     setValue,
   } = useForm<PollFormData>({
-    resolver: zodResolver(pollSchema),
+    resolver: zodResolver(pollSchema) as any,
     defaultValues: {
       title: initialData?.title ?? "",
       description: initialData?.description ?? "",
@@ -64,7 +69,7 @@ export function PollForm({
 
   const handleFormSubmit = async (data: PollFormData) => {
     // Convert start times from {hour, minutes} objects to "HH:MM" strings for backend
-    const processedData = {
+    const processedData: ProcessedPollFormData = {
       ...data,
       selectedStartTimes: data.selectedStartTimes?.map(startTime => {
         const hour = startTime.hour.toString().padStart(2, '0');

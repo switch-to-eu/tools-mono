@@ -14,9 +14,8 @@ import {
 import { Button } from "@workspace/ui/components/button";
 import { Label } from "@workspace/ui/components/label";
 import { toast } from "sonner";
-import { PollForm } from "./poll-form";
+import { PollForm, type ProcessedPollFormData } from "./poll-form";
 import type { DecryptedPoll } from "@/lib/interfaces";
-import type { PollFormData } from "@/lib/schemas";
 import { generateAdminUrl } from "@/lib/admin";
 import { SectionCard, SectionHeader, SectionContent } from "@workspace/ui/blocks/section-card";
 import { useRouter } from "@i18n/navigation";
@@ -27,7 +26,7 @@ interface AdminSectionProps {
   pollId: string;
   adminToken: string;
   encryptionKey: string;
-  onUpdatePoll: (formData: PollFormData) => Promise<void>;
+  onUpdatePoll: (formData: ProcessedPollFormData) => Promise<void>;
   onDeletePoll: () => Promise<void>;
   isUpdating?: boolean;
   isDeleting?: boolean;
@@ -73,7 +72,7 @@ export function AdminSection({
     setIsEditing(false);
   }, []);
 
-  const handleEditSubmit = useCallback(async (formData: PollFormData) => {
+  const handleEditSubmit = useCallback(async (formData: ProcessedPollFormData) => {
     await onUpdatePoll(formData);
     setIsEditing(false);
     toast.success("Poll updated successfully!");

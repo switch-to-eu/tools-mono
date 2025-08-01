@@ -22,12 +22,12 @@ export const pollSchema = z.object({
 
   expirationDays: z.number().min(1, "min").max(365, "max"),
 
-  enableTimeSelection: z.boolean().optional().default(false),
+  enableTimeSelection: z.boolean().default(false),
   fixedDuration: z.number().min(1).max(8).optional(), // 1-8 hours - applies to all start times
   selectedStartTimes: z.array(z.object({
     hour: z.number().min(0).max(23), // 0-23 hours
     minutes: z.number().refine(val => [0, 15, 30, 45].includes(val), "Must be 0, 15, 30, or 45"), // 15-minute intervals
-  })).optional().default([]), // Array of start times
+  })).default([]), // Array of start times
 });
 
 export type PollFormData = z.infer<typeof pollSchema>;

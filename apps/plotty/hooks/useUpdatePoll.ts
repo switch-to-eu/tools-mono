@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { api } from "@/lib/trpc-client";
 import { encryptData } from "@/lib/crypto";
 import type { DecryptedPoll } from "@/lib/interfaces";
-import type { PollFormData } from "@/lib/schemas";
+import type { ProcessedPollFormData } from "@components/poll-form";
 
 interface UseUpdatePollOptions {
   pollId: string;
@@ -17,7 +17,7 @@ export function useUpdatePoll({
 }: UseUpdatePollOptions) {
   const updatePollMutation = api.poll.update.useMutation();
 
-  const updatePoll = async (poll: DecryptedPoll, formData: PollFormData) => {
+  const updatePoll = async (poll: DecryptedPoll, formData: ProcessedPollFormData) => {
     if (!poll) return;
 
     try {
@@ -27,7 +27,7 @@ export function useUpdatePoll({
         description: formData.description,
         location: formData.location,
         dates: formData.selectedDates.map(
-          (date) => date.toISOString().split("T")[0]!
+          (date: Date) => date.toISOString().split("T")[0]!
         ),
         // Include new time selection fields
         fixedDuration: formData.fixedDuration,

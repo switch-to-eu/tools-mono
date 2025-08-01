@@ -33,7 +33,7 @@ export default function PollPage() {
     encryptionKey,
   });
 
-  const handleVote = async (name: string, availability: Record<string, boolean>) => {
+  const handleVote = async (name: string, availability: Record<string, boolean | string[]>) => {
     if (!poll) return;
 
     await submitVote(poll, { name, availability });
