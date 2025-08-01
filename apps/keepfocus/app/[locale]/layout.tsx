@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { TRPCReactProvider } from "@/lib/trpc-client";
 import { Header } from "@workspace/ui/blocks/header";
 import { Footer } from "@workspace/ui/blocks/footer";
+import { Button } from "@workspace/ui/components/button";
 import { BrandIndicator } from "@workspace/ui/components/brand-indicator";
 import { routing } from "../../i18n/routing";
 import { Link } from "../../i18n/navigation";
@@ -79,10 +80,24 @@ export default async function LocaleLayout({
                   </Link>
                 }
                 navigation={
-                  <LanguageSelector locale={locale} />
+                  <div className="flex items-center gap-2">
+                    <LanguageSelector locale={locale} />
+                    <Link href="/about">
+                      <Button className="bg-primary hover:bg-primary/90" size="sm">
+                        {t('about')}
+                      </Button>
+                    </Link>
+                  </div>
                 }
                 mobileNavigation={
-                  <LanguageSelector locale={locale} />
+                  <div className="flex items-center gap-2">
+                    <LanguageSelector locale={locale} />
+                    <Link href="/about">
+                      <Button className="bg-primary text-primary-foreground hover:bg-primary/90" size="sm">
+                        {t('about')}
+                      </Button>
+                    </Link>
+                  </div>
                 }
               />
               {children}

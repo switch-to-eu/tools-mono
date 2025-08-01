@@ -20,6 +20,10 @@
   @apply bg-gradient-to-r from-orange-500 to-red-500;
 }
 
+.gradient-blue-yellow {
+  @apply bg-gradient-to-r from-blue-500 to-yellow-500;
+}
+
 .gradient-green-blue {
   @apply bg-gradient-to-r from-green-500 to-blue-500;
 }

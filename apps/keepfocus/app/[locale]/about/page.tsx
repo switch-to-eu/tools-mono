@@ -1,6 +1,3 @@
-import { Link } from "@i18n/navigation";
-import Image from "next/image";
-
 import {
   Shield,
   MapPin,
@@ -8,13 +5,14 @@ import {
   Eye,
   Server,
   Lock,
-  Clock,
   Users,
   CheckCircle,
   ArrowRight,
   Globe,
   Database,
-  Wifi
+  Timer,
+  Target,
+  Brain
 } from "lucide-react";
 
 import {
@@ -25,9 +23,9 @@ import {
   CardContent,
 } from "@workspace/ui/components/card";
 
-import { ToolShowcase } from "../../../components/tool-showcase";
 import { useTranslations } from "next-intl";
 import { colors } from "../../../global";
+import { ToolShowcase } from "../../../components/tool-showcase";
 
 export default function AboutPage() {
   const t = useTranslations('AboutPage');
@@ -57,7 +55,7 @@ export default function AboutPage() {
               </div>
               <div className="flex items-center gap-2 text-neutral-700">
                 <Shield className="h-5 w-5 text-green-600" />
-                {t('hero.badges.encrypted')}
+                {t('hero.badges.localData')}
               </div>
               <div className="flex items-center gap-2 text-neutral-700">
                 <Eye className="h-5 w-5 text-primary-color" />
@@ -69,29 +67,43 @@ export default function AboutPage() {
       </div>
 
 
-      {/* About Plotty Section */}
+      {/* About KeepFocus Section */}
       <div className={`${colors.backgrounds.light} py-16 sm:py-20`}>
         <div className="container mx-auto">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="mb-4 text-4xl font-bold text-neutral-900 sm:text-5xl">
-              {t('plotty.title')}
+              {t('keepfocus.title')}
             </h2>
             <p className="mx-auto max-w-3xl text-xl text-neutral-600">
-              {t('plotty.subtitle')}
+              {t('keepfocus.subtitle')}
             </p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
             <Card className="border-0 bg-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">
               <CardHeader className="text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                  <Clock className="h-6 w-6 text-primary-color" />
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+                  <Timer className="h-6 w-6 text-red-600" />
                 </div>
                 <CardTitle className="text-xl text-neutral-900">
-                  {t('plotty.features.instant.title')}
+                  {t('keepfocus.features.pomodoro.title')}
                 </CardTitle>
                 <CardDescription className="text-neutral-600">
-                  {t('plotty.features.instant.description')}
+                  {t('keepfocus.features.pomodoro.description')}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-0 bg-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">
+              <CardHeader className="text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+                  <Target className="h-6 w-6 text-primary-color" />
+                </div>
+                <CardTitle className="text-xl text-neutral-900">
+                  {t('keepfocus.features.tasks.title')}
+                </CardTitle>
+                <CardDescription className="text-neutral-600">
+                  {t('keepfocus.features.tasks.description')}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -99,64 +111,18 @@ export default function AboutPage() {
             <Card className="border-0 bg-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">
               <CardHeader className="text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                  <Users className="h-6 w-6 text-green-600" />
+                  <Brain className="h-6 w-6 text-green-600" />
                 </div>
                 <CardTitle className="text-xl text-neutral-900">
-                  {t('plotty.features.realtime.title')}
+                  {t('keepfocus.features.focus.title')}
                 </CardTitle>
                 <CardDescription className="text-neutral-600">
-                  {t('plotty.features.realtime.description')}
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="border-0 bg-white shadow-lg transition-all hover:scale-105 hover:shadow-xl">
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-                  <Shield className="h-6 w-6 text-primary-color" />
-                </div>
-                <CardTitle className="text-xl text-neutral-900">
-                  {t('plotty.features.private.title')}
-                </CardTitle>
-                <CardDescription className="text-neutral-600">
-                  {t('plotty.features.private.description')}
+                  {t('keepfocus.features.focus.description')}
                 </CardDescription>
               </CardHeader>
             </Card>
           </div>
 
-          {/* Perfect For Section */}
-          <div className="mt-16 text-center">
-            <h3 className="mb-8 text-3xl font-bold text-neutral-900">
-              {t('plotty.perfectFor.title')}
-            </h3>
-
-            <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
-              <div className="text-center">
-                <div className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${colors.gradients.primary}`}>
-                  <Users className="h-8 w-8 text-white" />
-                </div>
-                <h4 className="font-semibold text-neutral-900 mb-2">{t('plotty.perfectFor.teams.title')}</h4>
-                <p className="text-sm text-neutral-600">{t('plotty.perfectFor.teams.description')}</p>
-              </div>
-
-              <div className="text-center">
-                <div className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${colors.gradients.secondary}`}>
-                  <Clock className="h-8 w-8 text-white" />
-                </div>
-                <h4 className="font-semibold text-neutral-900 mb-2">{t('plotty.perfectFor.events.title')}</h4>
-                <p className="text-sm text-neutral-600">{t('plotty.perfectFor.events.description')}</p>
-              </div>
-
-              <div className="text-center">
-                <div className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${colors.gradients.accent}`}>
-                  <Shield className="h-8 w-8 text-white" />
-                </div>
-                <h4 className="font-semibold text-neutral-900 mb-2">{t('plotty.perfectFor.privacy.title')}</h4>
-                <p className="text-sm text-neutral-600">{t('plotty.perfectFor.privacy.description')}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -182,26 +148,26 @@ export default function AboutPage() {
               <div className="grid gap-6 md:grid-cols-3">
                 <div className="text-center">
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-                    <Lock className="h-6 w-6 text-primary-color" />
+                    <Database className="h-6 w-6 text-primary-color" />
                   </div>
-                  <h4 className="font-semibold text-neutral-900 mb-2">{t('technical.architecture.encryption.title')}</h4>
-                  <p className="text-sm text-neutral-600">{t('technical.architecture.encryption.description')}</p>
+                  <h4 className="font-semibold text-neutral-900 mb-2">{t('technical.architecture.localStorage.title')}</h4>
+                  <p className="text-sm text-neutral-600">{t('technical.architecture.localStorage.description')}</p>
                 </div>
 
                 <div className="text-center">
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    <Wifi className="h-6 w-6 text-green-600" />
+                    <Timer className="h-6 w-6 text-green-600" />
                   </div>
-                  <h4 className="font-semibold text-neutral-900 mb-2">{t('technical.architecture.realtime.title')}</h4>
-                  <p className="text-sm text-neutral-600">{t('technical.architecture.realtime.description')}</p>
+                  <h4 className="font-semibold text-neutral-900 mb-2">{t('technical.architecture.webWorkers.title')}</h4>
+                  <p className="text-sm text-neutral-600">{t('technical.architecture.webWorkers.description')}</p>
                 </div>
 
                 <div className="text-center">
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
-                    <Database className="h-6 w-6 text-primary-color" />
+                    <Shield className="h-6 w-6 text-primary-color" />
                   </div>
-                  <h4 className="font-semibold text-neutral-900 mb-2">{t('technical.architecture.storage.title')}</h4>
-                  <p className="text-sm text-neutral-600">{t('technical.architecture.storage.description')}</p>
+                  <h4 className="font-semibold text-neutral-900 mb-2">{t('technical.architecture.privacy.title')}</h4>
+                  <p className="text-sm text-neutral-600">{t('technical.architecture.privacy.description')}</p>
                 </div>
               </div>
             </div>
@@ -214,7 +180,7 @@ export default function AboutPage() {
                 <div className="flex items-center gap-3 mb-2">
                   <Shield className="h-6 w-6 text-primary-color" />
                   <CardTitle className="text-xl text-neutral-900">
-                    {t('technical.details.security.title')}
+                    {t('technical.details.privacy.title')}
                   </CardTitle>
                 </div>
               </CardHeader>
@@ -222,19 +188,19 @@ export default function AboutPage() {
                 <ul className="space-y-3 text-neutral-600">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.security.encryption')}</span>
+                    <span className="text-sm">{t('technical.details.privacy.localData')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.security.zeroKnowledge')}</span>
+                    <span className="text-sm">{t('technical.details.privacy.noAnalytics')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.security.autoDelete')}</span>
+                    <span className="text-sm">{t('technical.details.privacy.noAccounts')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.security.noTracking')}</span>
+                    <span className="text-sm">{t('technical.details.privacy.offline')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -253,19 +219,19 @@ export default function AboutPage() {
                 <ul className="space-y-3 text-neutral-600">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.performance.sse')}</span>
+                    <span className="text-sm">{t('technical.details.performance.webWorkers')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.performance.trpc')}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.performance.optimistic')}</span>
+                    <span className="text-sm">{t('technical.details.performance.notifications')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
                     <span className="text-sm">{t('technical.details.performance.responsive')}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
+                    <span className="text-sm">{t('technical.details.performance.instant')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -274,9 +240,9 @@ export default function AboutPage() {
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-2">
-                  <Clock className="h-6 w-6 text-primary-color" />
+                  <Timer className="h-6 w-6 text-red-600" />
                   <CardTitle className="text-xl text-neutral-900">
-                    {t('technical.details.scheduling.title')}
+                    {t('technical.details.pomodoro.title')}
                   </CardTitle>
                 </div>
               </CardHeader>
@@ -284,19 +250,19 @@ export default function AboutPage() {
                 <ul className="space-y-3 text-neutral-600">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.scheduling.flexible')}</span>
+                    <span className="text-sm">{t('technical.details.pomodoro.customizable')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.scheduling.multiple')}</span>
+                    <span className="text-sm">{t('technical.details.pomodoro.autoStart')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.scheduling.granular')}</span>
+                    <span className="text-sm">{t('technical.details.pomodoro.notifications')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.scheduling.optimal')}</span>
+                    <span className="text-sm">{t('technical.details.pomodoro.statistics')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -319,15 +285,15 @@ export default function AboutPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.modern.database')}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
                     <span className="text-sm">{t('technical.details.modern.typescript')}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{t('technical.details.modern.hosting')}</span>
+                    <span className="text-sm">{t('technical.details.modern.tailwind')}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-600 mt-1 flex-shrink-0" />
+                    <span className="text-sm">{t('technical.details.modern.pwa')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -447,33 +413,6 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div className={`relative overflow-hidden ${colors.gradients.primaryExtended} py-16 sm:py-20`}>
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 container mx-auto text-center">
-          <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
-            {t('cta.title')}
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-white/90 sm:mb-10">
-            {t('cta.description')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/create"
-              className="inline-block bg-white text-primary-color shadow-xl transition-all hover:scale-105 hover:bg-neutral-100 px-8 py-4 text-lg font-semibold h-auto rounded-md inline-flex items-center justify-center gap-2"
-            >
-              <Shield className="mr-3 h-6 w-6" />
-              {t('cta.createPoll')}
-            </a>
-            <a
-              href="/"
-              className="inline-block border-white text-white hover:bg-white hover:text-primary-color px-8 py-4 text-lg font-semibold h-auto rounded-md inline-flex items-center justify-center gap-2 border bg-transparent shadow-xs transition-all"
-            >
-              {t('cta.learnMore')}
-            </a>
-          </div>
-        </div>
-      </div>
     </>
   );
 }
