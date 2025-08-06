@@ -1,16 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { usePeerConnection } from "../../../../hooks/use-peer-connection";
 import { useFileTransfer } from "../../../../hooks/use-file-transfer";
 import { ReceivePage } from "../../../../components/receive-page";
+import { ConnectionDiagnostics } from "../../../../components/connection-diagnostics";
+import { Button } from "@workspace/ui/components/button";
+import { Activity } from "lucide-react";
 
 export default function JoinPage() {
   const params = useParams();
   const senderPeerId = params.peerId as string;
   const { peerId, status, error, connect, send, onData, onConnect } = usePeerConnection();
   const { availableFiles, requestFile } = useFileTransfer({ send, onData, onConnect });
+  const [showDiagnostics, setShowDiagnostics] = useState(true); // Always show by default
 
   console.log("[JoinPage] Status:", status, "My PeerID:", peerId, "Sender PeerID:", senderPeerId);
 
@@ -24,9 +28,34 @@ export default function JoinPage() {
 
   if (status === "connecting" || status === "error") {
     return (
-      <main className="container mx-auto p-4">
+      <main className="container mx-auto max-w-2xl p-4 space-y-4">
+        {/* Diagnostics Toggle Button */}
+        <div className="flex justify-end">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDiagnostics(!showDiagnostics)}
+          >
+            <Activity className="w-4 h-4 mr-2" />
+            {showDiagnostics ? "Hide" : "Show"} Connection Diagnostics
+          </Button>
+        </div>
+        
+        {/* Diagnostics Panel */}
+        {showDiagnostics && (
+          <ConnectionDiagnostics />
+        )}
+        
+        {/* Error Display */}
+        {error && (
+          <div className="p-4 bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 rounded-lg">
+            <h3 className="font-semibold mb-2">Connection Error</h3>
+            <p className="text-sm">{error}</p>
+          </div>
+        )}
+        
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
-          <p>Connecting...</p>
+          <p>{status === "error" ? "Connection failed" : "Connecting..."}</p>
           {senderPeerId && (
             <p className="text-sm text-gray-500">
               Sender ID: <code className="bg-gray-100 px-1 rounded">{senderPeerId}</code>
@@ -39,7 +68,24 @@ export default function JoinPage() {
 
   if (status === "reconnecting") {
     return (
-      <main className="container mx-auto p-4">
+      <main className="container mx-auto max-w-2xl p-4 space-y-4">
+        {/* Diagnostics Toggle Button */}
+        <div className="flex justify-end">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDiagnostics(!showDiagnostics)}
+          >
+            <Activity className="w-4 h-4 mr-2" />
+            {showDiagnostics ? "Hide" : "Show"} Connection Diagnostics
+          </Button>
+        </div>
+        
+        {/* Diagnostics Panel */}
+        {showDiagnostics && (
+          <ConnectionDiagnostics />
+        )}
+        
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
           <p>Connection lost. Reconnecting...</p>
           {senderPeerId && (
@@ -54,7 +100,24 @@ export default function JoinPage() {
 
   if (status === "connected") {
     return (
-      <main className="container mx-auto max-w-2xl p-4">
+      <main className="container mx-auto max-w-2xl p-4 space-y-4">
+        {/* Diagnostics Toggle Button */}
+        <div className="flex justify-end">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDiagnostics(!showDiagnostics)}
+          >
+            <Activity className="w-4 h-4 mr-2" />
+            {showDiagnostics ? "Hide" : "Show"} Connection Diagnostics
+          </Button>
+        </div>
+        
+        {/* Diagnostics Panel */}
+        {showDiagnostics && (
+          <ConnectionDiagnostics />
+        )}
+        
         <ReceivePage
           status={status}
           availableFiles={availableFiles}
@@ -66,7 +129,24 @@ export default function JoinPage() {
 
   // Default state (should not reach here normally)
   return (
-    <main className="container mx-auto p-4">
+    <main className="container mx-auto max-w-2xl p-4 space-y-4">
+      {/* Diagnostics Toggle Button */}
+      <div className="flex justify-end">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowDiagnostics(!showDiagnostics)}
+        >
+          <Activity className="w-4 h-4 mr-2" />
+          {showDiagnostics ? "Hide" : "Show"} Connection Diagnostics
+        </Button>
+      </div>
+      
+      {/* Diagnostics Panel */}
+      {showDiagnostics && (
+        <ConnectionDiagnostics />
+      )}
+      
       <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
         <p className="text-lg text-gray-600">Preparing to join...</p>
       </div>

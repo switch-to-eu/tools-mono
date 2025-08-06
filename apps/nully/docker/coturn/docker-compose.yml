@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  coturn:
+    image: coturn/coturn:4.6.2
+    container_name: nully-coturn
+    restart: unless-stopped
+    
+    # Network configuration
+    network_mode: host
+    
+    # Volume mounts
+    volumes:
+      - ./turnserver.conf:/etc/coturn/turnserver.conf:ro
+      - ./logs:/var/log
+      - ./certs:/etc/coturn/certs:ro  # Optional: for TLS certificates
+    
+    # Environment variables
+    environment:
+      - TURN_USERNAME=nully
+      - TURN_PASSWORD=nully123!@#
+      - TURN_SECRET=nully-super-secret-key-2025
+      - EXTERNAL_IP=${EXTERNAL_IP:-auto}
+    
+    # Command override (optional)
+    command: [
+      "-c", "/etc/coturn/turnserver.conf",
+      "--listening-port=3478",
+      "--tls-listening-port=5349", 
+      "--alt-listening-port=80",
+      "--alt-tls-listening-port=443",
+      "--min-port=49160",
+      "--max-port=49200",
+      "--verbose"
+    ]
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "netstat", "-ln", "|", "grep", "3478"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: PostgreSQL for production
+  # coturn-db:
+  #   image: postgres:15
+  #   container_name: nully-coturn-db
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: coturn
+  #     POSTGRES_USER: coturn
+  #     POSTGRES_PASSWORD: secure_password_here
+  #   volumes:
+  #     - coturn_db_data:/var/lib/postgresql/data
+  #     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+# volumes:
+#   coturn_db_data:

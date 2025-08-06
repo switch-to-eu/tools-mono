@@ -1,0 +1,304 @@
+{
+  "timestamp": "2025-08-06T11:43:28.269Z",
+  "totalServers": 16,
+  "successfulServers": 0,
+  "failedServers": 11,
+  "overallResult": "none-working",
+  "recommendations": [
+    "❌ No TURN servers are working - this is a connectivity issue.",
+    "🔥 WebRTC connections will likely fail behind NAT/firewalls.",
+    "🛡️ Check if corporate firewall is blocking WebRTC/TURN traffic.",
+    "🔧 Consider using a VPN or contacting your IT department."
+  ],
+  "testResults": [
+    {
+      "name": "Metered TURN UDP:80",
+      "server": {
+        "urls": "turn:a.relay.metered.ca:80",
+        "username": "e46b04279917ad3e74ce808e",
+        "credential": "nVQbPOmeQMmQHy9j"
+      },
+      "result": "timeout",
+      "duration": 10013,
+      "details": {
+        "localCandidates": 3,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "gathering"
+      }
+    },
+    {
+      "name": "Metered TURN TCP:80",
+      "server": {
+        "urls": "turn:a.relay.metered.ca:80?transport=tcp",
+        "username": "e46b04279917ad3e74ce808e",
+        "credential": "nVQbPOmeQMmQHy9j"
+      },
+      "result": "timeout",
+      "duration": 10008,
+      "details": {
+        "localCandidates": 3,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "gathering"
+      }
+    },
+    {
+      "name": "Metered TURN UDP:443",
+      "server": {
+        "urls": "turn:a.relay.metered.ca:443",
+        "username": "e46b04279917ad3e74ce808e",
+        "credential": "nVQbPOmeQMmQHy9j"
+      },
+      "result": "timeout",
+      "duration": 10004,
+      "details": {
+        "localCandidates": 3,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "gathering"
+      }
+    },
+    {
+      "name": "Metered TURNS TCP:443",
+      "server": {
+        "urls": "turns:a.relay.metered.ca:443?transport=tcp",
+        "username": "e46b04279917ad3e74ce808e",
+        "credential": "nVQbPOmeQMmQHy9j"
+      },
+      "result": "timeout",
+      "duration": 10010,
+      "details": {
+        "localCandidates": 3,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "gathering"
+      }
+    },
+    {
+      "name": "Twilio TURN UDP:3478",
+      "server": {
+        "urls": "turn:global.turn.twilio.com:3478?transport=udp",
+        "username": "f4b4035eaa76f4a55de5f4351567653ee4ff6fa97b50b6b334fcc1be9c27212d",
+        "credential": "R0HjgaRsKPg4FTvC5BryUO8c1k8+9em3SwUThZG3Zu0="
+      },
+      "result": "failed",
+      "duration": 212,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "Twilio TURN TCP:3478",
+      "server": {
+        "urls": "turn:global.turn.twilio.com:3478?transport=tcp",
+        "username": "f4b4035eaa76f4a55de5f4351567653ee4ff6fa97b50b6b334fcc1be9c27212d",
+        "credential": "R0HjgaRsKPg4FTvC5BryUO8c1k8+9em3SwUThZG3Zu0="
+      },
+      "result": "failed",
+      "duration": 211,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "Twilio TURN TCP:443",
+      "server": {
+        "urls": "turn:global.turn.twilio.com:443?transport=tcp",
+        "username": "f4b4035eaa76f4a55de5f4351567653ee4ff6fa97b50b6b334fcc1be9c27212d",
+        "credential": "R0HjgaRsKPg4FTvC5BryUO8c1k8+9em3SwUThZG3Zu0="
+      },
+      "result": "failed",
+      "duration": 184,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "Xirsys TURN UDP:80",
+      "server": {
+        "urls": "turn:turn.xirsys.com:80?transport=udp",
+        "username": "ml0jDtHFEgY4bGh6yVoFklMrOb2M5DAbXU6zpHm7pRUb2x0J8u0fKg0_sNEOJGNDAAAAAGcyPBl3ZWJydGMtbGl2ZQ==",
+        "credential": "43dffc3e-b6b8-11ef-95bd-0242ac120004"
+      },
+      "result": "failed",
+      "duration": 28,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "Xirsys TURN UDP:3478",
+      "server": {
+        "urls": "turn:turn.xirsys.com:3478?transport=udp",
+        "username": "ml0jDtHFEgY4bGh6yVoFklMrOb2M5DAbXU6zpHm7pRUb2x0J8u0fKg0_sNEOJGNDAAAAAGcyPBl3ZWJydGMtbGl2ZQ==",
+        "credential": "43dffc3e-b6b8-11ef-95bd-0242ac120004"
+      },
+      "result": "failed",
+      "duration": 33,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "Xirsys TURN TCP:80",
+      "server": {
+        "urls": "turn:turn.xirsys.com:80?transport=tcp",
+        "username": "ml0jDtHFEgY4bGh6yVoFklMrOb2M5DAbXU6zpHm7pRUb2x0J8u0fKg0_sNEOJGNDAAAAAGcyPBl3ZWJydGMtbGl2ZQ==",
+        "credential": "43dffc3e-b6b8-11ef-95bd-0242ac120004"
+      },
+      "result": "failed",
+      "duration": 56,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "Xirsys TURN TCP:3478",
+      "server": {
+        "urls": "turn:turn.xirsys.com:3478?transport=tcp",
+        "username": "ml0jDtHFEgY4bGh6yVoFklMrOb2M5DAbXU6zpHm7pRUb2x0J8u0fKg0_sNEOJGNDAAAAAGcyPBl3ZWJydGMtbGl2ZQ==",
+        "credential": "43dffc3e-b6b8-11ef-95bd-0242ac120004"
+      },
+      "result": "failed",
+      "duration": 88,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "OpenRelay TURN UDP:80",
+      "server": {
+        "urls": "turn:openrelay.metered.ca:80",
+        "username": "openrelayproject",
+        "credential": "openrelayproject"
+      },
+      "result": "timeout",
+      "duration": 10006,
+      "details": {
+        "localCandidates": 3,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "gathering"
+      }
+    },
+    {
+      "name": "OpenRelay TURN UDP:443",
+      "server": {
+        "urls": "turn:openrelay.metered.ca:443",
+        "username": "openrelayproject",
+        "credential": "openrelayproject"
+      },
+      "result": "failed",
+      "duration": 11624,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "OpenRelay TURNS TCP:443",
+      "server": {
+        "urls": "turns:openrelay.metered.ca:443?transport=tcp",
+        "username": "openrelayproject",
+        "credential": "openrelayproject"
+      },
+      "result": "failed",
+      "duration": 427,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "Numb Viagenie UDP:3478",
+      "server": {
+        "urls": "turn:numb.viagenie.ca:3478",
+        "username": "webrtc@live.com",
+        "credential": "muazkh"
+      },
+      "result": "failed",
+      "duration": 91,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    },
+    {
+      "name": "ExpressTurn UDP:3478",
+      "server": {
+        "urls": "turn:relay1.expressturn.com:3478",
+        "username": "efJX3B48EZBZAHK3Y2",
+        "credential": "VLDnR2fvqo9tdHoE"
+      },
+      "result": "failed",
+      "duration": 114,
+      "details": {
+        "localCandidates": 4,
+        "relayCandidates": 0,
+        "srflxCandidates": 1,
+        "hostCandidates": 2,
+        "iceGatheringState": "complete"
+      },
+      "error": "ICE gathering completed but no relay candidates found"
+    }
+  ],
+  "networkInfo": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:141.0) Gecko/20100101 Firefox/141.0",
+    "language": "en-US",
+    "platform": "MacIntel",
+    "onLine": true
+  }
+}
