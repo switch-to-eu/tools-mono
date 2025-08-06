@@ -10,8 +10,8 @@ export default function TransferPage() {
   const params = useParams();
   const locale = params.locale as string;
   const initialPeerId = params.peerId as string;
-  const { peerId, status, error, send, onData, onConnect } = usePeerConnection({ initialPeerId });
-  const { stageFile, stagedFiles } = useFileTransfer({ send, onData, onConnect });
+  const { peerId, status, error, send, onData, onConnect, connectionType } = usePeerConnection({ initialPeerId });
+  const { stageFile, stagedFiles, sessionAnalytics, activeTransfers, uploadProgress } = useFileTransfer({ send, onData, onConnect });
   const [shareUrl, setShareUrl] = useState("");
 
   console.log("[TransferPage] Status:", status, "PeerID:", peerId);
@@ -55,6 +55,10 @@ export default function TransferPage() {
         status={status}
         stagedFiles={stagedFiles}
         onSelectFiles={handleSelectFiles}
+        sessionAnalytics={sessionAnalytics}
+        activeTransfers={activeTransfers}
+        connectionType={connectionType}
+        uploadProgress={uploadProgress}
       />
     </main>
   );

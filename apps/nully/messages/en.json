@@ -25,6 +25,19 @@
       "noFilesStaged": "Select files you want to share",
       "selectFilesButton": "Select Files"
     },
+    "Sender": {
+      "analytics": {
+        "title": "Transfer Analytics",
+        "activeTransfers": "Active Transfers",
+        "totalDownloads": "Downloads",
+        "totalBytes": "Data Sent",
+        "sessionTime": "Session",
+        "filesShared": "Files",
+        "fileStats": "Download History",
+        "transferring": "Transferring...",
+        "noActivity": "No download activity yet"
+      }
+    },
     "HowTo": {
       "step1": {
         "title": "2. Select Your Files",
@@ -41,7 +54,17 @@
     },
     "Connection": {
       "waiting": "Waiting for recipient to connect...",
-      "connected": "Connected and ready to transfer"
+      "connected": "Connected and ready to transfer",
+      "types": {
+        "directP2P": "Direct P2P",
+        "directP2PDesc": "Direct peer-to-peer connection - fastest and most private",
+        "stunServer": "STUN Server",
+        "stunServerDesc": "Using STUN server for NAT traversal - good performance",
+        "turnRelay": "TURN Relay",
+        "turnRelayDesc": "Using TURN relay server - works through firewalls",
+        "unknown": "Unknown",
+        "unknownDesc": "Connection type could not be determined"
+      }
     },
     "Receive": {
       "title": "Receive Files",
@@ -49,6 +72,12 @@
       "availableFilesTitle": "Available Files",
       "noFilesAvailable": "Waiting for sender to provide files...",
       "downloadButton": "Download"
+    },
+    "Download": {
+      "download": "Download",
+      "completed": "Complete",
+      "failed": "Failed",
+      "retry": "Retry"
     }
   },
   "layout": {

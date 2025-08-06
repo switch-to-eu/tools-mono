@@ -12,6 +12,12 @@ export type ConnectionStatus =
     | "reconnecting"
     | "error";
 
+export type ConnectionType = 
+    | "direct-p2p"
+    | "stun-server" 
+    | "turn-relay"
+    | "unknown";
+
 interface PeerConnectionOptions {
     initialPeerId?: string;
 }
@@ -22,6 +28,7 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
     const [status, setStatus] = useState<ConnectionStatus>("disconnected");
     const [error, setError] = useState<string | null>(null);
     const [connection, setConnection] = useState<DataConnection | null>(null);
+    const [connectionType, setConnectionType] = useState<ConnectionType>("unknown");
     const [metrics, setMetrics] = useState<PeerConnectionMetrics>({
         connectionStartTime: Date.now(),
         totalReconnectAttempts: 0,
@@ -41,6 +48,88 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
         if (connectionTimeoutRef.current) {
             clearTimeout(connectionTimeoutRef.current);
             connectionTimeoutRef.current = null;
+        }
+    }, []);
+
+    // Detect connection type from WebRTC statistics
+    const detectConnectionType = useCallback(async (peerConnection: RTCPeerConnection): Promise<ConnectionType> => {
+        try {
+            // Wait a bit for stats to be available
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            const stats = await peerConnection.getStats();
+            let localCandidateType = '';
+            let remoteCandidateType = '';
+            let foundPair = false;
+            
+            console.log('[usePeerConnection] 📊 Analyzing WebRTC stats for connection type...');
+            
+            // Find the active candidate pair
+            stats.forEach((stat) => {
+                if (stat.type === 'candidate-pair' && stat.state === 'succeeded') {
+                    foundPair = true;
+                    const localCandidate = stats.get(stat.localCandidateId);
+                    const remoteCandidate = stats.get(stat.remoteCandidateId);
+                    
+                    if (localCandidate) {
+                        localCandidateType = localCandidate.candidateType || '';
+                        console.log('[usePeerConnection] Local candidate type:', localCandidateType);
+                    }
+                    if (remoteCandidate) {
+                        remoteCandidateType = remoteCandidate.candidateType || '';
+                        console.log('[usePeerConnection] Remote candidate type:', remoteCandidateType);
+                    }
+                }
+            });
+            
+            if (!foundPair) {
+                console.warn('[usePeerConnection] No succeeded candidate pair found in stats');
+                // Fallback: try to get any candidate info
+                stats.forEach((stat) => {
+                    if (stat.type === 'local-candidate') {
+                        console.log('[usePeerConnection] Found local candidate:', stat.candidateType);
+                    }
+                    if (stat.type === 'remote-candidate') {
+                        console.log('[usePeerConnection] Found remote candidate:', stat.candidateType);
+                    }
+                });
+            }
+            
+            // Determine connection type based on candidate types
+            // 'relay' means TURN server is being used
+            if (localCandidateType === 'relay' || remoteCandidateType === 'relay') {
+                console.log('[usePeerConnection] ✅ Detected TURN relay connection');
+                return 'turn-relay';
+            }
+            // 'srflx' (server reflexive) means STUN server is being used
+            else if (localCandidateType === 'srflx' || remoteCandidateType === 'srflx') {
+                console.log('[usePeerConnection] ✅ Detected STUN server connection');
+                return 'stun-server';
+            }
+            // 'prflx' (peer reflexive) or mixed with 'host' indicates direct P2P with NAT
+            else if (
+                (localCandidateType === 'host' && remoteCandidateType === 'prflx') ||
+                (localCandidateType === 'prflx' && remoteCandidateType === 'host') ||
+                (localCandidateType === 'prflx' && remoteCandidateType === 'prflx')
+            ) {
+                console.log('[usePeerConnection] ✅ Detected direct P2P connection (with peer reflexive candidates)');
+                return 'direct-p2p';
+            }
+            // 'host' means direct P2P connection
+            else if (localCandidateType === 'host' && remoteCandidateType === 'host') {
+                console.log('[usePeerConnection] ✅ Detected direct P2P connection');
+                return 'direct-p2p';
+            }
+            
+            console.warn('[usePeerConnection] ⚠️ Could not determine connection type from candidates:', {
+                local: localCandidateType,
+                remote: remoteCandidateType,
+                foundPair
+            });
+            return 'unknown';
+        } catch (error) {
+            console.warn('[usePeerConnection] Could not detect connection type:', error);
+            return 'unknown';
         }
     }, []);
 
@@ -89,8 +178,16 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
             setConnection(conn);
             setStatus("connected");
 
-            conn.on("open", () => {
+            conn.on("open", async () => {
                 console.log("[usePeerConnection] Connection established");
+                
+                // Detect connection type
+                if (conn.peerConnection) {
+                    const type = await detectConnectionType(conn.peerConnection);
+                    setConnectionType(type);
+                    console.log(`[usePeerConnection] Connection type detected: ${type}`);
+                }
+                
                 onConnectCallbackRef.current(); // Notify that a connection is established
             });
 
@@ -116,6 +213,7 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
             conn.on("close", () => {
                 console.log("[usePeerConnection] Connection closed");
                 setStatus("disconnected");
+                setConnectionType("unknown");
             });
 
             conn.on("error", (err) => {
@@ -206,7 +304,7 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
                 return;
             }
 
-            const handleConnectionOpen = () => {
+            const handleConnectionOpen = async () => {
                 console.log("[usePeerConnection] ✅ Outgoing connection opened to:", remotePeerId);
                 console.log("[usePeerConnection] Connection established successfully:", {
                     peer: remotePeerId,
@@ -215,6 +313,13 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
                     type: conn.type,
                     timestamp: new Date().toISOString()
                 });
+                
+                // Detect connection type
+                if (conn.peerConnection) {
+                    const type = await detectConnectionType(conn.peerConnection);
+                    setConnectionType(type);
+                    console.log(`[usePeerConnection] Connection type detected: ${type}`);
+                }
                 
                 if (reconnectTimerRef.current) {
                     clearInterval(reconnectTimerRef.current);
@@ -242,6 +347,7 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
                 });
                 
                 setStatus("reconnecting");
+                setConnectionType("unknown");
                 
                 setMetrics(prev => ({
                     ...prev,
@@ -483,6 +589,7 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
         status,
         error,
         connection,
+        connectionType,
         metrics,
         connect,
         send,

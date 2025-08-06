@@ -3,6 +3,13 @@
 
 @source '../../../node_modules/@workspace/ui/src';
 
+/* CSS Custom Properties for Nully's green theme */
+:root {
+  --primary: 134 239 172; /* green-300 for light mode */
+  --primary-foreground: 22 163 74; /* green-600 for contrast */
+}
+
+
 /* Nully-specific color overrides */
 .gradient-primary {
   @apply bg-gradient-to-r from-green-600 to-emerald-600;

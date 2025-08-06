@@ -9,8 +9,8 @@ import { ReceivePage } from "../../../../components/receive-page";
 export default function JoinPage() {
   const params = useParams();
   const senderPeerId = params.peerId as string;
-  const { peerId, status, error, connect, send, onData, onConnect } = usePeerConnection();
-  const { availableFiles, requestFile } = useFileTransfer({ send, onData, onConnect });
+  const { peerId, status, error, connectionType, connect, send, onData, onConnect } = usePeerConnection();
+  const { availableFiles, downloadState, requestFile, clearDownloadError } = useFileTransfer({ send, onData, onConnect });
 
   console.log("[JoinPage] Status:", status, "My PeerID:", peerId, "Sender PeerID:", senderPeerId);
 
@@ -65,8 +65,12 @@ export default function JoinPage() {
       <main className="container mx-auto max-w-2xl p-4 space-y-4">
         <ReceivePage
           status={status}
+          connectionType={connectionType}
           availableFiles={availableFiles}
+          downloadState={downloadState}
           onDownload={requestFile}
+          onRetry={requestFile}
+          onClearError={clearDownloadError}
         />
       </main>
     );

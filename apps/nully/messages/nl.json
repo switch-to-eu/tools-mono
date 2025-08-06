@@ -16,6 +16,56 @@
       "unlimitedDesc": "Geen beperking op bestandsextensie of grootte"
     }
   },
+  "Nully": {
+    "Send": {
+      "title": "Bestanden Verzenden",
+      "description": "Deel een link om een veilige, realtime bestandsoverdracht te starten.",
+      "copyButton": "Kopiëren",
+      "stagedFilesTitle": "Te Verzenden Bestanden",
+      "noFilesStaged": "Selecteer bestanden die je wilt delen",
+      "selectFilesButton": "Bestanden Selecteren"
+    },
+    "Sender": {
+      "analytics": {
+        "title": "Overdracht Statistieken",
+        "activeTransfers": "Actieve Overdrachten",
+        "totalDownloads": "Downloads",
+        "totalBytes": "Data Verzonden",
+        "sessionTime": "Sessie",
+        "filesShared": "Bestanden",
+        "fileStats": "Download Geschiedenis",
+        "transferring": "Overdragen...",
+        "noActivity": "Nog geen download activiteit"
+      }
+    },
+    "Connection": {
+      "waiting": "Wachten op verbinding met ontvanger...",
+      "connected": "Verbonden en klaar voor overdracht",
+      "types": {
+        "directP2P": "Direct P2P",
+        "directP2PDesc": "Directe peer-to-peer verbinding - snelst en meest privé",
+        "stunServer": "STUN Server",
+        "stunServerDesc": "Gebruikt STUN server voor NAT doorgang - goede prestaties",
+        "turnRelay": "TURN Relay",
+        "turnRelayDesc": "Gebruikt TURN relay server - werkt door firewalls",
+        "unknown": "Onbekend",
+        "unknownDesc": "Verbindingstype kon niet worden bepaald"
+      }
+    },
+    "Receive": {
+      "title": "Bestanden Ontvangen",
+      "description": "Verbonden en klaar om bestanden te ontvangen.",
+      "availableFilesTitle": "Beschikbare Bestanden",
+      "noFilesAvailable": "Wachten tot verzender bestanden beschikbaar stelt...",
+      "downloadButton": "Downloaden"
+    },
+    "Download": {
+      "download": "Downloaden",
+      "completed": "Voltooid",
+      "failed": "Mislukt",
+      "retry": "Opnieuw"
+    }
+  },
   "layout": {
     "metadata": {
       "title": "P2P Bestandsoverdracht",
