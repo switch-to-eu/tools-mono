@@ -1,5 +1,6 @@
 import type { PeerJSOption } from "peerjs";
 import { getAdaptiveIceServers, getWorkingTurnServers } from "./peer-fallback-config";
+import { getComprehensiveIceServers, getCustomTurnInfo } from "./custom-turn-config";
 
 /**
  * PeerJS Server Configuration
@@ -25,7 +26,7 @@ export interface PeerConfigOptions extends Partial<PeerJSOption> {
 const DEFAULT_PEER_CONFIG: PeerJSOption = {
   debug: process.env.NODE_ENV === 'development' ? 3 : 1, // Increased debug level
   config: {
-    iceServers: getAdaptiveIceServers('balanced'), // Use adaptive strategy
+    iceServers: getComprehensiveIceServers(), // Use comprehensive strategy with custom TURN
     iceCandidatePoolSize: 10,
     // Enhanced WebRTC configuration
     iceTransportPolicy: 'all', // Allow both STUN and TURN
@@ -125,16 +126,24 @@ async function getAdaptivePeerConfig(options: PeerConfigOptions, useCustomServer
  */
 export function getServerInfo(): string {
   const useCustomServer = process.env.NEXT_PUBLIC_PEERJS_USE_CUSTOM_SERVER === 'true';
+  const customTurnInfo = getCustomTurnInfo();
   const config = getPeerConfig();
   const iceServers = config.config?.iceServers || [];
   const stunCount = iceServers.filter((server: any) => server.urls?.startsWith('stun:')).length;
   const turnCount = iceServers.filter((server: any) => server.urls?.startsWith('turn')).length;
   
+  let serverInfo = '';
+  
   if (useCustomServer) {
-    return `Custom Server: ${CUSTOM_SERVER_CONFIG.secure ? 'https' : 'http'}://${CUSTOM_SERVER_CONFIG.host}:${CUSTOM_SERVER_CONFIG.port}${CUSTOM_SERVER_CONFIG.path} (${stunCount} STUN, ${turnCount} TURN servers)`;
+    serverInfo = `Custom Server: ${CUSTOM_SERVER_CONFIG.secure ? 'https' : 'http'}://${CUSTOM_SERVER_CONFIG.host}:${CUSTOM_SERVER_CONFIG.port}${CUSTOM_SERVER_CONFIG.path}`;
+  } else {
+    serverInfo = `Default PeerJS Server (0.peerjs.com)`;
   }
   
-  return `Default PeerJS Server (0.peerjs.com) (${stunCount} STUN, ${turnCount} TURN servers)`;
+  const iceInfo = `(${stunCount} STUN, ${turnCount} TURN servers)`;
+  const turnInfo = customTurnInfo ? ` | ${customTurnInfo}` : '';
+  
+  return `${serverInfo} ${iceInfo}${turnInfo}`;
 }
 
 /**

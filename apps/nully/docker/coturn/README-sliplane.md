@@ -6,14 +6,25 @@ This directory contains the configuration and deployment files for hosting a CoT
 
 ### Step 1: Push to GitHub
 1. Push this directory structure to your GitHub repository
-2. Make sure the `Dockerfile` and `entrypoint.sh` are in the same directory
+2. Make sure all files are in the same directory (`apps/nully/docker/coturn/`)
 
 ### Step 2: Deploy on Sliplane
+
+#### Option A: Using Standalone Dockerfile (Recommended)
 1. Go to [Sliplane Dashboard](https://console.sliplane.io/)
 2. Click **"Deploy from GitHub"**
 3. Select your repository
-4. Choose this directory as the build context
-5. Configure the service:
+4. Set **Build Context**: `/apps/nully/docker/coturn/`
+5. Set **Dockerfile**: `Dockerfile.sliplane`
+6. Configure the service:
+
+#### Option B: Using Separate Files
+1. Go to [Sliplane Dashboard](https://console.sliplane.io/)
+2. Click **"Deploy from GitHub"**
+3. Select your repository
+4. Set **Build Context**: `/apps/nully/docker/coturn/` (important!)
+5. Set **Dockerfile**: `Dockerfile`
+6. Configure the service:
 
 #### Service Configuration:
 - **Service Name**: `nully-turn-server`
