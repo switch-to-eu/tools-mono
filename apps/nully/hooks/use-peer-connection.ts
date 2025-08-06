@@ -150,11 +150,10 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
             setStatus("disconnected");
         });
 
-            newPeer.on("close", () => {
-                console.log("[usePeerConnection] Peer closed");
-                setStatus("disconnected");
-            });
-        };
+        newPeer.on("close", () => {
+            console.log("[usePeerConnection] Peer closed");
+            setStatus("disconnected");
+        });
         
 
         return () => {
