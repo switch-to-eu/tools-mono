@@ -649,6 +649,9 @@ importers:
 
   packages/eslint-config:
     dependencies:
+      '@eslint/js':
+        specifier: ^9.20.1
+        version: 9.28.0
       '@next/eslint-plugin-next':
         specifier: ^15.1.7
         version: 15.1.7
@@ -676,13 +679,13 @@ importers:
       eslint-plugin-turbo:
         specifier: ^2.4.2
         version: 2.4.2(eslint@9.20.1(jiti@2.4.2))(turbo@2.5.4)
+      globals:
+        specifier: ^15.15.0
+        version: 15.15.0
       typescript-eslint:
         specifier: ^8.24.1
         version: 8.24.1(eslint@9.20.1(jiti@2.4.2))(typescript@5.7.3)
     devDependencies:
-      globals:
-        specifier: ^15.15.0
-        version: 15.15.0
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -729,6 +732,9 @@ importers:
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      eslint:
+        specifier: ^9.20.1
+        version: 9.28.0(jiti@2.4.2)
       typescript:
         specifier: ^5.7.3
         version: 5.8.3
@@ -822,6 +828,9 @@ importers:
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      eslint:
+        specifier: ^9.20.1
+        version: 9.28.0(jiti@2.4.2)
       tailwindcss:
         specifier: ^4.0.8
         version: 4.0.8

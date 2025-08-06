@@ -1,0 +1,105 @@
+# CoTURN TURN Server for Sliplane Deployment (Standalone)
+FROM coturn/coturn:4.6.2
+
+# Install additional utilities
+USER root
+RUN apt-get update && apt-get install -y \
+    curl \
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create necessary directories
+RUN mkdir -p /var/log/coturn /etc/coturn/certs
+RUN chown -R nobody:nogroup /var/log/coturn
+
+# Create base configuration file inline
+RUN echo "# CoTURN Configuration for Nully App" > /etc/coturn/turnserver.conf \
+&& echo "# High-performance TURN server configuration" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Listening interfaces and ports" >> /etc/coturn/turnserver.conf \
+&& echo "listening-port=3478" >> /etc/coturn/turnserver.conf \
+&& echo "# alt-listening-port=80 disabled - conflicts with Sliplane HTTP routing" >> /etc/coturn/turnserver.conf \
+&& echo "# TLS ports disabled - no certificates configured" >> /etc/coturn/turnserver.conf \
+&& echo "# tls-listening-port=5349" >> /etc/coturn/turnserver.conf \
+&& echo "# alt-tls-listening-port=443" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Relay interfaces" >> /etc/coturn/turnserver.conf \
+&& echo "# external-ip=" >> /etc/coturn/turnserver.conf \
+&& echo "relay-ip=0.0.0.0" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Authentication (configured at runtime)" >> /etc/coturn/turnserver.conf \
+&& echo "# user=USERNAME:PASSWORD" >> /etc/coturn/turnserver.conf \
+&& echo "use-auth-secret" >> /etc/coturn/turnserver.conf \
+&& echo "# static-auth-secret=SECRET" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Security settings" >> /etc/coturn/turnserver.conf \
+&& echo "fingerprint" >> /etc/coturn/turnserver.conf \
+&& echo "lt-cred-mech" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Enable both UDP and TCP relay" >> /etc/coturn/turnserver.conf \
+&& echo "no-udp-relay=false" >> /etc/coturn/turnserver.conf \
+&& echo "no-tcp-relay=false" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Logging" >> /etc/coturn/turnserver.conf \
+&& echo "verbose" >> /etc/coturn/turnserver.conf \
+&& echo "log-file=/var/log/turnserver.log" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Performance tuning" >> /etc/coturn/turnserver.conf \
+&& echo "max-bps=100000" >> /etc/coturn/turnserver.conf \
+&& echo "total-quota=100" >> /etc/coturn/turnserver.conf \
+&& echo "user-quota=50" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Realm" >> /etc/coturn/turnserver.conf \
+&& echo "realm=nully.app" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Additional security" >> /etc/coturn/turnserver.conf \
+&& echo "no-cli" >> /etc/coturn/turnserver.conf \
+&& echo "denied-peer-ip=127.0.0.0-127.255.255.255" >> /etc/coturn/turnserver.conf \
+&& echo "denied-peer-ip=::1" >> /etc/coturn/turnserver.conf \
+&& echo "no-multicast-peers" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Enable STUN" >> /etc/coturn/turnserver.conf \
+&& echo "stun-only=false" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# WebRTC compatibility" >> /etc/coturn/turnserver.conf \
+&& echo "mobility" >> /etc/coturn/turnserver.conf \
+&& echo "keep-address-family" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Disable TLS v1.0/1.1 for security" >> /etc/coturn/turnserver.conf \
+&& echo "no-tlsv1" >> /etc/coturn/turnserver.conf \
+&& echo "no-tlsv1_1" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Enable modern cipher suites" >> /etc/coturn/turnserver.conf \
+&& echo "cipher-list=\"ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256\"" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Misc settings" >> /etc/coturn/turnserver.conf \
+&& echo "prod" >> /etc/coturn/turnserver.conf \
+&& echo "check-origin-consistency" >> /etc/coturn/turnserver.conf \
+&& chown nobody:nogroup /etc/coturn/turnserver.conf \
+&& chmod 644 /etc/coturn/turnserver.conf
+
+# Copy and setup entrypoint script
+COPY entrypoint-sliplane.sh /usr/local/bin/entrypoint.sh
+
+# Make entrypoint executable
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Expose ports for TURN server
+# Standard TURN ports
+EXPOSE 3478/udp 3478/tcp
+# TLS TURN ports  
+EXPOSE 5349/udp 5349/tcp
+# Alternative ports for firewall traversal
+EXPOSE 80/tcp 443/tcp
+# RTP relay ports range
+EXPOSE 49160-49200/udp
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD netstat -tuln | grep -E ':(3478|5349|80|443)\s' || exit 1
+
+# Switch to non-root user for security
+USER nobody
+
+# Use custom entrypoint for dynamic configuration
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
