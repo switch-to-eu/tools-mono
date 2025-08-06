@@ -32,7 +32,7 @@ pnpm install
 pnpm dev
 
 # run a single app in development mode
-capp-name
+pnpm dev --filter @workspace/app-name
 
 # Build all apps and packages
 pnpm build
