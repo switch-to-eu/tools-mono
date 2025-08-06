@@ -21,10 +21,10 @@ alt-tls-listening-port=443
 external-ip=$EXTERNAL_IP
 relay-ip=0.0.0.0
 
-# Authentication
-user=${TURN_USERNAME:-nully}:${TURN_PASSWORD:-nully123!@#}
+# Authentication (configured from environment variables)
+user=${TURN_USERNAME:-nully}:${TURN_PASSWORD:-changeme}
 use-auth-secret
-static-auth-secret=${TURN_SECRET:-nully-super-secret-key-2025}
+static-auth-secret=${TURN_SECRET:-change-this-secret}
 
 # Security
 fingerprint

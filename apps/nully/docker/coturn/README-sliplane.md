@@ -32,16 +32,20 @@ This directory contains the configuration and deployment files for hosting a CoT
 - **Protocol**: `TCP` (Sliplane requirement)
 - **Health Check**: `/` (optional)
 
-#### Environment Variables:
+#### Environment Variables (REQUIRED for Security):
 ```bash
-TURN_USERNAME=nully
+# 🚨 SECURITY: These credentials are NOT stored in the repository
+# Set these in your Sliplane environment variables
+TURN_USERNAME=your-username
 TURN_PASSWORD=your-secure-password-123
 TURN_SECRET=your-super-secret-key-2025
-TURN_REALM=nully.app
+TURN_REALM=yourdomain.com
 TURN_MAX_BPS=100000
 TURN_TOTAL_QUOTA=100
 TURN_USER_QUOTA=50
 ```
+
+**⚠️ IMPORTANT**: Never commit credentials to your repository. These must be configured as environment variables in Sliplane.
 
 ### Step 3: Configure Your Nully App
 Once deployed, update your Nully app environment variables:
@@ -49,9 +53,11 @@ Once deployed, update your Nully app environment variables:
 ```bash
 # Replace YOUR_SLIPLANE_DOMAIN with your actual Sliplane domain
 NEXT_PUBLIC_CUSTOM_TURN_SERVER=your-app-name.sliplane.app
-NEXT_PUBLIC_CUSTOM_TURN_USERNAME=nully
+NEXT_PUBLIC_CUSTOM_TURN_USERNAME=your-username
 NEXT_PUBLIC_CUSTOM_TURN_PASSWORD=your-secure-password-123
 NEXT_PUBLIC_USE_CUSTOM_TURN=true
+
+# 🚨 SECURITY: Use the same credentials you set in Sliplane environment
 ```
 
 ## 📋 Available TURN Endpoints

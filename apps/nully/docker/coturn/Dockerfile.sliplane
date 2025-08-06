@@ -13,172 +13,69 @@ RUN mkdir -p /var/log/coturn /etc/coturn/certs
 RUN chown -R nobody:nogroup /var/log/coturn
 
 # Create base configuration file inline
-RUN cat > /etc/coturn/turnserver.conf << 'EOF'
-# CoTURN Configuration for Nully App
-# High-performance TURN server configuration
+RUN echo "# CoTURN Configuration for Nully App" > /etc/coturn/turnserver.conf \
+&& echo "# High-performance TURN server configuration" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Listening interfaces and ports" >> /etc/coturn/turnserver.conf \
+&& echo "listening-port=3478" >> /etc/coturn/turnserver.conf \
+&& echo "tls-listening-port=5349" >> /etc/coturn/turnserver.conf \
+&& echo "alt-listening-port=80" >> /etc/coturn/turnserver.conf \
+&& echo "alt-tls-listening-port=443" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Relay interfaces" >> /etc/coturn/turnserver.conf \
+&& echo "# external-ip=" >> /etc/coturn/turnserver.conf \
+&& echo "relay-ip=0.0.0.0" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Authentication (configured at runtime)" >> /etc/coturn/turnserver.conf \
+&& echo "# user=USERNAME:PASSWORD" >> /etc/coturn/turnserver.conf \
+&& echo "use-auth-secret" >> /etc/coturn/turnserver.conf \
+&& echo "# static-auth-secret=SECRET" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Security settings" >> /etc/coturn/turnserver.conf \
+&& echo "fingerprint" >> /etc/coturn/turnserver.conf \
+&& echo "lt-cred-mech" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Enable both UDP and TCP relay" >> /etc/coturn/turnserver.conf \
+&& echo "no-udp-relay=false" >> /etc/coturn/turnserver.conf \
+&& echo "no-tcp-relay=false" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Logging" >> /etc/coturn/turnserver.conf \
+&& echo "verbose" >> /etc/coturn/turnserver.conf \
+&& echo "log-file=/var/log/turnserver.log" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Performance tuning" >> /etc/coturn/turnserver.conf \
+&& echo "max-bps=100000" >> /etc/coturn/turnserver.conf \
+&& echo "total-quota=100" >> /etc/coturn/turnserver.conf \
+&& echo "user-quota=50" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Realm" >> /etc/coturn/turnserver.conf \
+&& echo "realm=nully.app" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Additional security" >> /etc/coturn/turnserver.conf \
+&& echo "no-cli" >> /etc/coturn/turnserver.conf \
+&& echo "no-loopback-peers" >> /etc/coturn/turnserver.conf \
+&& echo "no-multicast-peers" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Enable STUN" >> /etc/coturn/turnserver.conf \
+&& echo "stun-only=false" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# WebRTC compatibility" >> /etc/coturn/turnserver.conf \
+&& echo "mobility" >> /etc/coturn/turnserver.conf \
+&& echo "keep-address-family" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Disable TLS v1.0/1.1 for security" >> /etc/coturn/turnserver.conf \
+&& echo "no-tlsv1" >> /etc/coturn/turnserver.conf \
+&& echo "no-tlsv1_1" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Enable modern cipher suites" >> /etc/coturn/turnserver.conf \
+&& echo "cipher-list=\"ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256\"" >> /etc/coturn/turnserver.conf \
+&& echo "" >> /etc/coturn/turnserver.conf \
+&& echo "# Misc settings" >> /etc/coturn/turnserver.conf \
+&& echo "prod" >> /etc/coturn/turnserver.conf \
+&& echo "check-origin-consistency" >> /etc/coturn/turnserver.conf
 
-# Listening interfaces and ports
-listening-port=3478
-tls-listening-port=5349
-alt-listening-port=80
-alt-tls-listening-port=443
-
-# Relay interfaces
-relay-ip=0.0.0.0
-
-# Authentication
-# Use static credentials for simplicity
-user=nully:nully123!@#
-# Or use dynamic auth with secret
-use-auth-secret
-static-auth-secret=nully-super-secret-key-2025
-
-# Security settings
-fingerprint
-lt-cred-mech
-
-# Enable both UDP and TCP relay
-no-udp-relay=false
-no-tcp-relay=false
-
-# Logging
-verbose
-log-file=/var/log/turnserver.log
-
-# Performance tuning
-max-bps=100000
-total-quota=100
-user-quota=50
-
-# Realm (your domain)
-realm=nully.app
-
-# Additional security
-no-cli
-no-loopback-peers
-no-multicast-peers
-
-# Enable STUN
-stun-only=false
-
-# WebRTC compatibility
-mobility
-keep-address-family
-
-# Disable TLS v1.0/1.1 for security
-no-tlsv1
-no-tlsv1_1
-
-# Enable modern cipher suites
-cipher-list="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256"
-
-# Misc settings
-prod
-check-origin-consistency
-EOF
-
-# Create entrypoint script inline
-RUN cat > /usr/local/bin/entrypoint.sh << 'EOF'
-#!/bin/bash
-set -e
-
-# CoTURN Dynamic Configuration for Sliplane
-echo "🚀 Starting CoTURN TURN Server on Sliplane..."
-
-# Get external IP from Sliplane environment or detect it
-EXTERNAL_IP=${SLIPLANE_DOMAIN:-${EXTERNAL_IP:-$(curl -s ifconfig.me || curl -s ipinfo.io/ip || echo "127.0.0.1")}}
-
-echo "📍 Using external IP/domain: $EXTERNAL_IP"
-
-# Create dynamic configuration
-cat > /tmp/turnserver-dynamic.conf << EOFCONF
-# CoTURN Configuration for Sliplane - Auto-generated
-listening-port=3478
-tls-listening-port=5349
-alt-listening-port=80
-alt-tls-listening-port=443
-
-# Use Sliplane domain or external IP
-external-ip=$EXTERNAL_IP
-relay-ip=0.0.0.0
-
-# Authentication
-user=${TURN_USERNAME:-nully}:${TURN_PASSWORD:-nully123!@#}
-use-auth-secret
-static-auth-secret=${TURN_SECRET:-nully-super-secret-key-2025}
-
-# Security
-fingerprint
-lt-cred-mech
-
-# Performance
-max-bps=${TURN_MAX_BPS:-100000}
-total-quota=${TURN_TOTAL_QUOTA:-100}
-user-quota=${TURN_USER_QUOTA:-50}
-
-# Relay configuration
-no-udp-relay=false
-no-tcp-relay=false
-
-# Logging
-verbose
-log-file=/var/log/coturn/turnserver.log
-
-# Security settings
-no-cli
-no-loopback-peers
-no-multicast-peers
-stun-only=false
-mobility
-keep-address-family
-
-# Realm
-realm=${TURN_REALM:-nully.app}
-
-# Port ranges for relay
-min-port=49160
-max-port=49200
-
-# Production settings
-prod
-check-origin-consistency
-
-# Additional security
-no-tlsv1
-no-tlsv1_1
-cipher-list="ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256"
-EOFCONF
-
-# Merge with base configuration if it exists
-if [ -f "/etc/coturn/turnserver.conf" ]; then
-    echo "📝 Merging with base configuration..."
-    cat /etc/coturn/turnserver.conf /tmp/turnserver-dynamic.conf > /tmp/turnserver-final.conf
-else
-    cp /tmp/turnserver-dynamic.conf /tmp/turnserver-final.conf
-fi
-
-# Create log directory and set permissions
-mkdir -p /var/log/coturn
-touch /var/log/coturn/turnserver.log
-
-# Display configuration for debugging
-echo "🔧 TURN Server Configuration:"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "External IP/Domain: $EXTERNAL_IP"
-echo "TURN UDP: turn:$EXTERNAL_IP:3478" 
-echo "TURN TCP: turn:$EXTERNAL_IP:3478?transport=tcp"
-echo "TURN TLS: turns:$EXTERNAL_IP:5349"
-echo "Alt Port 80: turn:$EXTERNAL_IP:80"
-echo "Alt Port 443: turn:$EXTERNAL_IP:443?transport=tcp"
-echo "Username: ${TURN_USERNAME:-nully}"
-echo "Password: ${TURN_PASSWORD:-nully123!@#}"
-echo "Realm: ${TURN_REALM:-nully.app}"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-# Start CoTURN with dynamic configuration
-echo "🌟 Starting CoTURN TURN server..."
-exec /usr/bin/turnserver -c /tmp/turnserver-final.conf --listening-port=3478 --verbose
-EOF
+# Create dynamic entrypoint script  
+RUN printf '#!/bin/bash\nset -e\necho "🚀 Starting CoTURN TURN Server"\n\n# Get external IP\nEXTERNAL_IP=${SLIPLANE_DOMAIN:-$(curl -s ifconfig.me || echo "127.0.0.1")}\necho "📍 Using external IP: $EXTERNAL_IP"\n\n# Configure external IP\nsed -i "s/# external-ip=/external-ip=$EXTERNAL_IP/" /etc/coturn/turnserver.conf\n\n# Configure authentication from environment variables\nif [ -n "$TURN_USERNAME" ] && [ -n "$TURN_PASSWORD" ]; then\n  echo "🔐 Configuring user authentication"\n  sed -i "s/# user=USERNAME:PASSWORD/user=$TURN_USERNAME:$TURN_PASSWORD/" /etc/coturn/turnserver.conf\nelse\n  echo "⚠️ Warning: No user credentials provided (TURN_USERNAME/TURN_PASSWORD)"\nfi\n\nif [ -n "$TURN_SECRET" ]; then\n  echo "🔑 Configuring auth secret"\n  sed -i "s/# static-auth-secret=SECRET/static-auth-secret=$TURN_SECRET/" /etc/coturn/turnserver.conf\nelse\n  echo "⚠️ Warning: No auth secret provided (TURN_SECRET)"\nfi\n\nif [ -n "$TURN_REALM" ]; then\n  sed -i "s/realm=nully.app/realm=$TURN_REALM/" /etc/coturn/turnserver.conf\nfi\n\necho "✅ Configuration complete"\nexec /usr/bin/turnserver -c /etc/coturn/turnserver.conf --listening-port=3478 --verbose\n' > /usr/local/bin/entrypoint.sh
 
 # Make entrypoint executable
 RUN chmod +x /usr/local/bin/entrypoint.sh
