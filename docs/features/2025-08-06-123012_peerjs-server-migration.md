@@ -42,6 +42,15 @@ This plan outlines a **non-destructive migration** from the default PeerJS serve
    - **Target Files**: `apps/nully/.env.example`, `apps/nully/.env.local`
    - **Dependencies**: Task 2 completion
    - **Test Conditions**: Environment variables load correctly in development
+   - **Variables to Add**:
+     ```bash
+     # PeerJS Custom Server Configuration
+     NEXT_PUBLIC_PEERJS_USE_CUSTOM_SERVER=false  # Feature flag - set to true to enable custom server
+     NEXT_PUBLIC_PEERJS_SERVER_HOST=null-peer-server.sliplane.app
+     NEXT_PUBLIC_PEERJS_SERVER_PORT=443
+     NEXT_PUBLIC_PEERJS_SERVER_PATH=/
+     NEXT_PUBLIC_PEERJS_SERVER_SECURE=true
+     ```
 
 ### Phase 2: Configuration Implementation (Risk Level: LOW)
 **Objective**: Create centralized PeerJS configuration without changing existing logic

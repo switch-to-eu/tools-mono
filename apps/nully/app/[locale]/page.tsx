@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { type Locale } from "next-intl";
-import { Check, Database, Infinity, Layers, Zap, Upload, Shield, CheckCircle, MapPin } from "lucide-react";
+import { Check, Database, Infinity as InfinityIcon, Layers, Zap, Upload, Shield, CheckCircle, MapPin } from "lucide-react";
 
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@workspace/ui/components/card";
@@ -138,7 +138,7 @@ export default async function HomePage({
             <Card className="border-0 gradient-bg-white-yellow shadow-lg transition-all hover:scale-105 hover:shadow-xl p-6">
               <CardHeader className="text-center p-0">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full gradient-purple-blue">
-                  <Infinity className="h-6 w-6 text-white" />
+                  <InfinityIcon className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-xl text-neutral-900 mb-2">
                   {t('features.unlimited')}

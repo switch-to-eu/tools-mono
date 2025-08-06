@@ -35,7 +35,7 @@ function getCustomServerConfig(): PeerServerConfig {
     host: process.env.NEXT_PUBLIC_PEERJS_SERVER_HOST || 'null-peer-server.sliplane.app',
     port: parseInt(process.env.NEXT_PUBLIC_PEERJS_SERVER_PORT || '443'),
     path: process.env.NEXT_PUBLIC_PEERJS_SERVER_PATH || '/',
-    secure: process.env.NEXT_PUBLIC_PEERJS_SERVER_SECURE === 'true',
+    secure: process.env.NEXT_PUBLIC_PEERJS_SERVER_SECURE !== 'false',
   };
 }
 
