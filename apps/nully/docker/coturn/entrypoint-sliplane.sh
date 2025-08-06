@@ -10,8 +10,14 @@ echo "📍 Using external IP: $EXTERNAL_IP"
 # Create writable copy of config in /tmp
 cp /etc/coturn/turnserver.conf /tmp/turnserver.conf
 
+# Fix log file permissions - use /tmp for logs
+sed -i "s|log-file=/var/log/turnserver.log|log-file=/tmp/turnserver.log|" /tmp/turnserver.conf
+
 # Configure external IP
 sed -i "s/# external-ip=/external-ip=$EXTERNAL_IP/" /tmp/turnserver.conf
+
+# Ensure we bind to all interfaces (required for Sliplane)
+echo "listening-ip=0.0.0.0" >> /tmp/turnserver.conf
 
 # Configure authentication from environment variables
 if [ -n "$TURN_USERNAME" ] && [ -n "$TURN_PASSWORD" ]; then
