@@ -18,7 +18,7 @@ RUN echo "# CoTURN Configuration for Nully App" > /etc/coturn/turnserver.conf \
 && echo "" >> /etc/coturn/turnserver.conf \
 && echo "# Listening interfaces and ports" >> /etc/coturn/turnserver.conf \
 && echo "listening-port=3478" >> /etc/coturn/turnserver.conf \
-&& echo "alt-listening-port=80" >> /etc/coturn/turnserver.conf \
+&& echo "# alt-listening-port=80 disabled - conflicts with Sliplane HTTP routing" >> /etc/coturn/turnserver.conf \
 && echo "# TLS ports disabled - no certificates configured" >> /etc/coturn/turnserver.conf \
 && echo "# tls-listening-port=5349" >> /etc/coturn/turnserver.conf \
 && echo "# alt-tls-listening-port=443" >> /etc/coturn/turnserver.conf \

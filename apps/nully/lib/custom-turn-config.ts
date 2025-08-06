@@ -52,14 +52,15 @@ export function generateCustomTurnServers(config: CustomTurnConfig): RTCIceServe
   const servers: RTCIceServer[] = [];
   const { server, port, username, password, protocols = ['udp', 'tcp', 'tls'], alternativePorts = [] } = config;
   
-  // Generate servers for each protocol on main port (skip TLS - no certificates)
+  // Generate servers for each protocol on main port (focus on working TCP)
   protocols.forEach(protocol => {
     let urls: string;
     
     switch (protocol) {
       case 'udp':
-        urls = `turn:${server}:${port}`;
-        break;
+        // Skip UDP for now - Sliplane platform limitations
+        console.log('[Custom TURN] Skipping UDP endpoint - platform routing limitations');
+        return;
       case 'tcp':
         urls = `turn:${server}:${port}?transport=tcp`;
         break;
@@ -72,11 +73,15 @@ export function generateCustomTurnServers(config: CustomTurnConfig): RTCIceServe
     servers.push({ urls, username, credential: password });
   });
   
-  // Generate servers for alternative ports (TCP only, skip 443/TLS)
+  // Generate servers for alternative ports (TCP only, skip problematic ports)
   alternativePorts.forEach(altPort => {
     if (altPort === 443 || altPort === 5349) {
       // Skip TLS ports - no certificates
       console.log(`[Custom TURN] Skipping TLS port ${altPort} - no certificates configured`);
+      return;
+    } else if (altPort === 80) {
+      // Skip port 80 - conflicts with Sliplane HTTP routing
+      console.log(`[Custom TURN] Skipping port 80 - conflicts with Sliplane HTTP routing`);
       return;
     } else {
       // Regular TURN TCP on alternative ports
@@ -167,6 +172,18 @@ export async function testCustomTurnServer(): Promise<{
   
   try {
     const servers = generateCustomTurnServers(config);
+    if (servers.length === 0) {
+      return {
+        success: false,
+        error: 'No TURN servers configured',
+        details: {
+          server: config.server,
+          reachable: false,
+          relayFound: false,
+          duration: Date.now() - startTime
+        }
+      };
+    }
     const testServer = servers[0]; // Test first server configuration
     
     const pc = new RTCPeerConnection({

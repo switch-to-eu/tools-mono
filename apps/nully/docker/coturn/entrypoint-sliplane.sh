@@ -16,8 +16,14 @@ sed -i "s|log-file=/var/log/turnserver.log|log-file=/tmp/turnserver.log|" /tmp/t
 # Configure external IP
 sed -i "s/# external-ip=/external-ip=$EXTERNAL_IP/" /tmp/turnserver.conf
 
-# Ensure we bind to all interfaces (required for Sliplane)
+# Ensure we bind to all interfaces (required for Sliplane)  
 echo "listening-ip=0.0.0.0" >> /tmp/turnserver.conf
+echo "relay-ip=0.0.0.0" >> /tmp/turnserver.conf
+
+# Force UDP relay to work
+echo "" >> /tmp/turnserver.conf
+echo "# UDP Configuration" >> /tmp/turnserver.conf
+echo "udp-self-balance" >> /tmp/turnserver.conf
 
 # Configure authentication - use EITHER username/password OR shared secret, not both
 if [ -n "$TURN_USERNAME" ] && [ -n "$TURN_PASSWORD" ]; then
@@ -48,11 +54,23 @@ echo "# Relay port range" >> /tmp/turnserver.conf
 echo "min-port=49160" >> /tmp/turnserver.conf
 echo "max-port=49200" >> /tmp/turnserver.conf
 
+# Add verbose UDP logging
+echo "" >> /tmp/turnserver.conf
+echo "# Enhanced debugging" >> /tmp/turnserver.conf
+echo "verbose" >> /tmp/turnserver.conf
+echo "Verbose" >> /tmp/turnserver.conf
+
 # Disable problematic features that cause warnings
 echo "" >> /tmp/turnserver.conf
 echo "# Disable features causing issues" >> /tmp/turnserver.conf
 echo "no-dtls" >> /tmp/turnserver.conf
 echo "no-tls" >> /tmp/turnserver.conf
+
+# Ensure UDP relay is enabled
+echo "" >> /tmp/turnserver.conf
+echo "# Force UDP support" >> /tmp/turnserver.conf
+echo "no-udp-relay=false" >> /tmp/turnserver.conf
+echo "no-tcp-relay=false" >> /tmp/turnserver.conf
 
 echo "✅ Configuration complete - showing final config:"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
