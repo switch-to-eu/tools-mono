@@ -5,9 +5,6 @@ import { useEffect, useState } from "react";
 import { usePeerConnection } from "../../../../hooks/use-peer-connection";
 import { useFileTransfer } from "../../../../hooks/use-file-transfer";
 import { SendPage } from "../../../../components/send-page";
-import { ConnectionDiagnostics } from "../../../../components/connection-diagnostics";
-import { Button } from "@workspace/ui/components/button";
-import { Activity } from "lucide-react";
 
 export default function TransferPage() {
   const params = useParams();
@@ -16,7 +13,6 @@ export default function TransferPage() {
   const { peerId, status, error, send, onData, onConnect } = usePeerConnection({ initialPeerId });
   const { stageFile, stagedFiles } = useFileTransfer({ send, onData, onConnect });
   const [shareUrl, setShareUrl] = useState("");
-  const [showDiagnostics, setShowDiagnostics] = useState(true); // Always show by default
 
   console.log("[TransferPage] Status:", status, "PeerID:", peerId);
 
@@ -45,31 +41,11 @@ export default function TransferPage() {
 
   return (
     <main className="container mx-auto max-w-2xl p-4 space-y-4">
-      {/* Diagnostics Toggle Button - Always visible */}
-      <div className="flex justify-end">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setShowDiagnostics(!showDiagnostics)}
-        >
-          <Activity className="w-4 h-4 mr-2" />
-          {showDiagnostics ? "Hide" : "Show"} Connection Diagnostics
-        </Button>
-      </div>
-      
-      {/* Diagnostics Panel - Visible by default */}
-      {showDiagnostics && (
-        <ConnectionDiagnostics />
-      )}
-      
       {/* Error Display */}
       {error && (
         <div className="p-4 bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 rounded-lg">
           <h3 className="font-semibold mb-2">Connection Error</h3>
           <p className="text-sm">{error}</p>
-          <p className="text-sm mt-2">
-            Try running diagnostics to identify the issue.
-          </p>
         </div>
       )}
       

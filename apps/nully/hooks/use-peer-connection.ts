@@ -2,7 +2,7 @@ import { Peer } from "peerjs";
 import type { DataConnection } from "peerjs";
 import { useEffect, useState, useCallback, useRef } from "react";
 import type { PeerMessage, PeerConnectionMetrics } from "@/lib/interfaces";
-import { getPeerConfig, getServerInfo, getIceServerInfo, logTurnConnectivity } from "@/lib/peer-config";
+import { getPeerConfig, getServerInfo } from "@/lib/peer-config";
 
 export type ConnectionStatus =
     | "disconnected"
@@ -47,31 +47,22 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
         let newPeer: Peer | null = null;
         let isCancelled = false;
         
-        console.log("[usePeerConnection] Initializing new peer with ID:", initialPeerId);
-        console.log("[usePeerConnection] Server config:", getServerInfo());
+        console.log("[usePeerConnection] Initializing peer connection:", getServerInfo());
         
-        // Get PeerJS configuration - now handles async if needed
-        const configResult = getPeerConfig({ iceStrategy: 'aggressive' });
+        // Get PeerJS configuration
+        const peerConfig = getPeerConfig();
         
-        const setupPeer = (peerConfig: any) => {
-            if (isCancelled) return;
-            
-            console.log("[usePeerConnection] ICE servers:", peerConfig.config?.iceServers?.length || 0, "servers configured");
-            console.log("[usePeerConnection] Full PeerJS config:", JSON.stringify(peerConfig, null, 2));
-            
-            // Initialize peer with configuration
-            newPeer = initialPeerId 
-                ? new Peer(initialPeerId, peerConfig) 
-                : new Peer(peerConfig);
-            
-            console.log("[usePeerConnection] Peer created:", {
-                id: initialPeerId || 'auto-generated',
-                destroyed: newPeer.destroyed,
-                disconnected: newPeer.disconnected
-            });
-            
-            setPeer(newPeer);
-            setStatus("connecting");
+        if (isCancelled) return;
+        
+        console.log("[usePeerConnection] Using", peerConfig.config?.iceServers?.length || 0, "ICE servers");
+        
+        // Initialize peer with configuration
+        newPeer = initialPeerId 
+            ? new Peer(initialPeerId, peerConfig) 
+            : new Peer(peerConfig);
+        
+        setPeer(newPeer);
+        setStatus("connecting");
         
         // Update metrics
         setMetrics(prev => ({
@@ -80,13 +71,7 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
         }));
 
         newPeer.on("open", (id) => {
-            console.log("[usePeerConnection] Peer opened with ID:", id);
-            console.log("[usePeerConnection] Peer connection details:", {
-                id,
-                destroyed: newPeer.destroyed,
-                disconnected: newPeer.disconnected,
-                connections: Object.keys(newPeer.connections || {}).length
-            });
+            console.log("[usePeerConnection] ✅ Peer ready with ID:", id);
             setPeerId(id);
             setStatus("disconnected"); // Ready, but not connected to a peer yet
             
@@ -98,144 +83,56 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
         });
 
         newPeer.on("connection", (conn) => {
-            console.log("[usePeerConnection] Incoming connection received:", conn.peer);
-            console.log("[usePeerConnection] Connection details:", {
-                peer: conn.peer,
-                connectionId: conn.connectionId,
-                reliable: conn.reliable,
-                type: conn.type,
-                open: conn.open
-            });
+            console.log("[usePeerConnection] ✅ Incoming connection from:", conn.peer);
             cleanupConnection();
             setConnection(conn);
             setStatus("connected");
 
             conn.on("open", () => {
-                console.log("[usePeerConnection] Incoming connection opened");
-                console.log("[usePeerConnection] Connection now open:", {
-                    peer: conn.peer,
-                    open: conn.open,
-                    reliable: conn.reliable
-                });
+                console.log("[usePeerConnection] Connection established");
                 onConnectCallbackRef.current(); // Notify that a connection is established
             });
 
             conn.on("data", (data) => {
-                console.log("[usePeerConnection] Data received (incoming):", {
-                    type: typeof data,
-                    isString: typeof data === 'string',
-                    isObject: typeof data === 'object',
-                    messageType: data && typeof data === 'object' ? (data as any).type : 'unknown',
-                    dataPreview: typeof data === 'string' ? data.substring(0, 100) : data
-                });
                 let message: PeerMessage;
-                // PeerJS will deserialize BinaryPack data back into an object.
-                // If it was sent as a string, it will be a string.
+                
                 if (typeof data === 'string') {
                     try {
                         message = JSON.parse(data) as PeerMessage;
-                        console.log("[usePeerConnection] Parsed string message:", message.type);
                     } catch (e) {
-                        console.error("[usePeerConnection] Failed to parse string message:", e, data);
+                        console.error("[usePeerConnection] Failed to parse message:", e);
                         return;
                     }
                 } else if (typeof data === 'object' && data !== null) {
-                    // This should be our FILE_CHUNK message
                     message = data as PeerMessage;
-                    console.log("[usePeerConnection] Object message received:", message.type);
                 } else {
-                    console.error("[usePeerConnection] Received unexpected data type:", typeof data, data);
+                    console.error("[usePeerConnection] Unexpected data type:", typeof data);
                     return;
                 }
                 onDataCallbackRef.current(message);
             });
 
             conn.on("close", () => {
-                console.log("[usePeerConnection] Incoming connection closed", {
-                    peer: conn.peer,
-                    reason: "Connection closed by remote peer"
-                });
+                console.log("[usePeerConnection] Connection closed");
                 setStatus("disconnected");
             });
 
             conn.on("error", (err) => {
-                console.error("[usePeerConnection] Incoming connection error:", {
-                    error: err.message,
-                    type: err.type,
-                    peer: conn.peer
-                });
+                console.error("[usePeerConnection] Connection error:", err.message);
             });
 
-            // Add WebRTC connection state monitoring for incoming connections
+            // Monitor critical WebRTC connection states
             if (conn.peerConnection) {
                 conn.peerConnection.addEventListener('iceconnectionstatechange', () => {
-                    if (conn.peerConnection) {
-                        console.log(`[usePeerConnection] ICE connection state (incoming): ${conn.peerConnection.iceConnectionState}`);
-                        if (conn.peerConnection.iceConnectionState === 'failed') {
-                            console.error("[usePeerConnection] ICE connection failed (incoming) - WebRTC connection cannot be established");
-                        }
-                    }
-                });
-                conn.peerConnection.addEventListener('connectionstatechange', () => {
-                    if (conn.peerConnection) {
-                        console.log(`[usePeerConnection] Connection state (incoming): ${conn.peerConnection.connectionState}`);
-                    }
-                });
-                conn.peerConnection.addEventListener('icegatheringstatechange', () => {
-                    if (conn.peerConnection) {
-                        console.log(`[usePeerConnection] ICE gathering state (incoming): ${conn.peerConnection.iceGatheringState}`);
-                    }
-                });
-                conn.peerConnection.addEventListener('icecandidate', (event) => {
-                    if (event.candidate) {
-                        console.log(`[usePeerConnection] ICE candidate found (incoming):`, {
-                            candidate: event.candidate.candidate,
-                            protocol: event.candidate.protocol,
-                            type: event.candidate.type
-                        });
-                    } else {
-                        console.log(`[usePeerConnection] ICE gathering completed (incoming)`);
+                    if (conn.peerConnection?.iceConnectionState === 'failed') {
+                        console.error("[usePeerConnection] 🚨 ICE connection failed - WebRTC cannot connect");
                     }
                 });
             }
         });
 
         newPeer.on("error", (err) => {
-            console.error("[usePeerConnection] PeerJS error:", err);
-            console.error("[usePeerConnection] Error details:", {
-                type: err.type,
-                message: err.message,
-                serverInfo: getServerInfo(),
-                peerState: {
-                    id: newPeer.id,
-                    open: newPeer.open,
-                    destroyed: newPeer.destroyed,
-                    disconnected: newPeer.disconnected
-                },
-                iceServers: getIceServerInfo(),
-                timestamp: new Date().toISOString()
-            });
-            
-            // Log specific error types with more context
-            switch (err.type) {
-                case 'network':
-                    console.error("[usePeerConnection] Network error - possible server or connectivity issue");
-                    break;
-                case 'peer-unavailable':
-                    console.error("[usePeerConnection] Peer unavailable - target peer may be offline");
-                    break;
-                case 'server-error':
-                    console.error("[usePeerConnection] Server error - PeerJS server issue");
-                    break;
-                case 'browser-incompatible':
-                    console.error("[usePeerConnection] Browser incompatibility detected");
-                    break;
-                case 'webrtc':
-                    console.error("[usePeerConnection] WebRTC error - possible NAT/firewall issue");
-                    break;
-                default:
-                    console.error("[usePeerConnection] Unknown error type:", err.type);
-            }
+            console.error("[usePeerConnection] 🚨 PeerJS error:", err.type, "-", err.message);
             
             setError(err.message);
             setStatus("error");
@@ -249,34 +146,16 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
         });
 
         newPeer.on("disconnected", () => {
-            console.log("[usePeerConnection] Peer disconnected from server");
-            console.log("[usePeerConnection] Peer state after disconnect:", {
-                id: newPeer.id,
-                destroyed: newPeer.destroyed,
-                disconnected: newPeer.disconnected,
-                timestamp: new Date().toISOString()
-            });
+            console.log("[usePeerConnection] Disconnected from server");
             setStatus("disconnected");
         });
 
             newPeer.on("close", () => {
                 console.log("[usePeerConnection] Peer closed");
-                console.log("[usePeerConnection] Final peer state:", {
-                    id: newPeer.id,
-                    destroyed: newPeer.destroyed,
-                    disconnected: newPeer.disconnected,
-                    timestamp: new Date().toISOString()
-                });
                 setStatus("disconnected");
             });
         };
         
-        // Handle async config if needed
-        if (configResult instanceof Promise) {
-            configResult.then(peerConfig => setupPeer(peerConfig));
-        } else {
-            setupPeer(configResult);
-        }
 
         return () => {
             isCancelled = true;
