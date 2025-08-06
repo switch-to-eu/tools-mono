@@ -3,6 +3,7 @@ import type { DataConnection } from "peerjs";
 import { useEffect, useState, useCallback, useRef } from "react";
 import type { PeerMessage, PeerConnectionMetrics } from "@/lib/interfaces";
 import { getPeerConfig, getServerInfo } from "@/lib/peer-config";
+import { getComprehensiveIceServers } from "@/lib/custom-turn-config";
 
 export type ConnectionStatus =
     | "disconnected"
@@ -327,7 +328,9 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
                             console.error("[usePeerConnection] Diagnostics:", {
                                 localCandidates: 'Check console for local candidates',
                                 remoteCandidates: 'Check console for remote candidates', 
-                                turnServers: getIceServerInfo().filter(s => s.startsWith('turn')),
+                                turnServers: getComprehensiveIceServers().filter(server => 
+                                    server.urls && server.urls.toString().startsWith('turn')
+                                ).map(server => server.urls),
                                 suggestion: 'TURN servers may be unreachable or credentials invalid'
                             });
                         }
@@ -347,7 +350,12 @@ export function usePeerConnection({ initialPeerId }: PeerConnectionOptions = {})
                         if (conn.peerConnection.iceGatheringState === 'complete') {
                             // Log statistics about gathered candidates
                             conn.peerConnection.getStats().then(stats => {
-                                const candidates = [];
+                                const candidates: Array<{
+                                    type: string;
+                                    protocol: string;
+                                    address: string;
+                                    port: number;
+                                }> = [];
                                 stats.forEach(stat => {
                                     if (stat.type === 'local-candidate') {
                                         candidates.push({
