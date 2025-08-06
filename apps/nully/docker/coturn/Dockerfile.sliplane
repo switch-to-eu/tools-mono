@@ -72,10 +72,12 @@ RUN echo "# CoTURN Configuration for Nully App" > /etc/coturn/turnserver.conf \
 && echo "" >> /etc/coturn/turnserver.conf \
 && echo "# Misc settings" >> /etc/coturn/turnserver.conf \
 && echo "prod" >> /etc/coturn/turnserver.conf \
-&& echo "check-origin-consistency" >> /etc/coturn/turnserver.conf
+&& echo "check-origin-consistency" >> /etc/coturn/turnserver.conf \
+&& chown nobody:nogroup /etc/coturn/turnserver.conf \
+&& chmod 644 /etc/coturn/turnserver.conf
 
-# Create dynamic entrypoint script  
-RUN printf '#!/bin/bash\nset -e\necho "🚀 Starting CoTURN TURN Server"\n\n# Get external IP\nEXTERNAL_IP=${SLIPLANE_DOMAIN:-$(curl -s ifconfig.me || echo "127.0.0.1")}\necho "📍 Using external IP: $EXTERNAL_IP"\n\n# Configure external IP\nsed -i "s/# external-ip=/external-ip=$EXTERNAL_IP/" /etc/coturn/turnserver.conf\n\n# Configure authentication from environment variables\nif [ -n "$TURN_USERNAME" ] && [ -n "$TURN_PASSWORD" ]; then\n  echo "🔐 Configuring user authentication"\n  sed -i "s/# user=USERNAME:PASSWORD/user=$TURN_USERNAME:$TURN_PASSWORD/" /etc/coturn/turnserver.conf\nelse\n  echo "⚠️ Warning: No user credentials provided (TURN_USERNAME/TURN_PASSWORD)"\nfi\n\nif [ -n "$TURN_SECRET" ]; then\n  echo "🔑 Configuring auth secret"\n  sed -i "s/# static-auth-secret=SECRET/static-auth-secret=$TURN_SECRET/" /etc/coturn/turnserver.conf\nelse\n  echo "⚠️ Warning: No auth secret provided (TURN_SECRET)"\nfi\n\nif [ -n "$TURN_REALM" ]; then\n  sed -i "s/realm=nully.app/realm=$TURN_REALM/" /etc/coturn/turnserver.conf\nfi\n\necho "✅ Configuration complete"\nexec /usr/bin/turnserver -c /etc/coturn/turnserver.conf --listening-port=3478 --verbose\n' > /usr/local/bin/entrypoint.sh
+# Copy and setup entrypoint script
+COPY entrypoint-sliplane.sh /usr/local/bin/entrypoint.sh
 
 # Make entrypoint executable
 RUN chmod +x /usr/local/bin/entrypoint.sh
