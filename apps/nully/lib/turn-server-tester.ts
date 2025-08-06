@@ -36,8 +36,30 @@ export interface TurnTestReport {
   };
 }
 
+import { getCustomTurnConfig, generateCustomTurnServers } from './custom-turn-config';
+
 // Extended TURN server configurations for testing
-export const TURN_TEST_SERVERS: Array<{name: string; server: RTCIceServer}> = [
+function getTurnTestServers(): Array<{name: string; server: RTCIceServer}> {
+  const servers: Array<{name: string; server: RTCIceServer}> = [];
+  
+  // If custom TURN server is configured, only test that one
+  const customConfig = getCustomTurnConfig();
+  if (customConfig) {
+    console.log('[TURN Test] 🎯 Custom TURN server found - testing only custom server');
+    const customServers = generateCustomTurnServers(customConfig);
+    customServers.forEach((server, idx) => {
+      servers.push({
+        name: `Custom TURN ${idx + 1}: ${server.urls}`,
+        server
+      });
+    });
+    return servers; // Return early - only test custom servers
+  }
+  
+  console.log('[TURN Test] No custom TURN server - testing all public servers');
+  
+  // Add public TURN servers (only if no custom server)
+  servers.push(
   // Metered TURN servers
   {
     name: "Metered TURN UDP:80",
@@ -177,7 +199,12 @@ export const TURN_TEST_SERVERS: Array<{name: string; server: RTCIceServer}> = [
       credential: 'VLDnR2fvqo9tdHoE'
     }
   }
-];
+  );
+  
+  return servers;
+}
+
+export const TURN_TEST_SERVERS = getTurnTestServers();
 
 /**
  * Test a single TURN server
@@ -315,18 +342,28 @@ export async function runComprehensiveTurnTest(
   const startTime = Date.now();
   const testResults: TurnServerTest[] = [];
   
+  // Get fresh server list (includes custom TURN if configured)
+  const servers = getTurnTestServers();
+  
   console.log('[TURN Test] Starting comprehensive TURN server test...');
-  console.log(`[TURN Test] Testing ${TURN_TEST_SERVERS.length} servers with 10s timeout each`);
+  console.log(`[TURN Test] Testing ${servers.length} servers with 10s timeout each`);
+  
+  const customConfig = getCustomTurnConfig();
+  if (customConfig) {
+    console.log(`[TURN Test] 🎯 Custom TURN server detected: ${customConfig.server}`);
+  } else {
+    console.log('[TURN Test] ⚠️ No custom TURN server configured');
+  }
   
   // Test each server sequentially (to avoid overwhelming network)
-  for (let i = 0; i < TURN_TEST_SERVERS.length; i++) {
-    const { name, server } = TURN_TEST_SERVERS[i];
+  for (let i = 0; i < servers.length; i++) {
+    const { name, server } = servers[i];
     
     if (onProgress) {
-      onProgress(i + 1, TURN_TEST_SERVERS.length, name);
+      onProgress(i + 1, servers.length, name);
     }
     
-    console.log(`[TURN Test] Testing ${i + 1}/${TURN_TEST_SERVERS.length}: ${name}`);
+    console.log(`[TURN Test] Testing ${i + 1}/${servers.length}: ${name}`);
     
     const testResult = await testSingleTurnServer(name, server);
     testResults.push(testResult);

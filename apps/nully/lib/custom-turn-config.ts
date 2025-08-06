@@ -52,7 +52,7 @@ export function generateCustomTurnServers(config: CustomTurnConfig): RTCIceServe
   const servers: RTCIceServer[] = [];
   const { server, port, username, password, protocols = ['udp', 'tcp', 'tls'], alternativePorts = [] } = config;
   
-  // Generate servers for each protocol on main port
+  // Generate servers for each protocol on main port (skip TLS - no certificates)
   protocols.forEach(protocol => {
     let urls: string;
     
@@ -64,22 +64,20 @@ export function generateCustomTurnServers(config: CustomTurnConfig): RTCIceServe
         urls = `turn:${server}:${port}?transport=tcp`;
         break;
       case 'tls':
-        urls = `turns:${server}:5349`;
-        break;
+        // Skip TLS - no certificates configured
+        console.log('[Custom TURN] Skipping TLS endpoint - no certificates configured');
+        return;
     }
     
     servers.push({ urls, username, credential: password });
   });
   
-  // Generate servers for alternative ports (TCP only for firewall traversal)
+  // Generate servers for alternative ports (TCP only, skip 443/TLS)
   alternativePorts.forEach(altPort => {
-    if (altPort === 443) {
-      // TURNS on port 443
-      servers.push({
-        urls: `turns:${server}:443?transport=tcp`,
-        username,
-        credential: password
-      });
+    if (altPort === 443 || altPort === 5349) {
+      // Skip TLS ports - no certificates
+      console.log(`[Custom TURN] Skipping TLS port ${altPort} - no certificates configured`);
+      return;
     } else {
       // Regular TURN TCP on alternative ports
       servers.push({
