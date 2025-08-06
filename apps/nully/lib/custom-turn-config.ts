@@ -32,13 +32,7 @@ export function generateCustomTurnServers(config: CustomTurnConfig): RTCIceServe
 
     // Use multiple TURN endpoints for better connectivity
     return [{
-        urls: [
-            `turn:${server}:3478?transport=udp`,
-            `turn:${server}:3478?transport=tcp`,
-            `turns:${server}:5349?transport=tcp`,
-            `turn:${server}:80?transport=tcp`,
-            `turn:${server}:443?transport=tcp`
-        ],
+        urls: `turn:${server}:3478?transport=tcp`,
         username,
         credential: password
     }];

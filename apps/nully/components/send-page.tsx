@@ -2,15 +2,18 @@ import { useState } from "react";
 import { Laptop, Copy, Send, FilePlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@workspace/ui/components/button";
+import { ProgressGreen } from "./progress-green";
 import {
   SectionCard,
   SectionHeader,
   SectionContent,
   SectionFooter,
 } from "@workspace/ui/blocks/section-card";
-import { ConnectionStatus } from "../hooks/use-peer-connection";
+import { ConnectionStatus, ConnectionType } from "../hooks/use-peer-connection";
 import { usePolicyAcceptance } from "../hooks/use-policy-acceptance";
 import { AcceptanceChecklist } from "./acceptance-checklist";
+import { ConnectionTypeIndicator } from "./connection-type-indicator";
+import type { SessionAnalytics } from "../lib/interfaces";
 
 interface HowToStepProps {
   icon: React.ReactNode;
@@ -34,9 +37,10 @@ function HowToStep({ icon, title, description }: HowToStepProps) {
 
 interface ConnectionIndicatorProps {
   status: ConnectionStatus;
+  connectionType: ConnectionType;
 }
 
-function ConnectionIndicator({ status }: ConnectionIndicatorProps) {
+function ConnectionIndicator({ status, connectionType }: ConnectionIndicatorProps) {
   const t = useTranslations("Nully.Connection");
   const isConnected = status === "connected";
 
@@ -56,19 +60,64 @@ function ConnectionIndicator({ status }: ConnectionIndicatorProps) {
             }`}
         />
       </div>
-      <p className="text-sm font-medium">
-        {isConnected ? t("connected") : t("waiting")}
-      </p>
+      <div className="text-center">
+        <p className="text-sm font-medium">
+          {isConnected ? t("connected") : t("waiting")}
+        </p>
+        {isConnected && connectionType !== "unknown" && (
+          <div className="flex items-center justify-center gap-2 mt-2">
+            <ConnectionTypeIndicator connectionType={connectionType} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 interface StagedFilesProps {
   stagedFiles: File[];
+  activeTransfers: Set<string>;
+  sessionAnalytics: SessionAnalytics;
+  uploadProgress: Map<string, any>; // DownloadProgress from hook
 }
 
-function StagedFiles({ stagedFiles }: StagedFilesProps) {
+function StagedFiles({ stagedFiles, activeTransfers, sessionAnalytics, uploadProgress }: StagedFilesProps) {
   const t = useTranslations("Nully.Send");
+  
+  // Helper function to check if a file is being transferred
+  const isFileTransferring = (fileName: string) => {
+    return Array.from(activeTransfers).some(transferId => 
+      transferId.includes(fileName.substring(0, 10)) // Simple filename matching
+    );
+  };
+
+  // Helper function to get file download stats
+  const getFileStats = (fileName: string) => {
+    return Array.from(sessionAnalytics.fileStats.values()).find(stats => 
+      stats.fileName === fileName
+    );
+  };
+
+  // Helper function to get upload progress for a file
+  const getUploadProgress = (fileName: string) => {
+    // Find active transfer for this file
+    const activeTransferId = Array.from(activeTransfers).find(transferId => 
+      transferId.includes(fileName.substring(0, 10)) // Simple filename matching
+    );
+    
+    if (!activeTransferId) return null;
+    
+    // Find progress for this transfer
+    return uploadProgress.get(activeTransferId) || null;
+  };
+
+  // Format file size
+  const formatFileSize = (bytes: number): string => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
   if (stagedFiles.length === 0) {
     return (
       <div className="text-center text-sm text-gray-500 py-4">
@@ -76,15 +125,55 @@ function StagedFiles({ stagedFiles }: StagedFilesProps) {
       </div>
     );
   }
+  
   return (
     <div className="space-y-2">
       <h3 className="font-semibold text-sm">{t("stagedFilesTitle")}</h3>
       <ul className="divide-y rounded-md border">
-        {stagedFiles.map((file, i) => (
-          <li key={`${file.name}-${i}`} className="p-2 text-sm truncate">
-            {file.name}
-          </li>
-        ))}
+        {stagedFiles.map((file, i) => {
+          const isTransferring = isFileTransferring(file.name);
+          const fileStats = getFileStats(file.name);
+          const progress = getUploadProgress(file.name);
+          
+          return (
+            <li key={`${file.name}-${i}`} className="p-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    {isTransferring && (
+                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse flex-shrink-0" />
+                    )}
+                    <span className="text-sm truncate">
+                      {file.name}
+                    </span>
+                    <span className="text-xs text-gray-500 flex-shrink-0">
+                      {formatFileSize(file.size)}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2 ml-2">
+                    {fileStats && fileStats.downloadCount > 0 && (
+                      <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
+                        {fileStats.downloadCount}x
+                      </span>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Upload Progress Bar */}
+                {isTransferring && progress && (
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-xs text-gray-600">
+                      <span>Uploading {progress.percentage}%</span>
+                      <span>{progress.speed.toFixed(1)} MB/s</span>
+                    </div>
+                    <ProgressGreen value={progress.percentage} className="h-2" />
+                  </div>
+                )}
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -95,9 +184,13 @@ interface SendPageProps {
   status: ConnectionStatus;
   stagedFiles: File[];
   onSelectFiles: (files: FileList | null) => void;
+  sessionAnalytics: SessionAnalytics;
+  activeTransfers: Set<string>;
+  connectionType: ConnectionType;
+  uploadProgress: Map<string, any>; // DownloadProgress from hook
 }
 
-export function SendPage({ shareUrl, status, stagedFiles, onSelectFiles }: SendPageProps) {
+export function SendPage({ shareUrl, status, stagedFiles, onSelectFiles, sessionAnalytics, activeTransfers, connectionType, uploadProgress }: SendPageProps) {
   const t = useTranslations("Nully");
   const { hasAcceptedAll, isLoaded } = usePolicyAcceptance();
   const [userHasConfirmed, setUserHasConfirmed] = useState(false);
@@ -154,7 +247,7 @@ export function SendPage({ shareUrl, status, stagedFiles, onSelectFiles }: SendP
             </Button>
           </div>
 
-          <ConnectionIndicator status={status} />
+          <ConnectionIndicator status={status} connectionType={connectionType} />
         </SectionContent>
       </SectionCard>
 
@@ -169,7 +262,12 @@ export function SendPage({ shareUrl, status, stagedFiles, onSelectFiles }: SendP
             title={t("Send.stagedFilesTitle")}
           />
           <SectionContent>
-            <StagedFiles stagedFiles={stagedFiles} />
+            <StagedFiles 
+              stagedFiles={stagedFiles} 
+              activeTransfers={activeTransfers}
+              sessionAnalytics={sessionAnalytics}
+              uploadProgress={uploadProgress}
+            />
           </SectionContent>
           <SectionFooter>
             <input
@@ -190,6 +288,7 @@ export function SendPage({ shareUrl, status, stagedFiles, onSelectFiles }: SendP
           </SectionFooter>
         </SectionCard>
       )}
+
     </div>
   );
 }

@@ -329,3 +329,13 @@ Everything in `_OLD` is old code and READ ONLY. We have this folder to migrate t
 - Move API logic to `packages/trpc/`
 - Refactor app-specific code to the appropriate app directory
 - Update imports to use the new package structure
+
+## Learnings Log
+
+### 2025-01-06 - Download Progress Feature
+- **TypeScript error fix**: Removed unused `prev` parameter in `setDownloadState` callback - changed from arrow function with unused param to direct object assignment.
+- **Connection type showing "unknown"**: Fixed by adding 'prflx' (peer reflexive) candidate type detection - was missing this WebRTC candidate type in the logic.
+- **Sender analytics integration**: Successfully integrated real-time analytics tracking into file transfer hook and created visual analytics panel with transfer status, session stats, and file download history.
+- **Design uniformity improvement**: Integrated connection type indicator into existing connection status display and added transfer/download indicators directly to the file list, removing redundant analytics panel for cleaner UI.
+- **Download lifecycle messaging**: Implemented complete message protocol for download notifications - DOWNLOAD_START, DOWNLOAD_COMPLETE, DOWNLOAD_ERROR messages now provide real-time feedback to senders about receiver download activities.
+- **Visual progress bars enhancement**: Added upload progress tracking and visual progress bars for sender side - now shows real-time upload progress with percentage, speed (MB/s), and visual progress bars during file transfers.

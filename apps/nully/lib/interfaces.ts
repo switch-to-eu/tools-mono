@@ -20,7 +20,10 @@ export type MessageType =
     | "FILE_REQUEST"
     | "FILE_CHUNK"
     | "TRANSFER_COMPLETE"
-    | "ERROR";
+    | "ERROR"
+    | "DOWNLOAD_START"
+    | "DOWNLOAD_COMPLETE"
+    | "DOWNLOAD_ERROR";
 
 export interface Message<T extends MessageType, P> {
     type: T;
@@ -55,13 +58,34 @@ export type TransferCompleteMessage = Message<
 
 export type ErrorMessage = Message<"ERROR", { message: string }>;
 
+// Download lifecycle messages
+export type DownloadStartMessage = Message<"DOWNLOAD_START", { 
+    fileId: string; 
+    timestamp: number; 
+}>;
+
+export type DownloadCompleteMessage = Message<"DOWNLOAD_COMPLETE", { 
+    fileId: string; 
+    success: boolean; 
+    timestamp: number; 
+}>;
+
+export type DownloadErrorMessage = Message<"DOWNLOAD_ERROR", { 
+    fileId: string; 
+    error: string; 
+    timestamp: number; 
+}>;
+
 export type PeerMessage =
     | GreetingMessage
     | FileMetadataMessage
     | FileRequestMessage
     | FileChunkMessage
     | TransferCompleteMessage
-    | ErrorMessage;
+    | ErrorMessage
+    | DownloadStartMessage
+    | DownloadCompleteMessage
+    | DownloadErrorMessage;
 
 // PeerJS Configuration Types
 export interface PeerConnectionMetrics {
@@ -80,4 +104,20 @@ export interface PeerConnectionConfig {
     serverPath?: string;
     secure?: boolean;
     enableMetrics?: boolean;
+}
+
+// Download Analytics Types
+export interface FileDownloadStats {
+    fileId: string;
+    fileName: string;
+    downloadCount: number;
+    lastDownloadTime?: number;
+    totalBytesTransferred: number;
+}
+
+export interface SessionAnalytics {
+    sessionStartTime: number;
+    totalDownloads: number;
+    totalBytesTransferred: number;
+    fileStats: Map<string, FileDownloadStats>;
 }

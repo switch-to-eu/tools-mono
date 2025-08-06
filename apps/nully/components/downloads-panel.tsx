@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card";
 import { FileTransfer } from "@/lib/interfaces";
-import { Progress } from "@workspace/ui/components/progress";
+import { ProgressGreen } from "./progress-green";
 import { Button } from "@workspace/ui/components/button";
 
 interface DownloadsPanelProps {
@@ -37,7 +37,7 @@ export function DownloadsPanel({ files }: DownloadsPanelProps) {
                 <div>
                   <span className="font-medium">{file.file.name}</span>
                   {file.status !== "done" && (
-                    <Progress value={file.progress} className="mt-1" />
+                    <ProgressGreen value={file.progress} className="mt-1" />
                   )}
                 </div>
                 {file.status === "done" && (
