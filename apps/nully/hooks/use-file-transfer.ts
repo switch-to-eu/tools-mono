@@ -73,6 +73,9 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
     const receivedChunksRef = useRef(receivedChunks);
     receivedChunksRef.current = receivedChunks;
 
+    const downloadStateRef = useRef(downloadState);
+    downloadStateRef.current = downloadState;
+
     // Progress calculation utilities
     const calculateProgress = useCallback((bytesReceived: number, totalBytes: number, startTime: number): DownloadProgress => {
         const percentage = totalBytes > 0 ? Math.round((bytesReceived / totalBytes) * 100) : 0;
@@ -265,11 +268,11 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
         const finalChunks = newReceivedChunks.get(fileId);
         
         // Update progress if this is the active download
-        if (downloadState.activeFileId === fileId && downloadState.status === 'downloading' && downloadState.progress) {
+        if (downloadStateRef.current.activeFileId === fileId && downloadStateRef.current.status === 'downloading' && downloadStateRef.current.progress) {
             const receivedChunksCount = finalChunks ? finalChunks.filter(c => c).length : 0;
             const bytesReceived = receivedChunksCount * 64 * 1024; // 64KB per chunk
             
-            throttledUpdateProgress(fileId, bytesReceived, downloadState.progress.totalBytes, downloadState.progress.startTime);
+            throttledUpdateProgress(fileId, bytesReceived, downloadStateRef.current.progress.totalBytes, downloadStateRef.current.progress.startTime);
         }
         
         if (finalChunks && finalChunks.length === totalChunks && finalChunks.every(c => c)) {
@@ -345,7 +348,7 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
                 }));
             }
         }
-    }, [downloadState.activeFileId, downloadState.status, downloadState.progress, throttledUpdateProgress]);
+    }, [throttledUpdateProgress]);
 
     useEffect(() => {
         onData((message) => {
@@ -454,7 +457,7 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
         stageFile,
         requestFile,
         clearDownloadError,
-        stagedFiles: Array.from(stagedFiles.values()),
+        stagedFiles: Array.from(stagedFiles.entries()).map(([fileId, file]) => ({ fileId, file })),
         availableFiles,
         downloadState,
         sessionAnalytics,

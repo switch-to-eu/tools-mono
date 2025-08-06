@@ -7,11 +7,17 @@ import { Card } from "@workspace/ui/components/card";
 import type { SessionAnalytics, FileDownloadStats } from "../lib/interfaces";
 import type { ConnectionType } from "../hooks/use-peer-connection";
 import { ConnectionTypeIndicator } from "./connection-type-indicator";
+import { formatFileSize, formatDuration } from "../lib/formatters";
+
+interface StagedFileWithId {
+  fileId: string;
+  file: File;
+}
 
 interface SenderAnalyticsPanelProps {
   sessionAnalytics: SessionAnalytics;
   activeTransfers: Set<string>;
-  stagedFiles: File[];
+  stagedFiles: StagedFileWithId[];
   connectionType: ConnectionType;
   isConnected: boolean;
 }
@@ -25,21 +31,6 @@ export function SenderAnalyticsPanel({
 }: SenderAnalyticsPanelProps) {
   const t = useTranslations("Nully.Sender");
 
-  // Format file size
-  const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
-
-  // Format session duration
-  const formatDuration = (startTime: number): string => {
-    const duration = Math.floor((Date.now() - startTime) / 1000);
-    if (duration < 60) return `${duration}s`;
-    const minutes = Math.floor(duration / 60);
-    const seconds = duration % 60;
-    return `${minutes}m ${seconds}s`;
-  };
 
   // Get file stats array sorted by download count
   const fileStatsArray = Array.from(sessionAnalytics.fileStats.values())
@@ -69,7 +60,8 @@ export function SenderAnalyticsPanel({
           
           <div className="space-y-1">
             {Array.from(activeTransfers).map((fileId) => {
-              const file = stagedFiles.find(f => f.name.includes(fileId.split('-')[0] || fileId)); // Simple matching
+              const stagedFile = stagedFiles.find(sf => sf.fileId === fileId);
+              const file = stagedFile?.file;
               return (
                 <div key={fileId} className="text-xs text-gray-600 bg-orange-50 px-2 py-1 rounded flex items-center gap-1">
                   <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />

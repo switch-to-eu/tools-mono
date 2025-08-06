@@ -14,6 +14,8 @@ import { usePolicyAcceptance } from "../hooks/use-policy-acceptance";
 import { AcceptanceChecklist } from "./acceptance-checklist";
 import { ConnectionTypeIndicator } from "./connection-type-indicator";
 import type { SessionAnalytics } from "../lib/interfaces";
+import type { DownloadProgress } from "../hooks/use-file-transfer";
+import { formatFileSize } from "../lib/formatters";
 
 interface HowToStepProps {
   icon: React.ReactNode;
@@ -74,49 +76,36 @@ function ConnectionIndicator({ status, connectionType }: ConnectionIndicatorProp
   );
 }
 
+interface StagedFileWithId {
+  fileId: string;
+  file: File;
+}
+
 interface StagedFilesProps {
-  stagedFiles: File[];
+  stagedFiles: StagedFileWithId[];
   activeTransfers: Set<string>;
   sessionAnalytics: SessionAnalytics;
-  uploadProgress: Map<string, any>; // DownloadProgress from hook
+  uploadProgress: Map<string, DownloadProgress>;
 }
 
 function StagedFiles({ stagedFiles, activeTransfers, sessionAnalytics, uploadProgress }: StagedFilesProps) {
   const t = useTranslations("Nully.Send");
   
   // Helper function to check if a file is being transferred
-  const isFileTransferring = (fileName: string) => {
-    return Array.from(activeTransfers).some(transferId => 
-      transferId.includes(fileName.substring(0, 10)) // Simple filename matching
-    );
+  const isFileTransferring = (fileId: string) => {
+    return activeTransfers.has(fileId);
   };
 
   // Helper function to get file download stats
-  const getFileStats = (fileName: string) => {
-    return Array.from(sessionAnalytics.fileStats.values()).find(stats => 
-      stats.fileName === fileName
-    );
+  const getFileStats = (fileId: string) => {
+    return sessionAnalytics.fileStats.get(fileId);
   };
 
   // Helper function to get upload progress for a file
-  const getUploadProgress = (fileName: string) => {
-    // Find active transfer for this file
-    const activeTransferId = Array.from(activeTransfers).find(transferId => 
-      transferId.includes(fileName.substring(0, 10)) // Simple filename matching
-    );
-    
-    if (!activeTransferId) return null;
-    
-    // Find progress for this transfer
-    return uploadProgress.get(activeTransferId) || null;
+  const getUploadProgress = (fileId: string) => {
+    return uploadProgress.get(fileId) || null;
   };
 
-  // Format file size
-  const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
 
   if (stagedFiles.length === 0) {
     return (
@@ -130,13 +119,14 @@ function StagedFiles({ stagedFiles, activeTransfers, sessionAnalytics, uploadPro
     <div className="space-y-2">
       <h3 className="font-semibold text-sm">{t("stagedFilesTitle")}</h3>
       <ul className="divide-y rounded-md border">
-        {stagedFiles.map((file, i) => {
-          const isTransferring = isFileTransferring(file.name);
-          const fileStats = getFileStats(file.name);
-          const progress = getUploadProgress(file.name);
+        {stagedFiles.map((stagedFile, i) => {
+          const { fileId, file } = stagedFile;
+          const isTransferring = isFileTransferring(fileId);
+          const fileStats = getFileStats(fileId);
+          const progress = getUploadProgress(fileId);
           
           return (
-            <li key={`${file.name}-${i}`} className="p-3">
+            <li key={fileId} className="p-3">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -182,12 +172,12 @@ function StagedFiles({ stagedFiles, activeTransfers, sessionAnalytics, uploadPro
 interface SendPageProps {
   shareUrl: string;
   status: ConnectionStatus;
-  stagedFiles: File[];
+  stagedFiles: StagedFileWithId[];
   onSelectFiles: (files: FileList | null) => void;
   sessionAnalytics: SessionAnalytics;
   activeTransfers: Set<string>;
   connectionType: ConnectionType;
-  uploadProgress: Map<string, any>; // DownloadProgress from hook
+  uploadProgress: Map<string, DownloadProgress>;
 }
 
 export function SendPage({ shareUrl, status, stagedFiles, onSelectFiles, sessionAnalytics, activeTransfers, connectionType, uploadProgress }: SendPageProps) {

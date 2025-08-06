@@ -6,6 +6,7 @@ import { Button } from "@workspace/ui/components/button";
 import { ProgressGreen } from "./progress-green";
 import { Badge } from "@workspace/ui/components/badge";
 import type { DownloadState, FileMetadata } from "../hooks/use-file-transfer";
+import { formatFileSize, formatSpeed, formatETA } from "../lib/formatters";
 
 interface DownloadProgressItemProps {
   file: FileMetadata;
@@ -32,26 +33,6 @@ export function DownloadProgressItem({
                       (downloadState.status === 'completed' && !isActiveDownload) ||
                       (downloadState.status === 'failed' && !isActiveDownload);
 
-  // Format file size
-  const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
-
-  // Format transfer speed
-  const formatSpeed = (speed: number): string => {
-    return `${speed.toFixed(2)} MB/s`;
-  };
-
-  // Format ETA
-  const formatETA = (seconds: number): string => {
-    if (seconds === 0 || !isFinite(seconds)) return '--';
-    if (seconds < 60) return `${Math.round(seconds)}s`;
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.round(seconds % 60);
-    return `${minutes}m ${remainingSeconds}s`;
-  };
 
   return (
     <div className="p-4 border rounded-lg space-y-3">
