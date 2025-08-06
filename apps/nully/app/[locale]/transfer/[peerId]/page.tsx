@@ -40,7 +40,16 @@ export default function TransferPage() {
   }
 
   return (
-    <main className="container mx-auto max-w-2xl p-4">
+    <main className="container mx-auto max-w-2xl p-4 space-y-4">
+      {/* Error Display */}
+      {error && (
+        <div className="p-4 bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 rounded-lg">
+          <h3 className="font-semibold mb-2">Connection Error</h3>
+          <p className="text-sm">{error}</p>
+        </div>
+      )}
+      
+      {/* Main Transfer Interface */}
       <SendPage
         shareUrl={shareUrl}
         status={status}

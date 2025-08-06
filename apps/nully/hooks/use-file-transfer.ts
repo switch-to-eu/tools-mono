@@ -46,13 +46,12 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
                 payload: metadata,
             };
             send(message);
-            console.log("[useFileTransfer] Sent initial file metadata to new peer.");
+            console.log("[useFileTransfer] Sent metadata for", metadata.length, "files");
         }
     }, [send]);
 
     useEffect(() => {
         onConnect(() => {
-            console.log("[useFileTransfer] Peer connected, sending file metadata if available.");
             sendMetadata();
         });
     }, [onConnect, sendMetadata]);
@@ -60,11 +59,12 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
     const handleFileRequest = useCallback((fileId: string) => {
         const file = stagedFilesRef.current.get(fileId);
         if (!file) {
-            console.error(`[useFileTransfer] File with ID ${fileId} not found in staged files.`);
+            console.error(`[useFileTransfer] ❌ File not found: ${fileId}`);
             return;
         }
 
-        console.log(`[useFileTransfer] Received request for file: ${file.name}`);
+        console.log(`[useFileTransfer] 📤 Starting transfer: ${file.name} (${(file.size / 1024 / 1024).toFixed(1)}MB)`);
+        
         // Start chunking and sending the file
         const chunkSize = 64 * 1024; // 64KB
         const totalChunks = Math.ceil(file.size / chunkSize);
@@ -73,11 +73,14 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
         const reader = new FileReader();
         reader.onload = (e) => {
             if (e.target?.result) {
+                const chunk = e.target.result as ArrayBuffer;
+                // Send chunk without verbose logging
+                
                 const chunkMessage: FileChunkMessage = {
                     type: 'FILE_CHUNK',
                     payload: {
                         fileId,
-                        chunk: e.target.result as ArrayBuffer,
+                        chunk,
                         chunkIndex,
                         totalChunks,
                     }
@@ -88,9 +91,13 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
                 if (chunkIndex < totalChunks) {
                     readNextChunk();
                 } else {
-                    console.log(`[useFileTransfer] Finished sending file: ${file.name}`);
+                    console.log(`[useFileTransfer] ✅ Transfer complete: ${file.name}`);
                 }
             }
+        };
+        
+        reader.onerror = (e) => {
+            console.error(`[useFileTransfer] ❌ Error reading file: ${file.name}`);
         };
 
         const readNextChunk = () => {
@@ -104,7 +111,6 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
 
     const handleFileChunk = useCallback((message: FileChunkMessage) => {
         const { fileId, chunk, chunkIndex, totalChunks } = message.payload;
-        console.log(`[useFileTransfer] Received chunk ${chunkIndex + 1}/${totalChunks} for file ${fileId}`);
 
         const newReceivedChunks = new Map(receivedChunksRef.current);
         const chunks = newReceivedChunks.get(fileId) || [];
@@ -113,12 +119,15 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
         setReceivedChunks(newReceivedChunks);
 
         const finalChunks = newReceivedChunks.get(fileId);
+        
         if (finalChunks && finalChunks.length === totalChunks && finalChunks.every(c => c)) {
             const fileData = availableFilesRef.current.find(f => f.id === fileId);
             if (!fileData) {
-                console.error(`[useFileTransfer] File metadata for ${fileId} not found.`);
+                console.error(`[useFileTransfer] ❌ File metadata not found: ${fileId}`);
                 return;
             }
+
+            console.log(`[useFileTransfer] 📥 Download ready: ${fileData.name}`);
 
             const fileBlob = new Blob(finalChunks, { type: fileData.type });
             const url = URL.createObjectURL(fileBlob);
@@ -130,7 +139,7 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            console.log(`[useFileTransfer] File ${fileData.name} successfully downloaded.`);
+            console.log(`[useFileTransfer] ✅ Downloaded: ${fileData.name}`);
 
             const postDownloadChunks = new Map(receivedChunksRef.current);
             postDownloadChunks.delete(fileId);
@@ -141,7 +150,7 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
     useEffect(() => {
         onData((message) => {
             if (message.type === 'FILE_METADATA') {
-                console.log("[useFileTransfer] Received file metadata:", message.payload);
+                console.log("[useFileTransfer] 📋 Received metadata for", message.payload.length, "files");
                 setAvailableFiles(message.payload);
             } else if (message.type === 'FILE_REQUEST') {
                 handleFileRequest(message.payload.fileId);
@@ -153,6 +162,8 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
 
     const stageFile = (file: File) => {
         const fileId = uuidv4();
+        console.log("[useFileTransfer] 📁 Staged:", file.name, `(${(file.size / 1024 / 1024).toFixed(1)}MB)`);
+        
         const newStagedFiles = new Map(stagedFiles);
         newStagedFiles.set(fileId, file);
         setStagedFiles(newStagedFiles);
@@ -169,10 +180,14 @@ export function useFileTransfer({ send, onData, onConnect }: UseFileTransferProp
             payload: metadata,
         };
         send(message);
-        console.log("[useFileTransfer] Staged file and sent metadata:", file.name);
     };
 
     const requestFile = (fileId: string) => {
+        const fileData = availableFiles.find(f => f.id === fileId);
+        if (fileData) {
+            console.log(`[useFileTransfer] 📥 Requesting: ${fileData.name}`);
+        }
+        
         const message: FileRequestMessage = {
             type: "FILE_REQUEST",
             payload: { fileId },

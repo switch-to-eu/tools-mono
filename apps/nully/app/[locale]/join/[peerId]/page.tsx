@@ -24,9 +24,17 @@ export default function JoinPage() {
 
   if (status === "connecting" || status === "error") {
     return (
-      <main className="container mx-auto p-4">
+      <main className="container mx-auto max-w-2xl p-4 space-y-4">
+        {/* Error Display */}
+        {error && (
+          <div className="p-4 bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 rounded-lg">
+            <h3 className="font-semibold mb-2">Connection Error</h3>
+            <p className="text-sm">{error}</p>
+          </div>
+        )}
+        
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
-          <p>Connecting...</p>
+          <p>{status === "error" ? "Connection failed" : "Connecting..."}</p>
           {senderPeerId && (
             <p className="text-sm text-gray-500">
               Sender ID: <code className="bg-gray-100 px-1 rounded">{senderPeerId}</code>
@@ -39,7 +47,7 @@ export default function JoinPage() {
 
   if (status === "reconnecting") {
     return (
-      <main className="container mx-auto p-4">
+      <main className="container mx-auto max-w-2xl p-4 space-y-4">
         <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
           <p>Connection lost. Reconnecting...</p>
           {senderPeerId && (
@@ -54,7 +62,7 @@ export default function JoinPage() {
 
   if (status === "connected") {
     return (
-      <main className="container mx-auto max-w-2xl p-4">
+      <main className="container mx-auto max-w-2xl p-4 space-y-4">
         <ReceivePage
           status={status}
           availableFiles={availableFiles}
@@ -66,7 +74,7 @@ export default function JoinPage() {
 
   // Default state (should not reach here normally)
   return (
-    <main className="container mx-auto p-4">
+    <main className="container mx-auto max-w-2xl p-4 space-y-4">
       <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
         <p className="text-lg text-gray-600">Preparing to join...</p>
       </div>

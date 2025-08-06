@@ -4,9 +4,8 @@ export interface Tool {
     url: string;
     status: 'active' | 'beta' | 'coming-soon';
     color: string;
+    secondaryColor: string;
     icon?: string;
-    tagline?: string;
-    description?: string;
 }
 
 export const tools: Tool[] = [
@@ -15,7 +14,8 @@ export const tools: Tool[] = [
         name: 'Plotty',
         url: 'https://plotty.eu',
         status: 'active',
-        color: 'blue',
+        color: 'purple-600',
+        secondaryColor: 'blue-600',
         icon: 'calendar'
     },
     {
@@ -23,7 +23,8 @@ export const tools: Tool[] = [
         name: 'Nully',
         url: 'https://nully.eu',
         status: 'active',
-        color: 'green',
+        color: 'green-600',
+        secondaryColor: 'yellow-600',
         icon: 'upload'
     },
     {
@@ -31,7 +32,8 @@ export const tools: Tool[] = [
         name: 'KeepFocus',
         url: 'https://keepfocus.eu',
         status: 'active',
-        color: 'purple',
+        color: 'blue-600',
+        secondaryColor: 'purple-600',
         icon: 'target'
     }
 ];

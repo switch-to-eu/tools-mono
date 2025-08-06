@@ -62,3 +62,22 @@ export type PeerMessage =
     | FileChunkMessage
     | TransferCompleteMessage
     | ErrorMessage;
+
+// PeerJS Configuration Types
+export interface PeerConnectionMetrics {
+    connectionStartTime: number;
+    connectionEstablishTime?: number;
+    lastReconnectAttempt?: number;
+    totalReconnectAttempts: number;
+    errorCount: number;
+    lastError?: string;
+}
+
+export interface PeerConnectionConfig {
+    useCustomServer: boolean;
+    serverHost?: string;
+    serverPort?: number;
+    serverPath?: string;
+    secure?: boolean;
+    enableMetrics?: boolean;
+}
