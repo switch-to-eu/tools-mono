@@ -30,9 +30,15 @@ export function getCustomTurnConfig(): CustomTurnConfig | null {
 export function generateCustomTurnServers(config: CustomTurnConfig): RTCIceServer[] {
     const { server, username, password } = config;
 
-    // Only use TCP on port 3478 (the only configuration that works reliably)
+    // Use multiple TURN endpoints for better connectivity
     return [{
-        urls: `turn:${server}:3478?transport=tcp`,
+        urls: [
+            `turn:${server}:3478?transport=udp`,
+            `turn:${server}:3478?transport=tcp`,
+            `turns:${server}:5349?transport=tcp`,
+            `turn:${server}:80?transport=tcp`,
+            `turn:${server}:443?transport=tcp`
+        ],
         username,
         credential: password
     }];
