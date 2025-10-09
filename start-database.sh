@@ -14,7 +14,7 @@
 
 # Configuration
 DB_CONTAINER_NAME="tools-mono-postgres"
-DB_PORT="5434"
+DB_PORT="15432"
 DB_USER="postgres"
 DB_PASSWORD="tools_mono_dev_password"
 

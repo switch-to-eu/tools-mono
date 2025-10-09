@@ -35,6 +35,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # Enable pnpm and build the plotty app
 RUN corepack enable pnpm && pnpm run build --filter=@workspace/plotty
 
+# Compile migration script to JavaScript
+RUN cd apps/plotty && npx tsx --tsconfig tsconfig.json scripts/migrate.ts --emit > scripts/migrate.mjs || true
+RUN cd apps/plotty && npx esbuild scripts/migrate.ts --platform=node --format=esm --bundle --external:drizzle-orm --external:postgres --outfile=scripts/migrate.mjs
+
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
@@ -51,6 +55,15 @@ RUN adduser --system --uid 1001 nextjs
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/.next/static ./apps/plotty/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/public ./apps/plotty/public
+
+# Copy compiled migration script and SQL files
+COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/scripts/migrate.mjs ./apps/plotty/scripts/migrate.mjs
+COPY --from=builder --chown=nextjs:nodejs /app/apps/plotty/drizzle ./apps/plotty/drizzle
+
+# Copy only runtime dependencies for migrations
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/.pnpm/drizzle-orm@*/node_modules/drizzle-orm ./node_modules/drizzle-orm
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/.pnpm/postgres@*/node_modules/postgres ./node_modules/postgres
 
 USER nextjs
 
@@ -60,8 +73,15 @@ ENV HOSTNAME="0.0.0.0"
 
 COPY --chown=nextjs:nodejs <<EOF /app/start.sh
 #!/bin/sh
-echo "Starting server..."
+set -e
+
 cd /app/apps/plotty
+
+echo "🔄 Running database migrations..."
+node scripts/migrate.mjs
+
+echo "✅ Migrations complete"
+echo "🚀 Starting server..."
 exec node server.js
 EOF
 
