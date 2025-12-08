@@ -5,6 +5,7 @@ This guide explains how to create a new Next.js application in this Turborepo mo
 ## Overview
 
 This monorepo uses:
+
 - **Turborepo** for build orchestration and caching
 - **pnpm** for package management with workspaces
 - **Next.js** with App Router for applications
@@ -29,6 +30,7 @@ pnpm create-app
 ```
 
 This script will:
+
 - Copy all files from `apps/example`
 - Replace all "example" references with your app name
 - Update package.json name to `@workspace/your-app-name`
@@ -88,7 +90,7 @@ cd apps/your-app-name
     "drizzle-orm": "^0.41.0",
     "lucide-react": "^0.511.0",
     "nanoid": "^5.1.5",
-    "next": "^15.2.3",
+    "next": "^15.2.6",
     "next-intl": "^4.1.0",
     "postgres": "^3.4.4",
     "react": "^19.0.0",
@@ -131,24 +133,12 @@ cd apps/your-app-name
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@workspace/ui/*": [
-        "../../packages/ui/src/*"
-      ],
-      "@/lib/*": [
-        "./lib/*"
-      ],
-      "@/server/*": [
-        "./server/*"
-      ],
-      "@components/*": [
-        "./components/*"
-      ],
-      "@hooks/*": [
-        "./hooks/*"
-      ],
-      "@i18n/*": [
-        "./i18n/*"
-      ]
+      "@workspace/ui/*": ["../../packages/ui/src/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/server/*": ["./server/*"],
+      "@components/*": ["./components/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@i18n/*": ["./i18n/*"]
     },
     "plugins": [
       {
@@ -163,23 +153,21 @@ cd apps/your-app-name
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
 ```
 
 ### 4. Create next.config.mjs
 
 ```javascript
-import createNextIntlPlugin from 'next-intl/plugin';
+import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@workspace/ui", "@workspace/trpc"],
-}
+};
 
 export default withNextIntl(nextConfig);
 ```
@@ -187,10 +175,10 @@ export default withNextIntl(nextConfig);
 ### 5. Create eslint.config.js
 
 ```javascript
-import { nextJsConfig } from "@workspace/eslint-config/next-js"
+import { nextJsConfig } from "@workspace/eslint-config/next-js";
 
 /** @type {import("eslint").Linting.Config} */
-export default nextJsConfig
+export default nextJsConfig;
 ```
 
 ### 6. Create postcss.config.mjs
@@ -264,7 +252,7 @@ const geist = Geist({
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode;
   params: Promise<{ locale: Locale }>;
@@ -337,7 +325,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
           },
         }),
       ],
-    }),
+    })
   );
 
   return (
@@ -445,9 +433,12 @@ export const exampleRouter = createTRPCRouter({
   create: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ input }) => {
-      const [item] = await db.insert(items).values({
-        name: input.name,
-      }).returning();
+      const [item] = await db
+        .insert(items)
+        .values({
+          name: input.name,
+        })
+        .returning();
       return item;
     }),
 
@@ -462,23 +453,24 @@ export const exampleRouter = createTRPCRouter({
 ### Routing (i18n/routing.ts)
 
 ```typescript
-import { defineRouting } from 'next-intl/routing';
-import { createNavigation } from 'next-intl/navigation';
+import { defineRouting } from "next-intl/routing";
+import { createNavigation } from "next-intl/navigation";
 
 export const routing = defineRouting({
-  locales: ['en', 'nl'],
-  defaultLocale: 'en'
+  locales: ["en", "nl"],
+  defaultLocale: "en",
 });
 
 export type Locale = (typeof routing.locales)[number];
-export const { Link, redirect, usePathname, useRouter } = createNavigation(routing);
+export const { Link, redirect, usePathname, useRouter } =
+  createNavigation(routing);
 ```
 
 ### Request Configuration (i18n/request.ts)
 
 ```typescript
-import { getRequestConfig } from 'next-intl/server';
-import { routing } from './routing';
+import { getRequestConfig } from "next-intl/server";
+import { routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale;
@@ -489,7 +481,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   return {
     locale,
-    messages: (await import(`../messages/${locale}.json`)).default
+    messages: (await import(`../messages/${locale}.json`)).default,
   };
 });
 ```
@@ -497,10 +489,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
 ### Navigation (i18n/navigation.ts)
 
 ```typescript
-import { createNavigation } from 'next-intl/navigation';
-import { routing } from './routing';
+import { createNavigation } from "next-intl/navigation";
+import { routing } from "./routing";
 
-export const { Link, redirect, usePathname, useRouter } = createNavigation(routing);
+export const { Link, redirect, usePathname, useRouter } =
+  createNavigation(routing);
 ```
 
 ## Components Configuration (components.json)
@@ -528,22 +521,26 @@ export const { Link, redirect, usePathname, useRouter } = createNavigation(routi
 ## Running Your New App
 
 1. **Install dependencies** (from monorepo root):
+
    ```bash
    pnpm install
    ```
 
 2. **Set up environment variables**:
+
    ```bash
    # Create .env.local in your app directory
    DATABASE_URL="postgresql://..."
    ```
 
 3. **Generate database schema**:
+
    ```bash
    pnpm --filter=@workspace/your-app-name db:push
    ```
 
 4. **Start development**:
+
    ```bash
    # From monorepo root - runs all apps
    pnpm dev
@@ -562,6 +559,7 @@ From the monorepo root, you can run:
 - `pnpm type-check` - Type check all packages
 
 For specific apps:
+
 - `pnpm --filter=@workspace/your-app-name dev`
 - `pnpm --filter=@workspace/your-app-name build`
 - `pnpm --filter=@workspace/your-app-name lint`
@@ -610,6 +608,7 @@ export default function MyComponent() {
 ## Script Requirements
 
 The automated script requires:
+
 - `rsync` for copying files (usually pre-installed on Linux/macOS)
 - `sed` for text replacement (usually pre-installed)
 - `bash` shell
@@ -617,6 +616,7 @@ The automated script requires:
 ### App Name Validation
 
 The script validates app names to ensure they:
+
 - Start with a lowercase letter
 - Contain only lowercase letters, numbers, and hyphens
 - End with a letter or number

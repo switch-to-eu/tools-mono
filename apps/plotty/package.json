@@ -14,7 +14,12 @@
     "db:migrate": "tsx scripts/migrate.ts",
     "db:migrate:kit": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:remote:help": "./scripts/remote-db.sh",
+    "db:remote:studio": "dotenv -e .env.remote -- drizzle-kit studio",
+    "db:remote:push": "dotenv -e .env.remote -- drizzle-kit push",
+    "db:remote:migrate": "dotenv -e .env.remote -- drizzle-kit migrate",
+    "db:remote:generate": "dotenv -e .env.remote -- drizzle-kit generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -36,7 +41,7 @@
     "drizzle-orm": "^0.41.0",
     "lucide-react": "^0.511.0",
     "nanoid": "^5.1.5",
-    "next": "^15.2.3",
+    "next": "^15.2.6",
     "next-intl": "^4.1.0",
     "postgres": "^3.4.4",
     "react": "^19.0.0",
@@ -58,6 +63,8 @@
     "@types/react-dom": "^19.0.0",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
+    "dotenv-cli": "^7.4.2",
+    "drizzle-kit": "^0.30.6",
     "eslint": "^9.23.0",
     "eslint-config-next": "^15.3.3",
     "eslint-plugin-drizzle": "^0.2.3",
